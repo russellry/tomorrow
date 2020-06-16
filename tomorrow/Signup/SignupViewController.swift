@@ -13,9 +13,19 @@ import AuthenticationServices
 class SignupViewController: UIViewController {
     
     var name = ""
-    var appleLogInButton: ASAuthorizationAppleIDButton = {
+    let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton()
-        button.addTarget(self, action: #selector(handleLogInWithAppleID), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleLoginWithAppleID), for: .touchUpInside)
+        return button
+    }()
+    
+    let fbLoginButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(handleLoginWithFB), for: .touchUpInside)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("Sign in with Facebook", for: .normal)
+        button.layer.cornerRadius = 8
         return button
     }()
     
@@ -31,26 +41,65 @@ class SignupViewController: UIViewController {
                 NSLog("Facebook token is: \(String(describing: AccessToken.current))")
             } else {
                 NSLog("Facebook token has expired")
-                let fbLoginButton = FBLoginButton()
-                fbLoginButton.center = view.center
-                fbLoginButton.permissions = ["public_profile", "email"]
                 loginStackView.addArrangedSubview(fbLoginButton)
-                loginStackView.addArrangedSubview(appleLogInButton)
+                loginStackView.addArrangedSubview(appleLoginButton)
             }
             return
         }
-
+        
     }
     
-    @objc func handleLogInWithAppleID() {
+    func saveFBDetails(token: AccessToken) {
+        let tokenString = token.tokenString
+        let params = ["fields": "first_name, last_name, email"]
+        let graphRequest = GraphRequest(graphPath: "me", parameters: params, tokenString: tokenString, version: nil, httpMethod: .get)
+        graphRequest.start { (connection, result, error) in
+            
+            if let err = error {
+                print("Facebook graph request error: \(err)")
+            } else {
+                print("Facebook graph request successful!")
+                
+                guard let json = result as? NSDictionary else { return }
+                if let email = json["email"] as? String {
+                    print("\(email)")
+                }
+                if let firstName = json["first_name"] as? String {
+                    print("\(firstName)")
+                }
+                if let lastName = json["last_name"] as? String {
+                    print("\(lastName)")
+                }
+                if let id = json["id"] as? String {
+                    print("\(id)")
+                }
+            }
+        }
+    }
+    
+    @objc func handleLoginWithFB() {
+        let manager = LoginManager()
+        manager.logIn(permissions: ["public_profile", "email"], viewController: self, completion: { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success(granted: let granted, declined: let declined, token: let token):
+                self.saveFBDetails(token: token)
+            case .cancelled:
+                print("cancelled")
+            case .failed(_):
+                print("failed")
+            }
+        })
+    }
+    
+    @objc func handleLoginWithAppleID() {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
-        
         let controller = ASAuthorizationController(authorizationRequests: [request])
-        
         controller.delegate = self
         controller.presentationContextProvider = self
-        
         controller.performRequests()
     }
     
