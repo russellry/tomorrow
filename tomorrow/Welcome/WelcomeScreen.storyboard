@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="O7g-tC-ZAd">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Welcome View Controller-->
+        <scene sceneID="ioY-Bh-msw">
+            <objects>
+                <viewController id="e5Q-pc-4i7" customClass="WelcomeViewController" customModule="tomorrow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="95L-9S-oV6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIX-uN-z7x">
+                                <rect key="frame" x="62" y="742" width="290" height="36"/>
+                                <color key="backgroundColor" red="0.32172060009999998" green="0.59009963269999999" blue="0.83532422780000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="YvQ-i3-NUC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="tintColor" red="0.2627450980392157" green="0.49281919000000002" blue="0.70590835809999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" title="I am new">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="onTapNewBtn:" destination="e5Q-pc-4i7" eventType="touchUpInside" id="eMB-YI-VEg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yJs-wG-hds">
+                                <rect key="frame" x="62" y="794" width="290" height="36"/>
+                                <color key="backgroundColor" red="0.32172060009999998" green="0.59009963269999999" blue="0.83532422780000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="PqQ-J3-xWC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="I've been here">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="iTg-cS-vPY">
+                                <rect key="frame" x="62" y="696.5" width="290" height="37.5"/>
+                                <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="33"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tomorrow" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xon-ar-ZfO">
+                                <rect key="frame" x="104.5" y="52" width="205" height="42"/>
+                                <fontDescription key="fontDescription" name="HiraMinProN-W3" family="Hiragino Mincho ProN" pointSize="42"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="iTg-cS-vPY" firstAttribute="width" secondItem="CIX-uN-z7x" secondAttribute="width" id="2Ve-pX-XqJ"/>
+                            <constraint firstItem="xon-ar-ZfO" firstAttribute="centerX" secondItem="95L-9S-oV6" secondAttribute="centerX" id="3sT-md-FiR"/>
+                            <constraint firstItem="CIX-uN-z7x" firstAttribute="centerX" secondItem="95L-9S-oV6" secondAttribute="centerX" id="En7-Nn-ewy"/>
+                            <constraint firstItem="CIX-uN-z7x" firstAttribute="top" secondItem="iTg-cS-vPY" secondAttribute="bottom" constant="8" id="OQj-b5-lgU"/>
+                            <constraint firstItem="CIX-uN-z7x" firstAttribute="width" secondItem="DRC-6k-Ptn" secondAttribute="width" multiplier="0.7" id="OSW-TU-hgz"/>
+                            <constraint firstItem="yJs-wG-hds" firstAttribute="width" secondItem="CIX-uN-z7x" secondAttribute="width" id="ROq-1w-4wW"/>
+                            <constraint firstItem="yJs-wG-hds" firstAttribute="centerX" secondItem="95L-9S-oV6" secondAttribute="centerX" id="Tfh-KL-fGB"/>
+                            <constraint firstItem="xon-ar-ZfO" firstAttribute="top" secondItem="DRC-6k-Ptn" secondAttribute="top" constant="8" id="iLH-eF-FU8"/>
+                            <constraint firstItem="DRC-6k-Ptn" firstAttribute="bottom" secondItem="yJs-wG-hds" secondAttribute="bottom" constant="32" id="kdR-wF-8iw"/>
+                            <constraint firstItem="yJs-wG-hds" firstAttribute="top" secondItem="CIX-uN-z7x" secondAttribute="bottom" constant="16" id="t6T-4Q-NEU"/>
+                            <constraint firstItem="iTg-cS-vPY" firstAttribute="centerX" secondItem="95L-9S-oV6" secondAttribute="centerX" id="xbP-PQ-kjd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DRC-6k-Ptn"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="U7O-lo-hFi"/>
+                    <connections>
+                        <outlet property="beenBtn" destination="yJs-wG-hds" id="JXx-dF-Lg1"/>
+                        <outlet property="newBtn" destination="CIX-uN-z7x" id="wAl-tk-iub"/>
+                        <segue destination="aNH-OF-pUU" kind="show" identifier="toOnboardingScreen" id="bli-PB-OsR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HIZ-ae-B4m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="992.75362318840587" y="150.66964285714286"/>
+        </scene>
+        <!--OnboardingScreen-->
+        <scene sceneID="grT-AG-KjH">
+            <objects>
+                <viewControllerPlaceholder storyboardName="OnboardingScreen" id="aNH-OF-pUU" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="NRr-Sb-4uQ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wx4-KJ-7XI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1521.7391304347827" y="150.66964285714286"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GmM-MF-bIn">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="O7g-tC-ZAd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RLj-NH-th2">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="e5Q-pc-4i7" kind="relationship" relationship="rootViewController" id="0DE-9x-WrG"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nzz-2a-96c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="82.608695652173921" y="150.66964285714286"/>
+        </scene>
+    </scenes>
+</document>

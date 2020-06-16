@@ -13,6 +13,14 @@
 		FB3674552495313A003D2F1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674532495313A003D2F1E /* Main.storyboard */; };
 		FB3674572495313B003D2F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB3674562495313B003D2F1E /* Assets.xcassets */; };
 		FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674582495313B003D2F1E /* LaunchScreen.storyboard */; };
+		FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */; };
+		FB36746524961AE4003D2F1E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746424961AE4003D2F1E /* OnboardingViewController.swift */; };
+		FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746724961B22003D2F1E /* UIViewController+Background.swift */; };
+		FB36746E2497A4AD003D2F1E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */; };
+		FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */; };
+		FB3674732497AFF7003D2F1E /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674722497AFF7003D2F1E /* SignupViewController.swift */; };
+		FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */; };
+		FB3674772497BE70003D2F1E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674762497BE70003D2F1E /* UITextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +32,14 @@
 		FB3674562495313B003D2F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB3674592495313B003D2F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB36745B2495313C003D2F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingScreen.storyboard; sourceTree = "<group>"; };
+		FB36746424961AE4003D2F1E /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		FB36746724961B22003D2F1E /* UIViewController+Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Background.swift"; sourceTree = "<group>"; };
+		FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WelcomeScreen.storyboard; sourceTree = "<group>"; };
+		FB3674722497AFF7003D2F1E /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignupScreen.storyboard; sourceTree = "<group>"; };
+		FB3674762497BE70003D2F1E /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,11 @@
 		FB36744C2495313A003D2F1E /* tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				FB3674712497AFE9003D2F1E /* Signup */,
+				FB3674612496186A003D2F1E /* Onboarding */,
+				FB36746C2497A48A003D2F1E /* Welcome */,
+				FB36746924979CC0003D2F1E /* Common */,
+				FB36746624961B0B003D2F1E /* Extensions */,
 				FB36744D2495313A003D2F1E /* AppDelegate.swift */,
 				FB36744F2495313A003D2F1E /* SceneDelegate.swift */,
 				FB3674512495313A003D2F1E /* ViewController.swift */,
@@ -65,6 +86,49 @@
 				FB36745B2495313C003D2F1E /* Info.plist */,
 			);
 			path = tomorrow;
+			sourceTree = "<group>";
+		};
+		FB3674612496186A003D2F1E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */,
+				FB36746424961AE4003D2F1E /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		FB36746624961B0B003D2F1E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FB36746724961B22003D2F1E /* UIViewController+Background.swift */,
+				FB3674762497BE70003D2F1E /* UITextField.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FB36746924979CC0003D2F1E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		FB36746C2497A48A003D2F1E /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */,
+				FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		FB3674712497AFE9003D2F1E /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				FB3674722497AFF7003D2F1E /* SignupViewController.swift */,
+				FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */,
+			);
+			path = Signup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +190,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */,
+				FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */,
+				FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */,
+				FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */,
 				FB3674572495313B003D2F1E /* Assets.xcassets in Resources */,
 				FB3674552495313A003D2F1E /* Main.storyboard in Resources */,
 			);
@@ -139,8 +206,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB3674522495313A003D2F1E /* ViewController.swift in Sources */,
+				FB3674732497AFF7003D2F1E /* SignupViewController.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
+				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,
+				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,
+				FB36746E2497A4AD003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB3674502495313A003D2F1E /* SceneDelegate.swift in Sources */,
+				FB36746524961AE4003D2F1E /* OnboardingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +342,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -287,6 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,6 +378,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
