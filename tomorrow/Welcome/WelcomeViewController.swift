@@ -9,7 +9,7 @@
 import UIKit
 
 class WelcomeViewController: UIViewController {
-
+    
     @IBOutlet weak var newBtn: UIButton!
     @IBOutlet weak var beenBtn: UIButton!
     

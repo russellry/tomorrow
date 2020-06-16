@@ -7,10 +7,25 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        guard let url = URLContexts.first?.url else {
+            return
+        }
+
+        ApplicationDelegate.shared.application(
+            UIApplication.shared,
+            open: url,
+            sourceApplication: nil,
+            annotation: [UIApplication.OpenURLOptionsKey.annotation]
+        )
+    }
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -18,6 +33,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if let userIdentifier = UserDefaults.standard.object(forKey: "user") as? String {
+               let authorizationProvider = ASAuthorizationAppleIDProvider()
+               authorizationProvider.getCredentialState(forUserID: userIdentifier) { (state, error) in
+                   switch (state) {
+                   case .authorized:
+                       DispatchQueue.main.async {
+                            self.showHomeScreen(scene: scene)
+                       }
+                       break
+                   case .revoked:
+                       fallthrough
+                   case .notFound:
+                        DispatchQueue.main.async {
+                             self.showWelcomeScreen(scene: scene)
+                        }
+                   default:
+                       break
+                   }
+               }
+        }
+    }
+    
+    func showHomeScreen(scene: UIScene) {
+        
+    }
+    
+    func showWelcomeScreen(scene: UIScene) {
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,6 +92,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    
 }
 

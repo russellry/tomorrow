@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270426510742B9BF4E230206 /* Pods_tomorrow.framework */; };
 		FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36744D2495313A003D2F1E /* AppDelegate.swift */; };
 		FB3674502495313A003D2F1E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36744F2495313A003D2F1E /* SceneDelegate.swift */; };
 		FB3674522495313A003D2F1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674512495313A003D2F1E /* ViewController.swift */; };
-		FB3674552495313A003D2F1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674532495313A003D2F1E /* Main.storyboard */; };
 		FB3674572495313B003D2F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB3674562495313B003D2F1E /* Assets.xcassets */; };
 		FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674582495313B003D2F1E /* LaunchScreen.storyboard */; };
 		FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */; };
@@ -21,14 +21,18 @@
 		FB3674732497AFF7003D2F1E /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674722497AFF7003D2F1E /* SignupViewController.swift */; };
 		FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */; };
 		FB3674772497BE70003D2F1E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674762497BE70003D2F1E /* UITextField.swift */; };
+		FB36747A24992446003D2F1E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36747924992446003D2F1E /* HomeViewController.swift */; };
+		FB36747C24992455003D2F1E /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36747B24992455003D2F1E /* HomeScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		035E02E42098671B790B6929 /* Pods-tomorrow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tomorrow.debug.xcconfig"; path = "Target Support Files/Pods-tomorrow/Pods-tomorrow.debug.xcconfig"; sourceTree = "<group>"; };
+		270426510742B9BF4E230206 /* Pods_tomorrow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tomorrow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6B50E03F8DCD23BB3830237 /* Pods-tomorrow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tomorrow.release.xcconfig"; path = "Target Support Files/Pods-tomorrow/Pods-tomorrow.release.xcconfig"; sourceTree = "<group>"; };
 		FB36744A2495313A003D2F1E /* tomorrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomorrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB36744D2495313A003D2F1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB36744F2495313A003D2F1E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		FB3674512495313A003D2F1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FB3674542495313A003D2F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB3674562495313B003D2F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB3674592495313B003D2F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB36745B2495313C003D2F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -40,6 +44,9 @@
 		FB3674722497AFF7003D2F1E /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignupScreen.storyboard; sourceTree = "<group>"; };
 		FB3674762497BE70003D2F1E /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		FB36747924992446003D2F1E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FB36747B24992455003D2F1E /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
+		FB36747D24992A9A003D2F1E /* tomorrow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tomorrow.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,17 +54,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F43A9A99535D1702FD148DF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				270426510742B9BF4E230206 /* Pods_tomorrow.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DACFF07C69E1D83DBF07E424 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				035E02E42098671B790B6929 /* Pods-tomorrow.debug.xcconfig */,
+				E6B50E03F8DCD23BB3830237 /* Pods-tomorrow.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		FB3674412495313A003D2F1E = {
 			isa = PBXGroup;
 			children = (
 				FB36744C2495313A003D2F1E /* tomorrow */,
 				FB36744B2495313A003D2F1E /* Products */,
+				DACFF07C69E1D83DBF07E424 /* Pods */,
+				4F43A9A99535D1702FD148DF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +99,8 @@
 		FB36744C2495313A003D2F1E /* tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				FB36747D24992A9A003D2F1E /* tomorrow.entitlements */,
+				FB36747824992438003D2F1E /* Home */,
 				FB3674712497AFE9003D2F1E /* Signup */,
 				FB3674612496186A003D2F1E /* Onboarding */,
 				FB36746C2497A48A003D2F1E /* Welcome */,
@@ -80,7 +109,6 @@
 				FB36744D2495313A003D2F1E /* AppDelegate.swift */,
 				FB36744F2495313A003D2F1E /* SceneDelegate.swift */,
 				FB3674512495313A003D2F1E /* ViewController.swift */,
-				FB3674532495313A003D2F1E /* Main.storyboard */,
 				FB3674562495313B003D2F1E /* Assets.xcassets */,
 				FB3674582495313B003D2F1E /* LaunchScreen.storyboard */,
 				FB36745B2495313C003D2F1E /* Info.plist */,
@@ -131,6 +159,15 @@
 			path = Signup;
 			sourceTree = "<group>";
 		};
+		FB36747824992438003D2F1E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FB36747924992446003D2F1E /* HomeViewController.swift */,
+				FB36747B24992455003D2F1E /* HomeScreen.storyboard */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -138,9 +175,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FB36745E2495313C003D2F1E /* Build configuration list for PBXNativeTarget "tomorrow" */;
 			buildPhases = (
+				DFEFC4301501FB0D0704869F /* [CP] Check Pods Manifest.lock */,
 				FB3674462495313A003D2F1E /* Sources */,
 				FB3674472495313A003D2F1E /* Frameworks */,
 				FB3674482495313A003D2F1E /* Resources */,
+				699550C5D87E4C9EF1F0446A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -192,13 +231,55 @@
 				FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */,
 				FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */,
 				FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */,
+				FB36747C24992455003D2F1E /* HomeScreen.storyboard in Resources */,
 				FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */,
 				FB3674572495313B003D2F1E /* Assets.xcassets in Resources */,
-				FB3674552495313A003D2F1E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		699550C5D87E4C9EF1F0446A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tomorrow/Pods-tomorrow-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-tomorrow/Pods-tomorrow-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-tomorrow/Pods-tomorrow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFEFC4301501FB0D0704869F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-tomorrow-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FB3674462495313A003D2F1E /* Sources */ = {
@@ -210,6 +291,7 @@
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
 				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,
 				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,
+				FB36747A24992446003D2F1E /* HomeViewController.swift in Sources */,
 				FB36746E2497A4AD003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB3674502495313A003D2F1E /* SceneDelegate.swift in Sources */,
 				FB36746524961AE4003D2F1E /* OnboardingViewController.swift in Sources */,
@@ -219,14 +301,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FB3674532495313A003D2F1E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FB3674542495313A003D2F1E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FB3674582495313B003D2F1E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -354,8 +428,10 @@
 		};
 		FB36745F2495313C003D2F1E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 035E02E42098671B790B6929 /* Pods-tomorrow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = tomorrow/tomorrow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
@@ -373,8 +449,10 @@
 		};
 		FB3674602495313C003D2F1E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E6B50E03F8DCD23BB3830237 /* Pods-tomorrow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = tomorrow/tomorrow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
