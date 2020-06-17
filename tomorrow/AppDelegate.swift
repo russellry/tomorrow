@@ -13,6 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// - Tag: did_finish_launching
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        ApplicationDelegate.shared.application(
+            application,
+            didFinishLaunchingWithOptions: launchOptions
+        )
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
             switch credentialState {

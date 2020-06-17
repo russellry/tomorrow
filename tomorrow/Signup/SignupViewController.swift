@@ -10,6 +10,7 @@ import UIKit
 import AuthenticationServices
 import CryptoKit
 import Firebase
+import FBSDKLoginKit
 
 class SignupViewController: UIViewController {
     
@@ -24,20 +25,50 @@ class SignupViewController: UIViewController {
         super.viewDidLoad()
         setBackground(name: "onboard-bg")
         nameLabel.text = name
-        setupProviderLoginView()
+        setupAppleLoginView()
+        setupFBLoginView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         performExistingAccountSetupFlows()
     }
-    
+}
 
+extension SignupViewController: LoginButtonDelegate {
+    
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        
+        if AccessToken.current == nil {
+            
+            
+            
+        }
+                    
+        
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        <#code#>
+    }
+    
+    
 }
 
 extension SignupViewController: ASAuthorizationControllerDelegate {
     
-    func setupProviderLoginView() {
+    func setupFBLoginView() {
+        let fbLoginButton = FBLoginButton()
+        fbLoginButton.permissions = ["public_profile", "email"]
+        fbLoginButton.addTarget(self, action: #selector(handleAuthorizationFBButtonPress), for: .touchUpInside)
+        self.loginStackView.addSubview(fbLoginButton)
+    }
+    
+    @objc func handleAuthorizationFBButtonPress() {
+        //TODO: start fb flow?
+    }
+    
+    func setupAppleLoginView() {
         let authorizationButton = ASAuthorizationAppleIDButton()
         authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         self.loginStackView.addArrangedSubview(authorizationButton)
