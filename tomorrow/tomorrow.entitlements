@@ -6,5 +6,9 @@
 	<array>
 		<string>Default</string>
 	</array>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>https://tomorrow-a8631.firebaseapp.com/__/auth/handler</string>
+	</array>
 </dict>
 </plist>
