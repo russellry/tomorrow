@@ -38,18 +38,24 @@ class SignupViewController: UIViewController {
 extension SignupViewController: LoginButtonDelegate {
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        
-        if AccessToken.current == nil {
-            
-            
-            
+        if let error = error {
+            print(error.localizedDescription)
+            return
         }
-                    
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        Auth.auth().signIn(with: credential, completion: { (authResult, error) in
+            if let error = error {
+                print("Facebook authentication with Firebase error: ", error)
+                return
+            }
+            print("Login success!")
+        })
         
     }
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        <#code#>
+        print("logged out")
     }
     
     
@@ -59,9 +65,10 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
     
     func setupFBLoginView() {
         let fbLoginButton = FBLoginButton()
+        fbLoginButton.delegate = self
         fbLoginButton.permissions = ["public_profile", "email"]
         fbLoginButton.addTarget(self, action: #selector(handleAuthorizationFBButtonPress), for: .touchUpInside)
-        self.loginStackView.addSubview(fbLoginButton)
+        self.loginStackView.addArrangedSubview(fbLoginButton)
     }
     
     @objc func handleAuthorizationFBButtonPress() {
