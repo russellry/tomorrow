@@ -16,11 +16,10 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setBackground(name: "onboard-bg")
-        nameTextField.becomeFirstResponder()
         letsgoBtn.layer.cornerRadius = 8
         letsgoBtn.isEnabled = false
         nameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+//        setBackground(name: "onboard-bg") //TODO: this causes LAG.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -28,6 +27,10 @@ class OnboardingViewController: UIViewController {
             let targetController = segue.destination as! SignupViewController
             targetController.name = nameTextField.text!
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        nameTextField.becomeFirstResponder()
     }
     
     @objc func editingChanged(_ textField: UITextField) {

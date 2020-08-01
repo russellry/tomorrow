@@ -20,6 +20,7 @@ class SignupViewController: UIViewController {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var loginStackView: UIStackView!
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +45,26 @@ extension SignupViewController: LoginButtonDelegate {
         }
         
         let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
-        Auth.auth().signIn(with: credential, completion: { (authResult, error) in
+        Auth.auth().signIn(with: credential, completion: { [weak self] (authResult, error) in
             if let error = error {
                 print("Facebook authentication with Firebase error: ", error)
                 return
             }
-            print("Login success!")
+            
+            guard let self = self else {return}
+            self.defaults.set(self.name, forKey: "user")
+            self.performSegue(withIdentifier: "toHomeScreen", sender: nil)
         })
         
     }
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        print("logged out")
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
     
     
@@ -67,12 +76,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
         let fbLoginButton = FBLoginButton()
         fbLoginButton.delegate = self
         fbLoginButton.permissions = ["public_profile", "email"]
-        fbLoginButton.addTarget(self, action: #selector(handleAuthorizationFBButtonPress), for: .touchUpInside)
         self.loginStackView.addArrangedSubview(fbLoginButton)
-    }
-    
-    @objc func handleAuthorizationFBButtonPress() {
-        //TODO: start fb flow?
     }
     
     func setupAppleLoginView() {
@@ -116,7 +120,7 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                                                       idToken: idTokenString,
                                                       rawNonce: nonce)
             // Sign in with Firebase.
-            Auth.auth().signIn(with: credential) { (authResult, error) in
+            Auth.auth().signIn(with: credential) {[weak self] (authResult, error) in
                 if (error != nil) {
                     // Error. If error.code == .MissingOrInvalidNonce, make sure
                     // you're sending the SHA256-hashed nonce as a hex string with
@@ -124,8 +128,9 @@ extension SignupViewController: ASAuthorizationControllerDelegate {
                     print(error?.localizedDescription)
                     return
                 }
-                // User is signed in to Firebase with Apple.
-                // ...
+                guard let self = self else {return}
+                self.defaults.set(self.name, forKey: "user")
+                self.performSegue(withIdentifier: "toHomeScreen", sender: nil)
             }
         }
     }
@@ -204,16 +209,5 @@ extension SignupViewController: ASAuthorizationControllerPresentationContextProv
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
-    }
-}
-
-extension UIViewController {
-    func showSignupController() {
-        let storyboard = UIStoryboard(name: "SignupScreen", bundle: nil)
-        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "SignupViewController") as? SignupViewController {
-            loginViewController.modalPresentationStyle = .formSheet
-            loginViewController.isModalInPresentation = true
-            self.present(loginViewController, animated: true, completion: nil)
-        }
     }
 }
