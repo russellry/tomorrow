@@ -30,30 +30,17 @@ class PageViewController: UIPageViewController {
         myViewControllers.append(homeVC)
         myViewControllers.append(settingsVC)
         
-        if let firstViewController = myViewControllers.first {
-            setViewControllers([firstViewController],
-                               direction: .forward,
-                animated: true,
-                completion: { _ in
-                    
-                    let vc = firstViewController as! HomeViewController
-                    vc.homeDelegate = self
-             
-            })
+        guard let firstViewController = myViewControllers.first else {
+            return
         }
+        
+        setViewControllers([firstViewController],
+                           direction: .forward,
+            animated: true,
+            completion: nil)
         
         //TODO: when horizontally scrolling, it breaks when adding completion's delegate to homeviewcontrollerdelegate.
         
-    }
-}
-
-extension PageViewController: UIPageViewControllerDelegate {
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed {
-            if let currentViewController = pageViewController.viewControllers![0] as? HomeViewController {
-                currentViewController.homeDelegate = self
-            }
-        }
     }
 }
 
@@ -100,16 +87,4 @@ extension PageViewController: UIPageViewControllerDataSource {
                 
         return myViewControllers[nextIndex]
     }
-}
-
-extension PageViewController: HomeViewControllerDelegate {
-    func disableHorizontalScroll() {
-        dataSource = nil
-    }
-    
-    func enableHorizontalScroll() {
-        dataSource = self
-    }
-    
-    
 }
