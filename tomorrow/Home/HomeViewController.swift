@@ -11,47 +11,37 @@ import CoreData
 
 class HomeViewController: UIViewController {
     
-    var entries: [NSManagedObject] = []
-    
     var isEditingText = false
     
     let productCellId = "EntryTableViewCell"
     
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
+    private var entries = [Entry]()
     
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
-    private var fetchedRC: NSFetchedResultsController<Entry>!
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var fetchedRC: NSFetchedResultsController<Entry>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let request = Entry.fetchRequest() as NSFetchRequest<Entry>
-        let sort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
-        request.sortDescriptors = [sort]
-        do {
-            fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-            try fetchedRC.performFetch()
-            fetchedRC.delegate = self
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        setupNib()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
-        
         tableView.addGestureRecognizer(tap)
-        
         doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
         addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        
         navItem.setRightBarButton(addBtn, animated: true)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refresh()
+        setupNib()
+        
     }
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
@@ -60,8 +50,8 @@ class HomeViewController: UIViewController {
         if let indexPathForRow = path {
             tableView.selectRow(at: indexPathForRow, animated: true, scrollPosition: .top)
         } else {
-            save(name: "")
-            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            addEntry(name: "")
+            appDelegate.saveContext()
             tableView.reloadData()
         }
     }
@@ -115,6 +105,8 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             tableView.insertRows(at: [cellIndex], with: .fade)
+        case .delete:
+            tableView.deleteRows(at: [cellIndex], with: .fade)
         default:
             break
         }
@@ -132,34 +124,51 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //        guard let sections = fetchedRC.sections, let objs = sections[section].objects else {
+        //          return 0
+        //        }
+        //        return objs.count
         guard let entries = fetchedRC.fetchedObjects else { return 0 }
         return entries.count
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        //        return fetchedRC.sections?.count ?? 0
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let entry = fetchedRC.object(at: indexPath)
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: productCellId, for: indexPath) as! EntryTableViewCell
         cell.rowHeightDelegate = self
         cell.selectedCellDelegate = self
+        cell.selectNextPossibleCellDelegate = self
         cell.selectionStyle = .none
         cell.textView.text = entry.value(forKey: "task") as? String
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let entry = fetchedRC.object(at: indexPath)
+            context.delete(entry)
+            appDelegate.saveContext()
+            refresh()
+        }
     }
     
 }
 
 extension HomeViewController: SaveSelectedCellProtocol {
     func saveSelectedCell(_ cell: EntryTableViewCell, text: String){
-        if let thisIndexPath = tableView.indexPath(for: cell) {
-            let entry = fetchedRC.object(at: thisIndexPath)
+        if let index = tableView.indexPath(for: cell) {
+            let entry = fetchedRC.object(at: index)
             entry.task = text
         }
     }
 }
 
 extension HomeViewController: CellDynamicHeightProtocol {
-    
     func updateHeightOfRow(_ cell: EntryTableViewCell, _ textView: UITextView) {
         let size = textView.bounds.size
         let newSize = tableView.sizeThatFits(CGSize(width: size.width,
@@ -176,38 +185,44 @@ extension HomeViewController: CellDynamicHeightProtocol {
     }
 }
 
-extension HomeViewController {
-    func save(name: String) {
-        
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        // 1
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        // 2
-        let entity =
-            NSEntityDescription.entity(forEntityName: "Entry",
-                                       in: managedContext)!
-        
-        let entry = NSManagedObject(entity: entity,
-                                    insertInto: managedContext)
-        
-        // 3
-        entry.setValue(name, forKeyPath: "task")
-        entry.setValue(NSDate(), forKey: "dateCreated")
-        entry.setValue(false, forKey: "done")
-        
-        appDelegate.saveContext()
-        // 4
-        do {
-            try managedContext.save()
-            entries.append(entry)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+extension HomeViewController: SelectNextCellProtocol {
+    func selectNextPossibleCell(_ cell: EntryTableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            if entries.count < indexPath.row + 1 {
+                addEntry(name: "")
+                appDelegate.saveContext()
+                tableView.reloadData()
+            }
+            let index = IndexPath(row: indexPath.row + 1, section: 0)
+            tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+//            editCell(cell)
         }
     }
 }
+
+extension HomeViewController {
+    private func refresh() {
+        let request = Entry.fetchRequest() as NSFetchRequest<Entry>
+        let sort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
+        request.sortDescriptors = [sort]
+        do {
+            fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedRC.delegate = self
+            try fetchedRC.performFetch()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func addEntry(name: String) {
+        let entry = Entry(entity: Entry.entity() , insertInto: context)
+        
+        entry.task = name
+        entry.dateCreated = NSDate() as Date
+        entry.done = false
+        refresh()
+        appDelegate.saveContext()
+        tableView.reloadData()
+    }
+}
+

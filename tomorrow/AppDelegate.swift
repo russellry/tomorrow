@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         username = obtainedUsername
         FirebaseApp.configure()
 
-        window?.rootViewController = PageViewController()
+//        window?.rootViewController = PageViewController() //enable if you want pageviewcontroller.
+        window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
         window?.makeKeyAndVisible()
         
         return true

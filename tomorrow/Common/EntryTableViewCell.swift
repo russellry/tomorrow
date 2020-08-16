@@ -17,10 +17,15 @@ protocol SaveSelectedCellProtocol: class {
     func saveSelectedCell(_ cell: EntryTableViewCell, text: String)
 }
 
+protocol SelectNextCellProtocol: class {
+    func selectNextPossibleCell(_ cell: EntryTableViewCell)
+}
+
 class EntryTableViewCell: UITableViewCell {
     
     weak var rowHeightDelegate: CellDynamicHeightProtocol?
     weak var selectedCellDelegate: SaveSelectedCellProtocol?
+    weak var selectNextPossibleCellDelegate: SelectNextCellProtocol?
     
     @IBOutlet weak var textView: UITextView!
     
@@ -55,11 +60,13 @@ extension EntryTableViewCell: UITextViewDelegate {
         }
     }
     
-//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        if text == "\n" {
-//
-//            return false
-//        }
-//        return true
-//    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            if let delegate = selectNextPossibleCellDelegate {
+                delegate.selectNextPossibleCell(self)
+            }
+            return false
+        }
+        return true
+    }
 }
