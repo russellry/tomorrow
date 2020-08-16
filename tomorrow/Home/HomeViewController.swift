@@ -17,7 +17,6 @@ class HomeViewController: UIViewController {
     
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
-    private var entries = [Entry]()
     
     @IBOutlet weak var navItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
@@ -124,16 +123,11 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //        guard let sections = fetchedRC.sections, let objs = sections[section].objects else {
-        //          return 0
-        //        }
-        //        return objs.count
         guard let entries = fetchedRC.fetchedObjects else { return 0 }
         return entries.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        //        return fetchedRC.sections?.count ?? 0
         return 1
     }
     
@@ -157,6 +151,9 @@ extension HomeViewController: UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+    }
 }
 
 extension HomeViewController: SaveSelectedCellProtocol {
@@ -188,14 +185,18 @@ extension HomeViewController: CellDynamicHeightProtocol {
 extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCell(_ cell: EntryTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
-            if entries.count < indexPath.row + 1 {
+            guard let entriesCount = fetchedRC.fetchedObjects?.count else {return}
+            print("entriescount - \(entriesCount - 1); indexPathrow - \(indexPath.row + 1)")
+            if entriesCount - 1 < indexPath.row + 1 {
                 addEntry(name: "")
                 appDelegate.saveContext()
                 tableView.reloadData()
             }
             let index = IndexPath(row: indexPath.row + 1, section: 0)
+            print(index)
             tableView.selectRow(at: index, animated: true, scrollPosition: .none)
-//            editCell(cell)
+            let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
+            nextCell.textView.becomeFirstResponder()
         }
     }
 }
