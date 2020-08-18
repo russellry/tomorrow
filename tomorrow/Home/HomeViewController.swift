@@ -24,7 +24,7 @@ class HomeViewController: UIViewController {
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
@@ -49,9 +49,21 @@ class HomeViewController: UIViewController {
         if let indexPathForRow = path {
             tableView.selectRow(at: indexPathForRow, animated: true, scrollPosition: .top)
         } else {
-            addEntry(name: "")
-            appDelegate.saveContext()
-            tableView.reloadData()
+            //get last cell index
+            //if last cell is empty
+            //do not proceed
+            let lastRow = tableView.numberOfRows(inSection: 0) - 1
+            let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
+            if !lastCell.textView.text.isEmpty{
+                addEntry(name: "")
+                appDelegate.saveContext()
+                tableView.reloadData()
+                if let count = fetchedRC.fetchedObjects?.count {
+                    let index = IndexPath(row: count - 1, section: 0)
+                    let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
+                    selectNextPossibleCellTableTap(cell)
+                }
+            }
         }
     }
     
@@ -137,6 +149,7 @@ extension HomeViewController: UITableViewDataSource {
         cell.rowHeightDelegate = self
         cell.selectedCellDelegate = self
         cell.selectNextPossibleCellDelegate = self
+        cell.deleteEmptyCellDataDelegate = self
         cell.selectionStyle = .none
         cell.textView.text = entry.value(forKey: "task") as? String
         return cell
@@ -153,6 +166,19 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+    }
+}
+
+extension HomeViewController: DeleteEmptyCellDataProtocol {
+    func deleteEmptyCellData(_ cell: EntryTableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            let entry = fetchedRC.object(at: indexPath)
+            if entry.task.isEmpty {
+                context.delete(entry)
+                appDelegate.saveContext()
+                refresh()
+            }
+        }
     }
 }
 
@@ -186,14 +212,22 @@ extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCell(_ cell: EntryTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             guard let entriesCount = fetchedRC.fetchedObjects?.count else {return}
-            print("entriescount - \(entriesCount - 1); indexPathrow - \(indexPath.row + 1)")
             if entriesCount - 1 < indexPath.row + 1 {
                 addEntry(name: "")
                 appDelegate.saveContext()
                 tableView.reloadData()
             }
             let index = IndexPath(row: indexPath.row + 1, section: 0)
-            print(index)
+            
+            tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+            let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
+            nextCell.textView.becomeFirstResponder()
+        }
+    }
+    
+    func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {
+        if let indexPath = tableView.indexPath(for: cell) {
+            let index = IndexPath(row: indexPath.row, section: 0)
             tableView.selectRow(at: index, animated: true, scrollPosition: .none)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
@@ -211,7 +245,7 @@ extension HomeViewController {
             fetchedRC.delegate = self
             try fetchedRC.performFetch()
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            NSLog("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     

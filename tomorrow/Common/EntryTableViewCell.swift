@@ -21,11 +21,16 @@ protocol SelectNextCellProtocol: class {
     func selectNextPossibleCell(_ cell: EntryTableViewCell)
 }
 
+protocol DeleteEmptyCellDataProtocol: class {
+    func deleteEmptyCellData(_ cell: EntryTableViewCell)
+}
+
 class EntryTableViewCell: UITableViewCell {
     
     weak var rowHeightDelegate: CellDynamicHeightProtocol?
     weak var selectedCellDelegate: SaveSelectedCellProtocol?
     weak var selectNextPossibleCellDelegate: SelectNextCellProtocol?
+    weak var deleteEmptyCellDataDelegate: DeleteEmptyCellDataProtocol?
     
     @IBOutlet weak var textView: UITextView!
     
@@ -43,15 +48,19 @@ class EntryTableViewCell: UITableViewCell {
 extension EntryTableViewCell: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        NSLog("Begin Editing")
         if let delegate = rowHeightDelegate {
             delegate.updateHeightOfRow(self, textView)
         }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        NSLog("End Editing")
         if let delegate = selectedCellDelegate {
             delegate.saveSelectedCell(self, text: textView.text)
         }
+        
+        deleteEmptyCellDataDelegate?.deleteEmptyCellData(self)
     }
     
     func textViewDidChange(_ textView: UITextView) {
