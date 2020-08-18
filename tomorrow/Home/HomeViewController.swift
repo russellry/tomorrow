@@ -47,14 +47,22 @@ class HomeViewController: UIViewController {
         let location = tap.location(in: self.tableView)
         let path = self.tableView.indexPathForRow(at: location)
         if let indexPathForRow = path {
-            tableView.selectRow(at: indexPathForRow, animated: true, scrollPosition: .top)
+            tableView.selectRow(at: indexPathForRow, animated: false, scrollPosition: .bottom)
         } else {
-            //get last cell index
-            //if last cell is empty
-            //do not proceed
             let lastRow = tableView.numberOfRows(inSection: 0) - 1
-            let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
-            if !lastCell.textView.text.isEmpty{
+            if lastRow >= 0 {
+                let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
+                if !lastCell.textView.text.isEmpty{
+                    addEntry(name: "")
+                    appDelegate.saveContext()
+                    tableView.reloadData()
+                    if let count = fetchedRC.fetchedObjects?.count {
+                        let index = IndexPath(row: count - 1, section: 0)
+                        let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
+                        selectNextPossibleCellTableTap(cell)
+                    }
+                }
+            } else {
                 addEntry(name: "")
                 appDelegate.saveContext()
                 tableView.reloadData()
@@ -64,6 +72,7 @@ class HomeViewController: UIViewController {
                     selectNextPossibleCellTableTap(cell)
                 }
             }
+
         }
     }
     
@@ -131,7 +140,7 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 44
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,10 +171,6 @@ extension HomeViewController: UITableViewDataSource {
             appDelegate.saveContext()
             refresh()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
 }
 
@@ -202,7 +207,7 @@ extension HomeViewController: CellDynamicHeightProtocol {
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
             if let thisIndexPath = tableView.indexPath(for: cell) {
-                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: true)
+                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
             }
         }
     }
@@ -217,9 +222,10 @@ extension HomeViewController: SelectNextCellProtocol {
                 appDelegate.saveContext()
                 tableView.reloadData()
             }
+            
             let index = IndexPath(row: indexPath.row + 1, section: 0)
             
-            tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+            tableView.selectRow(at: index, animated: false, scrollPosition: .bottom)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }
@@ -228,7 +234,7 @@ extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let index = IndexPath(row: indexPath.row, section: 0)
-            tableView.selectRow(at: index, animated: true, scrollPosition: .none)
+            tableView.selectRow(at: index, animated: false, scrollPosition: .bottom)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }
