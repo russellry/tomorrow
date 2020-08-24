@@ -140,7 +140,7 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
