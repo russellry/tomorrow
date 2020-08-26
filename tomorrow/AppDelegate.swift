@@ -17,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let obtainedUsername = UserDefaults.standard.object(forKey: "user") as? String else {
 
             FirebaseApp.configure()
-            window?.rootViewController?.showWelcomeScreen()
+//            window?.rootViewController?.showWelcomeScreen()
+            window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
+            window?.makeKeyAndVisible() // toggle to show home screen
             return true
         }
         username = obtainedUsername

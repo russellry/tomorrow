@@ -24,7 +24,17 @@ class HomeViewController: UIViewController {
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
-        
+    
+    fileprivate func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    fileprivate func teardownNotificationCenter(){
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
@@ -32,20 +42,24 @@ class HomeViewController: UIViewController {
         doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
         addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
         navItem.setRightBarButton(addBtn, animated: true)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refresh()
         setupNib()
-        
+        setupNotificationCenter()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        teardownNotificationCenter()
+        super.viewWillDisappear(animated)
     }
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
         let location = tap.location(in: self.tableView)
         let path = self.tableView.indexPathForRow(at: location)
+        
         if let indexPathForRow = path {
             tableView.selectRow(at: indexPathForRow, animated: false, scrollPosition: .bottom)
         } else {
@@ -54,8 +68,6 @@ class HomeViewController: UIViewController {
                 let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
                 if !lastCell.textView.text.isEmpty{
                     addEntry(name: "")
-                    appDelegate.saveContext()
-                    tableView.reloadData()
                     if let count = fetchedRC.fetchedObjects?.count {
                         let index = IndexPath(row: count - 1, section: 0)
                         let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
@@ -64,29 +76,29 @@ class HomeViewController: UIViewController {
                 }
             } else {
                 addEntry(name: "")
-                appDelegate.saveContext()
-                tableView.reloadData()
                 if let count = fetchedRC.fetchedObjects?.count {
                     let index = IndexPath(row: count - 1, section: 0)
                     let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
                     selectNextPossibleCellTableTap(cell)
                 }
             }
-
+            
         }
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
-        
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            self.tableView.contentInset = contentInset
+            self.tableView.scrollIndicatorInsets = contentInset
         }
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
-        
         if ((notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue) != nil {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.tableView.contentInset = contentInset
+            self.tableView.scrollIndicatorInsets = contentInset
         }
     }
     
@@ -107,13 +119,15 @@ class HomeViewController: UIViewController {
     }
     
     func toggleBarButton(){
-        isEditingText = !isEditingText
-        
-        if isEditingText {
-            navItem.rightBarButtonItem = doneBtn
-        } else {
-            navItem.rightBarButtonItem = addBtn
-        }
+        NSLog(tableView.contentSize.debugDescription) //this is for the whole table
+        NSLog(tableView.visibleSize.debugDescription) //this is for the table on the screen
+        //        isEditingText = !isEditingText
+        //
+        //        if isEditingText {
+        //            navItem.rightBarButtonItem = doneBtn
+        //        } else {
+        //            navItem.rightBarButtonItem = addBtn
+        //        }
     }
 }
 
@@ -138,7 +152,6 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 extension HomeViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -207,7 +220,7 @@ extension HomeViewController: CellDynamicHeightProtocol {
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
             if let thisIndexPath = tableView.indexPath(for: cell) {
-                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: false)
+                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: true)
             }
         }
     }
@@ -219,8 +232,6 @@ extension HomeViewController: SelectNextCellProtocol {
             guard let entriesCount = fetchedRC.fetchedObjects?.count else {return}
             if entriesCount - 1 < indexPath.row + 1 {
                 addEntry(name: "")
-                appDelegate.saveContext()
-                tableView.reloadData()
             }
             
             let index = IndexPath(row: indexPath.row + 1, section: 0)
