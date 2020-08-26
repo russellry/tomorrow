@@ -274,7 +274,9 @@ extension HomeViewController {
         entry.done = false
         refresh()
         appDelegate.saveContext()
-        tableView.reloadData()
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: tableView.numberOfRows(inSection: 0), section: 0)], with: .fade)
+        tableView.endUpdates()
     }
 }
 
