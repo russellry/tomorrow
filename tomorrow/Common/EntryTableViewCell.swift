@@ -46,24 +46,20 @@ class EntryTableViewCell: UITableViewCell {
 }
 
 extension EntryTableViewCell: UITextViewDelegate {
-    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        NSLog("Begin Editing")
-        if let delegate = rowHeightDelegate {
-            delegate.updateHeightOfRow(self, textView)
-        }
+        NSLog("Start Editing")
+        // when it begins, whole cell should be visible. TODO: leave it for now
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        NSLog("End Editing")
-        if let delegate = selectedCellDelegate {
-            delegate.saveSelectedCell(self, text: textView.text)
-        }
-        
         deleteEmptyCellDataDelegate?.deleteEmptyCellData(self)
     }
     
     func textViewDidChange(_ textView: UITextView) {
+        if let delegate = selectedCellDelegate {
+            delegate.saveSelectedCell(self, text: textView.text)
+        }
+        
         if let delegate = rowHeightDelegate {
             delegate.updateHeightOfRow(self, textView)
         }

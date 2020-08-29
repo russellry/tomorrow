@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure()
 //            window?.rootViewController?.showWelcomeScreen()
             window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
+//            window?.rootViewController = UIStoryboard(name: "SettingsScreen", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController")
             window?.makeKeyAndVisible() // toggle to show home screen
             return true
         }
@@ -27,6 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        window?.rootViewController = PageViewController() //enable if you want pageviewcontroller.
         window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
+//        window?.rootViewController = UIStoryboard(name: "SettingsScreen", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController")
+
         window?.makeKeyAndVisible()
         
         return true

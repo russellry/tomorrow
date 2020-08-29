@@ -57,11 +57,13 @@ class HomeViewController: UIViewController {
     }
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
+        NSLog("table is tapped")
         let location = tap.location(in: self.tableView)
         let path = self.tableView.indexPathForRow(at: location)
         
         if let indexPathForRow = path {
-            tableView.selectRow(at: indexPathForRow, animated: false, scrollPosition: .bottom)
+            let cell = tableView.cellForRow(at: IndexPath(row: indexPathForRow.row, section: 0)) as! EntryTableViewCell
+            selectNextPossibleCellTableTap(cell)
         } else {
             let lastRow = tableView.numberOfRows(inSection: 0) - 1
             if lastRow >= 0 {
@@ -88,7 +90,7 @@ class HomeViewController: UIViewController {
     
     @objc func keyboardWillShow(_ notification:Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - (UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0), right: 0)
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
         }
@@ -107,6 +109,7 @@ class HomeViewController: UIViewController {
         self.tableView.register(nib, forCellReuseIdentifier: productCellId)
         self.tableView.tableFooterView = UIView()
         self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
     
     @objc func clickedDone() {
@@ -148,7 +151,6 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
 }
 
 extension HomeViewController: UITableViewDelegate {
-    
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -180,9 +182,7 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let entry = fetchedRC.object(at: indexPath)
-            context.delete(entry)
-            appDelegate.saveContext()
-            refresh()
+            deleteEntry(entry)
         }
     }
 }
@@ -192,9 +192,7 @@ extension HomeViewController: DeleteEmptyCellDataProtocol {
         if let indexPath = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: indexPath)
             if entry.task.isEmpty {
-                context.delete(entry)
-                appDelegate.saveContext()
-                refresh()
+                deleteEntry(entry)
             }
         }
     }
@@ -205,6 +203,7 @@ extension HomeViewController: SaveSelectedCellProtocol {
         if let index = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: index)
             entry.task = text
+            appDelegate.saveContext() //TODO: this is saving every time text changes - might cause performance issues
         }
     }
 }
@@ -212,16 +211,13 @@ extension HomeViewController: SaveSelectedCellProtocol {
 extension HomeViewController: CellDynamicHeightProtocol {
     func updateHeightOfRow(_ cell: EntryTableViewCell, _ textView: UITextView) {
         let size = textView.bounds.size
-        let newSize = tableView.sizeThatFits(CGSize(width: size.width,
-                                                    height: CGFloat.greatestFiniteMagnitude))
-        if size.height != newSize.height {
+        let newSize = textView.sizeThatFits(CGSize(width: size.width,
+                                                   height: CGFloat.greatestFiniteMagnitude))
+        if size.height.rounded(.down) != newSize.height.rounded(.down) {
             UIView.setAnimationsEnabled(false)
             tableView?.beginUpdates()
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            if let thisIndexPath = tableView.indexPath(for: cell) {
-                tableView.scrollToRow(at: thisIndexPath, at: .bottom, animated: true)
-            }
         }
     }
 }
@@ -236,7 +232,6 @@ extension HomeViewController: SelectNextCellProtocol {
             
             let index = IndexPath(row: indexPath.row + 1, section: 0)
             
-            tableView.selectRow(at: index, animated: false, scrollPosition: .bottom)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }
@@ -245,7 +240,6 @@ extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let index = IndexPath(row: indexPath.row, section: 0)
-            tableView.selectRow(at: index, animated: false, scrollPosition: .bottom)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }
@@ -277,6 +271,12 @@ extension HomeViewController {
         tableView.beginUpdates()
         tableView.insertRows(at: [IndexPath(row: tableView.numberOfRows(inSection: 0), section: 0)], with: .fade)
         tableView.endUpdates()
+    }
+    
+    fileprivate func deleteEntry(_ entry: Entry) {
+        context.delete(entry)
+        appDelegate.saveContext()
+        refresh()
     }
 }
 
