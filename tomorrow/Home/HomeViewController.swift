@@ -8,9 +8,9 @@
 
 import UIKit
 import CoreData
+import SideMenu
 
-class HomeViewController: UIViewController {
-    
+class HomeViewController: UIViewController, MenuControllerDelegate {
     var isEditingText = false
     
     let productCellId = "EntryTableViewCell"
@@ -18,7 +18,9 @@ class HomeViewController: UIViewController {
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
     
-    @IBOutlet weak var navItem: UINavigationItem!
+    private var sideMenu: SideMenuNavigationController?
+    private let settingsVC = SETTINGSVC
+    private let profileVC = PROFILEVC
     @IBOutlet weak var tableView: UITableView!
     
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -39,9 +41,34 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
         tableView.addGestureRecognizer(tap)
-        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
-        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        navItem.setRightBarButton(addBtn, animated: true)
+        //        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
+        //        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
+        //        navItem.setRightBarButton(addBtn, animated: true)
+        let menu = SideMenuViewController(with: SideMenuItem.allCases)
+        menu.delegate = self
+        sideMenu = SideMenuNavigationController(rootViewController: menu)
+        sideMenu?.leftSide = true
+        SideMenuManager.default.leftMenuNavigationController = sideMenu
+        SideMenuManager.default.addPanGestureToPresent(toView: view)
+        addChildControllers()
+        
+    }
+    
+    private func addChildControllers() {
+        addChild(profileVC)
+        addChild(settingsVC)
+        
+        view.addSubview(profileVC.view)
+        view.addSubview(settingsVC.view)
+        
+        profileVC.view.frame = view.bounds
+        settingsVC.view.frame = view.bounds
+        
+        profileVC.didMove(toParent: self)
+        settingsVC.didMove(toParent: self)
+        
+        profileVC.view.isHidden = true
+        settingsVC.view.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +82,29 @@ class HomeViewController: UIViewController {
         teardownNotificationCenter()
         super.viewWillDisappear(animated)
     }
+    
+    @IBAction func sideMenuTapped(_ sender: Any) {
+        present(sideMenu!, animated: true)
+    }
+    
+    func didSelectMenuItem(named: SideMenuItem) {
+        sideMenu?.dismiss(animated: true, completion: nil)
+        
+        title = named.rawValue
+        switch named {
+        case .profile:
+            profileVC.view.isHidden = false
+            settingsVC.view.isHidden = true
+        case .home:
+            profileVC.view.isHidden = true
+            settingsVC.view.isHidden = true
+        case .settings:
+            profileVC.view.isHidden = false
+            settingsVC.view.isHidden = true
+        }
+        
+    }
+    
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
         NSLog("table is tapped")
@@ -278,5 +328,7 @@ extension HomeViewController {
         appDelegate.saveContext()
         refresh()
     }
+    
+    
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0uD-Oh-cKa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="GpU-Mi-Bsi">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -15,12 +15,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2hN-ZE-oNl">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                                <items>
-                                    <navigationItem id="KZZ-OY-VTJ"/>
-                                </items>
-                            </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9MS-qX-Hej">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -32,24 +26,48 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="2hN-ZE-oNl" firstAttribute="top" secondItem="gE8-A1-eof" secondAttribute="top" id="EVT-0H-fUq"/>
-                            <constraint firstItem="2hN-ZE-oNl" firstAttribute="trailing" secondItem="gE8-A1-eof" secondAttribute="trailing" id="IlU-Hk-34O"/>
+                            <constraint firstItem="9MS-qX-Hej" firstAttribute="top" secondItem="gE8-A1-eof" secondAttribute="top" id="7px-mO-dc3"/>
                             <constraint firstItem="gE8-A1-eof" firstAttribute="trailing" secondItem="9MS-qX-Hej" secondAttribute="trailing" id="Nug-Mc-cVv"/>
-                            <constraint firstItem="9MS-qX-Hej" firstAttribute="top" secondItem="2hN-ZE-oNl" secondAttribute="bottom" id="gk5-Ni-cIB"/>
                             <constraint firstItem="gE8-A1-eof" firstAttribute="bottom" secondItem="9MS-qX-Hej" secondAttribute="bottom" id="oLc-Pr-e1L"/>
                             <constraint firstItem="9MS-qX-Hej" firstAttribute="leading" secondItem="gE8-A1-eof" secondAttribute="leading" id="sNt-eG-lRb"/>
-                            <constraint firstItem="2hN-ZE-oNl" firstAttribute="leading" secondItem="gE8-A1-eof" secondAttribute="leading" id="xJ7-Np-PGg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gE8-A1-eof"/>
                     </view>
+                    <navigationItem key="navigationItem" id="led-D6-bJt">
+                        <barButtonItem key="leftBarButtonItem" image="line.horizontal.3" catalog="system" id="CJK-Gn-ic6">
+                            <connections>
+                                <action selector="sideMenuTapped:" destination="0uD-Oh-cKa" id="LZt-0V-oqG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
-                        <outlet property="navItem" destination="KZZ-OY-VTJ" id="UUH-82-xxn"/>
                         <outlet property="tableView" destination="9MS-qX-Hej" id="xTc-iy-rHM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x66-ev-PmV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1020" y="59"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3iU-jj-n2J">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GpU-Mi-Bsi" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QlN-kH-qaX">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0uD-Oh-cKa" kind="relationship" relationship="rootViewController" id="3Z4-ec-KpS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Vw-7g-rxh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="276.81159420289856" y="58.928571428571423"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="line.horizontal.3" catalog="system" width="128" height="64"/>
+    </resources>
 </document>

@@ -28,8 +28,7 @@ class WelcomeViewController: UIViewController {
 
 extension UIViewController {
     func showWelcomeScreen() {
-        let storyboard = UIStoryboard(name: "WelcomeScreen", bundle: nil)
-        if let loginViewController = storyboard.instantiateViewController(withIdentifier: "WelcomeViewController") as? WelcomeViewController {
+        if let loginViewController = WELCOMEVC as? WelcomeViewController {
             loginViewController.modalPresentationStyle = .fullScreen
             self.present(loginViewController, animated: true, completion: nil)
         }

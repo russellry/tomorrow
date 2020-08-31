@@ -15,33 +15,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cYg-TH-krk">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="IJm-6A-kXp">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IJm-6A-kXp" id="x7u-9h-nQO">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CRAZY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ca-yM-hnH">
+                                <rect key="frame" x="179" y="437.5" width="56" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="cYg-TH-krk" firstAttribute="leading" secondItem="sll-Or-hbu" secondAttribute="leading" id="0j0-A3-g1P"/>
-                            <constraint firstItem="sll-Or-hbu" firstAttribute="trailing" secondItem="cYg-TH-krk" secondAttribute="trailing" id="8ob-Te-UUt"/>
-                            <constraint firstItem="sll-Or-hbu" firstAttribute="bottom" secondItem="cYg-TH-krk" secondAttribute="bottom" id="Eha-JO-p8t"/>
-                            <constraint firstItem="cYg-TH-krk" firstAttribute="top" secondItem="sll-Or-hbu" secondAttribute="top" id="qFf-Pf-FCX"/>
+                            <constraint firstItem="1Ca-yM-hnH" firstAttribute="centerY" secondItem="jxA-Ze-ir9" secondAttribute="centerY" id="DdD-CY-pfi"/>
+                            <constraint firstItem="1Ca-yM-hnH" firstAttribute="centerX" secondItem="jxA-Ze-ir9" secondAttribute="centerX" id="fLY-AL-cs2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sll-Or-hbu"/>
                     </view>
-                    <connections>
-                        <outlet property="tableView" destination="cYg-TH-krk" id="Qf9-2b-EMq"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CFS-kE-zDa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

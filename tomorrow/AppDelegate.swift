@@ -17,18 +17,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let obtainedUsername = UserDefaults.standard.object(forKey: "user") as? String else {
 
             FirebaseApp.configure()
-//            window?.rootViewController?.showWelcomeScreen()
-            window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
-//            window?.rootViewController = UIStoryboard(name: "SettingsScreen", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController")
-            window?.makeKeyAndVisible() // toggle to show home screen
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            let navController = UINavigationController(rootViewController: HOMEVC)
+            self.window?.rootViewController = navController
+            window?.makeKeyAndVisible()
             return true
         }
-        username = obtainedUsername
+        USERNAME = obtainedUsername
         FirebaseApp.configure()
 
-//        window?.rootViewController = PageViewController() //enable if you want pageviewcontroller.
-        window?.rootViewController = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
-//        window?.rootViewController = UIStoryboard(name: "SettingsScreen", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController")
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navController = UINavigationController(rootViewController: HOMEVC)
+        self.window?.rootViewController = navController
 
         window?.makeKeyAndVisible()
         

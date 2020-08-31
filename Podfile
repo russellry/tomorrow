@@ -9,4 +9,6 @@ target 'tomorrow' do
     pod 'FBSDKLoginKit'
     pod 'FirebaseUI'
     pod 'Firebase'
+    pod 'SideMenu'
+
 end

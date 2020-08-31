@@ -1,19 +1,22 @@
 //
-//  SettingsViewController.swift
+//  ProfileViewController.swift
 //  tomorrow
 //
-//  Created by Russell Ong on 27/6/20.
+//  Created by Russell Ong on 30/8/20.
 //  Copyright © 2020 trillion.unicorn. All rights reserved.
 //
 
 import UIKit
 
-class SettingsViewController: UIViewController{
-    
+class ProfileViewController: UIViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
+    
+
     /*
     // MARK: - Navigation
 
@@ -23,4 +26,5 @@ class SettingsViewController: UIViewController{
         // Pass the selected object to the new view controller.
     }
     */
+
 }
