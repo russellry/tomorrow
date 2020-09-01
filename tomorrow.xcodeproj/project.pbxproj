@@ -30,6 +30,8 @@
 		FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB5A135E24FAB7A900F9A3C0 /* ProfileScreen.storyboard */; };
 		FB5A136124FAB7E500F9A3C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A136024FAB7E500F9A3C0 /* ProfileViewController.swift */; };
 		FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */; };
+		FB5A136B24FE9F2E00F9A3C0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */; };
+		FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */; };
 		FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB8684B324E0153500C93440 /* EntryModel.xcdatamodeld */; };
 		FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */; };
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
@@ -66,6 +68,8 @@
 		FB5A135E24FAB7A900F9A3C0 /* ProfileScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileScreen.storyboard; sourceTree = "<group>"; };
 		FB5A136024FAB7E500F9A3C0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenuScreen.storyboard; sourceTree = "<group>"; };
 		FB8684B424E0153500C93440 /* EntryModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntryModel.xcdatamodel; sourceTree = "<group>"; };
 		FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */,
+				FB5A136B24FE9F2E00F9A3C0 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +93,7 @@
 		4F43A9A99535D1702FD148DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */,
 				270426510742B9BF4E230206 /* Pods_tomorrow.framework */,
 			);
 			name = Frameworks;
@@ -214,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */,
+				FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -305,6 +312,7 @@
 				FB36747C24992455003D2F1E /* HomeScreen.storyboard in Resources */,
 				FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */,
 				FB3674572495313B003D2F1E /* Assets.xcassets in Resources */,
+				FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */,
 				FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */,
 				FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */,
 			);

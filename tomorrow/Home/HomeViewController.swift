@@ -18,6 +18,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
     
+    let dimmingView = UIView()
+    
     private var sideMenu: SideMenuNavigationController?
     private let settingsVC = SETTINGSVC
     private let profileVC = PROFILEVC
@@ -44,14 +46,23 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         //        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
         //        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
         //        navItem.setRightBarButton(addBtn, animated: true)
-        let menu = SideMenuViewController(with: SideMenuItem.allCases)
+        setupSideMenu()
+        
+    }
+    
+    private func setupSideMenu(){
+        let menu = UIStoryboard(name: "SideMenuScreen", bundle: nil).instantiateViewController(identifier: "SideMenuViewController") as! SideMenuViewController
         menu.delegate = self
         sideMenu = SideMenuNavigationController(rootViewController: menu)
         sideMenu?.leftSide = true
         SideMenuManager.default.leftMenuNavigationController = sideMenu
         SideMenuManager.default.addPanGestureToPresent(toView: view)
+        sideMenu?.presentationStyle = .menuSlideIn
+        dimmingView.backgroundColor = .black
+        dimmingView.alpha = 0
+        view.addSubview(dimmingView)
+        dimmingView.frame = view.bounds
         addChildControllers()
-        
     }
     
     private func addChildControllers() {
@@ -84,22 +95,25 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @IBAction func sideMenuTapped(_ sender: Any) {
+        view.endEditing(true)
         present(sideMenu!, animated: true)
     }
     
-    func didSelectMenuItem(named: SideMenuItem) {
+    func didSelectMenuItem(row: Int) {
         sideMenu?.dismiss(animated: true, completion: nil)
         
-        title = named.rawValue
-        switch named {
-        case .profile:
+        switch row {
+        case 0:
             profileVC.view.isHidden = false
             settingsVC.view.isHidden = true
-        case .home:
+        case 1:
             profileVC.view.isHidden = true
             settingsVC.view.isHidden = true
-        case .settings:
-            profileVC.view.isHidden = false
+        case 2:
+            profileVC.view.isHidden = true
+            settingsVC.view.isHidden = false
+        default:
+            profileVC.view.isHidden = true
             settingsVC.view.isHidden = true
         }
         
@@ -107,7 +121,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
-        NSLog("table is tapped")
         let location = tap.location(in: self.tableView)
         let path = self.tableView.indexPathForRow(at: location)
         
@@ -172,8 +185,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     func toggleBarButton(){
-        NSLog(tableView.contentSize.debugDescription) //this is for the whole table
-        NSLog(tableView.visibleSize.debugDescription) //this is for the table on the screen
         //        isEditingText = !isEditingText
         //
         //        if isEditingText {
@@ -332,3 +343,16 @@ extension HomeViewController {
     
 }
 
+extension HomeViewController: SideMenuNavigationControllerDelegate {
+    func sideMenuWillAppear(menu: SideMenuNavigationController, animated: Bool) {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.dimmingView.alpha = 0.5
+        })
+    }
+    
+    func sideMenuWillDisappear(menu: SideMenuNavigationController, animated: Bool) {
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.dimmingView.alpha = 0
+        })
+    }
+}

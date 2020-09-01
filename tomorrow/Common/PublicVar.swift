@@ -14,4 +14,3 @@ public let HOMEVC = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateVie
 public let MENUVC = UIStoryboard(name: "MenuScreen", bundle: nil).instantiateViewController(withIdentifier: "MenuViewController")
 public let WELCOMEVC = UIStoryboard(name: "WelcomeScreen", bundle: nil).instantiateViewController(withIdentifier: "WelcomeViewController")
 public let PROFILEVC = UIStoryboard(name: "ProfileScreen", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController")
-public let SIDEMENUVC = UIStoryboard(name: "SideMenuScreen", bundle: nil).instantiateViewController(identifier: "SideMenuVC")
