@@ -53,6 +53,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     private func setupSideMenu(){
         let menu = UIStoryboard(name: "SideMenuScreen", bundle: nil).instantiateViewController(identifier: "SideMenuViewController") as! SideMenuViewController
+        navigationController?.navigationBar.isHidden = false
         menu.delegate = self
         sideMenu = SideMenuNavigationController(rootViewController: menu)
         sideMenu?.leftSide = true

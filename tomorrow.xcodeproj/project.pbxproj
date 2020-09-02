@@ -14,13 +14,9 @@
 		FB3674522495313A003D2F1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674512495313A003D2F1E /* ViewController.swift */; };
 		FB3674572495313B003D2F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB3674562495313B003D2F1E /* Assets.xcassets */; };
 		FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674582495313B003D2F1E /* LaunchScreen.storyboard */; };
-		FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */; };
-		FB36746524961AE4003D2F1E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746424961AE4003D2F1E /* OnboardingViewController.swift */; };
 		FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746724961B22003D2F1E /* UIViewController+Background.swift */; };
-		FB36746E2497A4AD003D2F1E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */; };
-		FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */; };
-		FB3674732497AFF7003D2F1E /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674722497AFF7003D2F1E /* SignupViewController.swift */; };
-		FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */; };
+		FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674722497AFF7003D2F1E /* WelcomeViewController.swift */; };
+		FB3674752497AFFF003D2F1E /* WelcomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674742497AFFF003D2F1E /* WelcomeScreen.storyboard */; };
 		FB3674772497BE70003D2F1E /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674762497BE70003D2F1E /* UITextField.swift */; };
 		FB36747A24992446003D2F1E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36747924992446003D2F1E /* HomeViewController.swift */; };
 		FB36747C24992455003D2F1E /* HomeScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB36747B24992455003D2F1E /* HomeScreen.storyboard */; };
@@ -51,13 +47,9 @@
 		FB3674562495313B003D2F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB3674592495313B003D2F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB36745B2495313C003D2F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = OnboardingScreen.storyboard; sourceTree = "<group>"; };
-		FB36746424961AE4003D2F1E /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		FB36746724961B22003D2F1E /* UIViewController+Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Background.swift"; sourceTree = "<group>"; };
-		FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WelcomeScreen.storyboard; sourceTree = "<group>"; };
-		FB3674722497AFF7003D2F1E /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SignupScreen.storyboard; sourceTree = "<group>"; };
+		FB3674722497AFF7003D2F1E /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		FB3674742497AFFF003D2F1E /* WelcomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WelcomeScreen.storyboard; sourceTree = "<group>"; };
 		FB3674762497BE70003D2F1E /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		FB36747924992446003D2F1E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FB36747B24992455003D2F1E /* HomeScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeScreen.storyboard; sourceTree = "<group>"; };
@@ -134,9 +126,7 @@
 				FB8684B624E036B000C93440 /* Data */,
 				FBA5757024A7347800D59A47 /* Settings */,
 				FB36747824992438003D2F1E /* Home */,
-				FB3674712497AFE9003D2F1E /* Signup */,
-				FB3674612496186A003D2F1E /* Onboarding */,
-				FB36746C2497A48A003D2F1E /* Welcome */,
+				FB3674712497AFE9003D2F1E /* Welcome */,
 				FB36746924979CC0003D2F1E /* Common */,
 				FB36746624961B0B003D2F1E /* Extensions */,
 				FB36744D2495313A003D2F1E /* AppDelegate.swift */,
@@ -149,15 +139,6 @@
 				FB8684B324E0153500C93440 /* EntryModel.xcdatamodeld */,
 			);
 			path = tomorrow;
-			sourceTree = "<group>";
-		};
-		FB3674612496186A003D2F1E /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				FB36746224961AD1003D2F1E /* OnboardingScreen.storyboard */,
-				FB36746424961AE4003D2F1E /* OnboardingViewController.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		FB36746624961B0B003D2F1E /* Extensions */ = {
@@ -180,22 +161,13 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		FB36746C2497A48A003D2F1E /* Welcome */ = {
+		FB3674712497AFE9003D2F1E /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
-				FB36746D2497A4AD003D2F1E /* WelcomeViewController.swift */,
-				FB36746F2497A4B6003D2F1E /* WelcomeScreen.storyboard */,
+				FB3674722497AFF7003D2F1E /* WelcomeViewController.swift */,
+				FB3674742497AFFF003D2F1E /* WelcomeScreen.storyboard */,
 			);
 			path = Welcome;
-			sourceTree = "<group>";
-		};
-		FB3674712497AFE9003D2F1E /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				FB3674722497AFF7003D2F1E /* SignupViewController.swift */,
-				FB3674742497AFFF003D2F1E /* SignupScreen.storyboard */,
-			);
-			path = Signup;
 			sourceTree = "<group>";
 		};
 		FB36747824992438003D2F1E /* Home */ = {
@@ -307,10 +279,8 @@
 				FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */,
 				FB2C01D724D560040093D16D /* EntryTableViewCell.xib in Resources */,
 				FBA5757224A7349000D59A47 /* SettingsScreen.storyboard in Resources */,
-				FB36746324961AD1003D2F1E /* OnboardingScreen.storyboard in Resources */,
-				FB3674752497AFFF003D2F1E /* SignupScreen.storyboard in Resources */,
+				FB3674752497AFFF003D2F1E /* WelcomeScreen.storyboard in Resources */,
 				FB36747C24992455003D2F1E /* HomeScreen.storyboard in Resources */,
-				FB3674702497A4B6003D2F1E /* WelcomeScreen.storyboard in Resources */,
 				FB3674572495313B003D2F1E /* Assets.xcassets in Resources */,
 				FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */,
 				FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */,
@@ -386,7 +356,7 @@
 			files = (
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
 				FB3674522495313A003D2F1E /* ViewController.swift in Sources */,
-				FB3674732497AFF7003D2F1E /* SignupViewController.swift in Sources */,
+				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
@@ -397,8 +367,6 @@
 				FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */,
 				FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */,
 				FB36747A24992446003D2F1E /* HomeViewController.swift in Sources */,
-				FB36746E2497A4AD003D2F1E /* WelcomeViewController.swift in Sources */,
-				FB36746524961AE4003D2F1E /* OnboardingViewController.swift in Sources */,
 				FB367484249AA245003D2F1E /* PublicVar.swift in Sources */,
 				FBA5757424A7349E00D59A47 /* SettingsViewController.swift in Sources */,
 			);
