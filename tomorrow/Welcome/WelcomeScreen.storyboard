@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--WelcomeViewController-->
+        <!--Welcome View Controller-->
         <scene sceneID="ioY-Bh-msw">
             <objects>
-                <viewController storyboardIdentifier="WelcomeViewController" title="WelcomeViewController" id="e5Q-pc-4i7" customClass="WelcomeViewController" customModule="tomorrow" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WelcomeViewController" id="e5Q-pc-4i7" customClass="WelcomeViewController" customModule="tomorrow" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="95L-9S-oV6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,7 +94,6 @@
         <!--Navigation Controller-->
         <scene sceneID="GmM-MF-bIn">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nzz-2a-96c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="O7g-tC-ZAd" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -106,6 +105,7 @@
                         <segue destination="e5Q-pc-4i7" kind="relationship" relationship="rootViewController" id="0DE-9x-WrG"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nzz-2a-96c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="82.608695652173921" y="150.66964285714286"/>
         </scene>

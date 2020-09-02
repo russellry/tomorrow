@@ -20,6 +20,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     let dimmingView = UIView()
     
+    @IBOutlet weak var navbar: UINavigationItem!
     private var sideMenu: SideMenuNavigationController?
     private let settingsVC = SETTINGSVC
     private let profileVC = PROFILEVC
@@ -43,9 +44,9 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         super.viewDidLoad()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
         tableView.addGestureRecognizer(tap)
-        //        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
-        //        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        //        navItem.setRightBarButton(addBtn, animated: true)
+        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
+        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
+        navbar.rightBarButtonItem = addBtn
         setupSideMenu()
         
     }
@@ -61,6 +62,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         dimmingView.backgroundColor = .black
         dimmingView.alpha = 0
         view.addSubview(dimmingView)
+        self.navigationController?.view.addSubview(dimmingView)
         dimmingView.frame = view.bounds
         addChildControllers()
     }

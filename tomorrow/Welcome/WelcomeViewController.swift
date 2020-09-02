@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//TODO: sign up logic should be in welcome.
 class WelcomeViewController: UIViewController {
     
     @IBOutlet weak var newBtn: UIButton!

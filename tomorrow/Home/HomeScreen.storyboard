@@ -41,6 +41,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="navbar" destination="led-D6-bJt" id="98m-ZW-sFY"/>
                         <outlet property="tableView" destination="9MS-qX-Hej" id="xTc-iy-rHM"/>
                     </connections>
                 </viewController>
