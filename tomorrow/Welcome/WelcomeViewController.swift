@@ -30,7 +30,7 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        performExistingAccountSetupFlows()
+//        performExistingAccountSetupFlows()
     }
 }
 
@@ -111,7 +111,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
             self.defaults.set(appleIDCredential.user, forKey: "userID")
             let email = appleIDCredential.email
             let givenName = appleIDCredential.fullName?.givenName
-            
+            saveUserInKeychain(appleIDCredential.user)
             /*
              useful for server side, the app can send identityToken and authorizationCode
              to the server for verification purpose

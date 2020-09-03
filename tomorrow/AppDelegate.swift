@@ -14,52 +14,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// - Tag: did_finish_launching
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        FirebaseApp.configure()
+
         if let appleID = UserDefaults.standard.string(forKey: "userID") {
             print("appleID is... \(appleID)")
             // get the login status of Apple sign in for the app
             // asynchronous
+            
             ASAuthorizationAppleIDProvider().getCredentialState(forUserID: appleID, completion: {
                 credentialState, error in
-                
-                switch(credentialState){
-                case .authorized:
-                    print("user remain logged in, proceed to another view")
-                    FirebaseApp.configure()
-                    self.window = UIWindow(frame: UIScreen.main.bounds)
-                    let navController = UINavigationController(rootViewController: HOMEVC)
-                    self.window?.rootViewController = navController
-                    self.window?.makeKeyAndVisible()
-                case .revoked:
-                    print("user logged in before but revoked")
-                    self.setupWelcomeScreen()
-
-                case .notFound:
-                    print("user haven't log in before")
-                    self.setupWelcomeScreen()
-
-                default:
-                    print("unknown state")
-                    self.setupWelcomeScreen()
-
+                DispatchQueue.main.async {
+                    switch(credentialState){
+                    case .authorized:
+                        print("user remain logged in, proceed to another view")
+                        self.setupHomeScreen()
+                    case .revoked:
+                        print("user logged in before but revoked")
+                        self.setupWelcomeScreen()
+                        
+                    case .notFound:
+                        print("user haven't log in before")
+                        self.setupWelcomeScreen()
+                        
+                    default:
+                        print("unknown state")
+                        self.setupWelcomeScreen()
+                        
+                    }
                 }
+                
             })
         }
-        NSLog("username is... \(USERNAME)")
-        print("There's no one logged in yet.")
-        setupWelcomeScreen()
-
-//        FirebaseApp.configure()
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//        let navController = UINavigationController(rootViewController: HOMEVC)
-//        self.window?.rootViewController = navController
-//        window?.makeKeyAndVisible()
-        
         return true
     }
     
+    fileprivate func setupHomeScreen(){
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        let navController = UINavigationController(rootViewController: HOMEVC)
+        self.window?.rootViewController = navController
+        self.window?.makeKeyAndVisible()
+    }
+    
     fileprivate func setupWelcomeScreen() {
-        FirebaseApp.configure()
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let navVC = UINavigationController(rootViewController: WELCOMEVC)
         self.window?.rootViewController = navVC
