@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-public var USERNAME = UserDefaults.standard.object(forKey: "user") as? String
+public var USERNAME = (UserDefaults.standard.object(forKey: "user") != nil) ? UserDefaults.standard.object(forKey: "user") : UserDefaults.standard.object(forKey: "applename")
 public let SETTINGSVC = UIStoryboard(name: "SettingsScreen", bundle: nil).instantiateViewController(withIdentifier: "SettingsViewController")
 public let HOMEVC = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController")
 public let MENUVC = UIStoryboard(name: "MenuScreen", bundle: nil).instantiateViewController(withIdentifier: "MenuViewController")

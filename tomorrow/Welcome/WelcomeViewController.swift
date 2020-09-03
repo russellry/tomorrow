@@ -14,7 +14,6 @@ import FBSDKLoginKit
 
 class WelcomeViewController: UIViewController {
     
-    var name = ""
     // Unhashed nonce.
     fileprivate var currentNonce: String?
     
@@ -24,7 +23,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        setBackground(name: "onboard-bg")
+        setBackground(name: "welcome-bg")
         setupAppleLoginView()
         setupFBLoginView()
     }
@@ -51,7 +50,7 @@ extension WelcomeViewController: LoginButtonDelegate {
             }
             
             guard let self = self else {return}
-            self.defaults.set(self.name, forKey: "user")
+            //            self.defaults.set(self.name, forKey: "user")
             self.navigationController?.pushViewController(HOMEVC, animated: true)
         })
         
@@ -86,6 +85,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
     
     func performExistingAccountSetupFlows() {
         // Prepare requests for both Apple ID and password providers.
+        #if !targetEnvironment(simulator)
         let requests = [ASAuthorizationAppleIDProvider().createRequest(),
                         ASAuthorizationPasswordProvider().createRequest()]
         
@@ -94,6 +94,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+        #endif
     }
     
     @objc func handleAuthorizationAppleIDButtonPress() {
@@ -102,21 +103,27 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
     
     /// - Tag: did_complete_authorization
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let nonce = currentNonce else {
+            fatalError("Invalid state: A login callback was received, but no login request was sent.")
+        }
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            // unique ID for each user, this uniqueID will always be returned
+            self.defaults.set(appleIDCredential.user, forKey: "userID")
+            let email = appleIDCredential.email
+            let givenName = appleIDCredential.fullName?.givenName
+            
+            /*
+             useful for server side, the app can send identityToken and authorizationCode
+             to the server for verification purpose
+             */
+            var idTokenString : String?
+            if let token = appleIDCredential.identityToken {
+                idTokenString = String(bytes: token, encoding: .utf8)
             }
-            guard let appleIDToken = appleIDCredential.identityToken else {
-                print("Unable to fetch identity token")
-                return
-            }
-            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
-                return
-            }
+
             // Initialize a Firebase credential.
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
-                                                      idToken: idTokenString,
+                                                      idToken: idTokenString!,
                                                       rawNonce: nonce)
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) {[weak self] (authResult, error) in
@@ -128,9 +135,9 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
                     return
                 }
                 guard let self = self else {return}
-                self.defaults.set(self.name, forKey: "user")
                 self.navigationController?.pushViewController(HOMEVC, animated: true)
             }
+            
         }
     }
     
@@ -193,10 +200,11 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
     
     private func saveUserInKeychain(_ userIdentifier: String) {
         do {
-            try KeychainItem(service: "com.example.apple-samplecode.juice", account: "userIdentifier").saveItem(userIdentifier)
+            try KeychainItem(service: "trillion.unicorn.tomorrow", account: "userIdentifier").saveItem(userIdentifier)
         } catch {
             print("Unable to save userIdentifier to keychain.")
         }
+        
     }
 }
 
@@ -207,6 +215,30 @@ extension WelcomeViewController: ASAuthorizationControllerPresentationContextPro
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         // Handle error.
-        print("Sign in with Apple errored: \(error)")
+        print("authorization error")
+        guard let error = error as? ASAuthorizationError else {
+            return
+        }
+        
+        switch error.code {
+        case .canceled:
+            // user press "cancel" during the login prompt
+            print("Canceled")
+        case .unknown:
+            // user didn't login their Apple ID on the device
+            print("Unknown")
+        case .invalidResponse:
+            // invalid response received from the login
+            print("Invalid Respone")
+        case .notHandled:
+            // authorization request not handled, maybe internet failure during login
+            print("Not handled")
+        case .failed:
+            // authorization failed
+            print("Failed")
+        @unknown default:
+            print("Default")
+        }
+        
     }
 }
