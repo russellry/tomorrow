@@ -30,29 +30,50 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        performExistingAccountSetupFlows()
     }
 }
 
 extension WelcomeViewController: LoginButtonDelegate {
-    
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         if let error = error {
             print(error.localizedDescription)
             return
         }
         
-        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        guard let token = AccessToken.current?.tokenString else {
+            print("Facebook token error - user probably cancelled action")
+            return
+        }
+        
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
         Auth.auth().signIn(with: credential, completion: { [weak self] (authResult, error) in
             if let error = error {
                 print("Facebook authentication with Firebase error: ", error)
                 return
             }
             
+            let changeRequest = authResult?.user.createProfileChangeRequest()
+            changeRequest?.commitChanges(completion: { (error) in
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    let profileName = Auth.auth().currentUser?.displayName ?? ""
+                    self?.defaults.set(profileName, forKey: "fbName")
+                    print("Updated display name: \(profileName)")
+                }
+            })
+            
             guard let self = self else {return}
-            //            self.defaults.set(self.name, forKey: "user")
             self.navigationController?.pushViewController(HOMEVC, animated: true)
         })
+        
+        
         
     }
     
@@ -75,6 +96,10 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
         fbLoginButton.delegate = self
         fbLoginButton.permissions = ["public_profile", "email"]
         self.loginStackView.addArrangedSubview(fbLoginButton)
+        
+        NotificationCenter.default.addObserver(forName: .AccessTokenDidChange, object: nil, queue: OperationQueue.main) { (notification) in
+            print("FB Access Token: \(String(describing: AccessToken.current?.tokenString))")
+        }
     }
     
     func setupAppleLoginView() {
@@ -83,57 +108,60 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
         self.loginStackView.addArrangedSubview(authorizationButton)
     }
     
-    func performExistingAccountSetupFlows() {
-        // Prepare requests for both Apple ID and password providers.
-        #if !targetEnvironment(simulator)
-        let requests = [ASAuthorizationAppleIDProvider().createRequest(),
-                        ASAuthorizationPasswordProvider().createRequest()]
+    @objc func handleAuthorizationAppleIDButtonPress() {
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
         
-        // Create an authorization controller with the given requests.
-        let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
-        #endif
-    }
-    
-    @objc func handleAuthorizationAppleIDButtonPress() {
-        startSignInWithAppleFlow()
     }
     
     /// - Tag: did_complete_authorization
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        guard let nonce = currentNonce else {
-            fatalError("Invalid state: A login callback was received, but no login request was sent.")
-        }
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             // unique ID for each user, this uniqueID will always be returned
-            self.defaults.set(appleIDCredential.user, forKey: "userID")
-            let email = appleIDCredential.email
-            let givenName = appleIDCredential.fullName?.givenName
+            self.defaults.set(appleIDCredential.user, forKey: "appleAuthorizedID")
             saveUserInKeychain(appleIDCredential.user)
-            /*
-             useful for server side, the app can send identityToken and authorizationCode
-             to the server for verification purpose
-             */
+            
+            guard let nonce = currentNonce else {
+                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+            }
+            
             var idTokenString : String?
             if let token = appleIDCredential.identityToken {
                 idTokenString = String(bytes: token, encoding: .utf8)
             }
-
+            
             // Initialize a Firebase credential.
             let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                       idToken: idTokenString!,
                                                       rawNonce: nonce)
             // Sign in with Firebase.
             Auth.auth().signIn(with: credential) {[weak self] (authResult, error) in
-                if (error != nil) {
-                    // Error. If error.code == .MissingOrInvalidNonce, make sure
-                    // you're sending the SHA256-hashed nonce as a hex string with
-                    // your request to Apple.
-                    print(error?.localizedDescription)
-                    return
-                }
+                // Mak a request to set user's display name on Firebase
+                let changeRequest = authResult?.user.createProfileChangeRequest()
+                changeRequest?.displayName = appleIDCredential.fullName?.givenName
+                changeRequest?.commitChanges(completion: { (error) in
+                    
+                    if let error = error {
+                        print(error.localizedDescription)
+                        return
+                    }
+                    
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        let profileName = Auth.auth().currentUser?.displayName ?? ""
+                        self?.defaults.set(profileName, forKey: "appleName")
+                        print("Updated display name: \(profileName)")
+                    }
+                })
                 guard let self = self else {return}
                 self.navigationController?.pushViewController(HOMEVC, animated: true)
             }
@@ -172,20 +200,6 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
         }
         
         return result
-    }
-    
-    func startSignInWithAppleFlow() {
-        let nonce = randomNonceString()
-        currentNonce = nonce
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        request.nonce = sha256(nonce)
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
     }
     
     private func sha256(_ input: String) -> String {

@@ -9,18 +9,20 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    //TODO: try with physical device!!!
     var window: UIWindow?
     
     /// - Tag: did_finish_launching
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
+        
+        if let user = Auth.auth().currentUser {
+            USERNAME = user.displayName
+        }
+        
+        NSLog("\(USERNAME)")
 
-        if let appleID = UserDefaults.standard.string(forKey: "userID") {
-            print("appleID is... \(appleID)")
-            // get the login status of Apple sign in for the app
-            // asynchronous
-            
+        if let appleID = UserDefaults.standard.string(forKey: "appleAuthorizedID") {
+            //TODO: avoid using main thread.
             ASAuthorizationAppleIDProvider().getCredentialState(forUserID: appleID, completion: {
                 credentialState, error in
                 DispatchQueue.main.async {
@@ -45,6 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
             })
         }
+        
+        if let fbID = UserDefaults.standard.string(forKey: "facebookName") {
+            setupHomeScreen()
+        } else {
+            setupWelcomeScreen()
+        }
+        
+        
         return true
     }
     
