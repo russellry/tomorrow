@@ -22,7 +22,6 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
         setBackground(name: "welcome-bg")
         setupAppleLoginView()
         setupFBLoginView()
@@ -30,6 +29,7 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.navigationBar.isHidden = true
     }
 }
 
@@ -70,6 +70,7 @@ extension WelcomeViewController: LoginButtonDelegate {
             })
             
             guard let self = self else {return}
+            self.defaults.set(true, forKey: "isUserLoggedIn")
             self.navigationController?.pushViewController(HOMEVC, animated: true)
         })
         
@@ -163,6 +164,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
                     }
                 })
                 guard let self = self else {return}
+                self.defaults.set(true, forKey: "isUserLoggedIn")
                 self.navigationController?.pushViewController(HOMEVC, animated: true)
             }
             

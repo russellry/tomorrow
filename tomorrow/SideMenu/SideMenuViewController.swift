@@ -12,6 +12,8 @@ enum SideMenuItem: String, CaseIterable {
 
 class SideMenuViewController: UITableViewController {
 
+    @IBOutlet weak var profileName: UILabel!
+    
     public var delegate: MenuControllerDelegate?
 
     private let color = UIColor(red: 33/255.0,
@@ -22,6 +24,7 @@ class SideMenuViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        profileName.text = (USERNAME as? String) ?? "Name"
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

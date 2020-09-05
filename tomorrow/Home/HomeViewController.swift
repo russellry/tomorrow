@@ -48,8 +48,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
         navbar.rightBarButtonItem = addBtn
         setupSideMenu()
-        
     }
+    
     
     private func setupSideMenu(){
         let menu = UIStoryboard(name: "SideMenuScreen", bundle: nil).instantiateViewController(identifier: "SideMenuViewController") as! SideMenuViewController
@@ -87,6 +87,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
         refresh()
         setupNib()
         setupNotificationCenter()

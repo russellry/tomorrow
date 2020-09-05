@@ -112,6 +112,9 @@
                             <outlet property="delegate" destination="K0S-iK-KYZ" id="BMl-R3-MVt"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="onTapLogout" destination="sdh-bQ-Guu" id="CTM-lQ-mPY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QHh-U8-QTk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

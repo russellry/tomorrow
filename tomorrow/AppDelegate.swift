@@ -15,46 +15,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
+        //TODO: have a login state management: eg: with userdefaults for loginState, at first always false, after login true -> go to home screen, if false set by logout or first time entry -> go to welcome screen
+        
+        let isLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
+        isLoggedIn ? setupHomeScreen() : setupWelcomeScreen()
+        print(isLoggedIn)
+        
         if let user = Auth.auth().currentUser {
             USERNAME = user.displayName
         }
         
-        NSLog("\(USERNAME)")
-
-        if let appleID = UserDefaults.standard.string(forKey: "appleAuthorizedID") {
-            //TODO: avoid using main thread.
-            ASAuthorizationAppleIDProvider().getCredentialState(forUserID: appleID, completion: {
-                credentialState, error in
-                DispatchQueue.main.async {
-                    switch(credentialState){
-                    case .authorized:
-                        print("user remain logged in, proceed to another view")
-                        self.setupHomeScreen()
-                    case .revoked:
-                        print("user logged in before but revoked")
-                        self.setupWelcomeScreen()
-                        
-                    case .notFound:
-                        print("user haven't log in before")
-                        self.setupWelcomeScreen()
-                        
-                    default:
-                        print("unknown state")
-                        self.setupWelcomeScreen()
-                        
-                    }
-                }
-                
-            })
-        }
+        NSLog("*****Username is ... \(USERNAME)")
         
-        if let fbID = UserDefaults.standard.string(forKey: "facebookName") {
-            setupHomeScreen()
-        } else {
-            setupWelcomeScreen()
-        }
-        
-        
+//        if let appleID = UserDefaults.standard.string(forKey: "appleAuthorizedID") {
+//            //TODO: avoid using main thread.
+//            ASAuthorizationAppleIDProvider().getCredentialState(forUserID: appleID, completion: {
+//                credentialState, error in
+//                DispatchQueue.main.async {
+//                    switch(credentialState){
+//                    case .authorized:
+//                        print("user remain logged in, proceed to another view")
+//                        self.setupHomeScreen()
+//                    case .revoked:
+//                        print("user logged in before but revoked")
+//                        self.setupWelcomeScreen()
+//
+//                    case .notFound:
+//                        print("user haven't log in before")
+//                        self.setupWelcomeScreen()
+//
+//                    default:
+//                        print("unknown state")
+//                        self.setupWelcomeScreen()
+//
+//                    }
+//                }
+//
+//            })
+//        } else {
+//            if let fbID = UserDefaults.standard.string(forKey: "fbName") {
+//                USERNAME = fbID
+//                setupHomeScreen()
+//            } else {
+//                setupWelcomeScreen()
+//            }
+//        }
         return true
     }
     
