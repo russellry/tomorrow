@@ -34,7 +34,9 @@ class WelcomeViewController: UIViewController {
 }
 
 extension WelcomeViewController: LoginButtonDelegate {
+    
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        
         if let error = error {
             print(error.localizedDescription)
             return

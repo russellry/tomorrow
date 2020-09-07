@@ -15,20 +15,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="brainstorm what to add here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qs-hh-dMl">
-                                <rect key="frame" x="98.5" y="437.5" width="217" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxq-Wr-SLl" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="44" width="414" height="491"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="7Qs-hh-dMl" firstAttribute="centerY" secondItem="Bl0-wX-nXF" secondAttribute="centerY" id="e2a-QB-6Fv"/>
-                            <constraint firstItem="7Qs-hh-dMl" firstAttribute="centerX" secondItem="Bl0-wX-nXF" secondAttribute="centerX" id="ee5-XG-cQF"/>
+                            <constraint firstItem="zxq-Wr-SLl" firstAttribute="leading" secondItem="b8Q-3J-zQ6" secondAttribute="leading" id="Sa8-7x-ouJ"/>
+                            <constraint firstItem="zxq-Wr-SLl" firstAttribute="top" secondItem="b8Q-3J-zQ6" secondAttribute="top" id="aFL-64-hxB"/>
+                            <constraint firstItem="b8Q-3J-zQ6" firstAttribute="trailing" secondItem="zxq-Wr-SLl" secondAttribute="trailing" id="p6A-gu-HHL"/>
+                            <constraint firstItem="zxq-Wr-SLl" firstAttribute="height" secondItem="b8Q-3J-zQ6" secondAttribute="height" multiplier="0.6" id="zdj-tr-jFv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b8Q-3J-zQ6"/>
                     </view>
+                    <connections>
+                        <outlet property="calendarView" destination="zxq-Wr-SLl" id="6S2-XU-8kl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ECD-3c-kfv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

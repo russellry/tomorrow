@@ -13,8 +13,6 @@ import FBSDKLoginKit
 class SettingsViewController: UITableViewController{
 
     @IBOutlet weak var onTapLogout: UITableViewCell!
-    
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,19 +25,10 @@ class SettingsViewController: UITableViewController{
         NSLog("Logout Tapped")
         let fbLoginManager = LoginManager()
         fbLoginManager.logOut()
-        appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+        AppDelegate.shared.window = UIWindow(frame: UIScreen.main.bounds)
         let navVC = UINavigationController(rootViewController: WELCOMEVC)
-        appDelegate.window?.rootViewController = navVC
-        appDelegate.window?.makeKeyAndVisible()
+        AppDelegate.shared.window?.rootViewController = navVC
+        AppDelegate.shared.window?.makeKeyAndVisible()
+        //delegate call home view controller to hide the other views?
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }

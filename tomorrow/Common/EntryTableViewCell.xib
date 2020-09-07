@@ -16,25 +16,44 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHf-5Z-mjk">
+                        <rect key="frame" x="8" y="7.5" width="30" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="XBO-GP-hMj"/>
+                            <constraint firstAttribute="height" constant="30" id="vBL-ZW-KOp"/>
+                            <constraint firstAttribute="width" secondItem="XHf-5Z-mjk" secondAttribute="height" multiplier="1:1" id="xe1-po-jeK"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="circle" catalog="system"/>
+                        <connections>
+                            <action selector="onTapCheckbox:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2Pi-uJ-dey"/>
+                        </connections>
+                    </button>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Enter text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NT3-9o-MS8">
-                        <rect key="frame" x="8" y="4" width="304" height="36"/>
+                        <rect key="frame" x="42" y="4" width="274" height="36"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                     </textView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="NT3-9o-MS8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Blb-M0-sl0"/>
-                    <constraint firstAttribute="trailing" secondItem="NT3-9o-MS8" secondAttribute="trailing" constant="8" id="FZy-qR-BsD"/>
+                    <constraint firstItem="XHf-5Z-mjk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="4wM-5e-Xs6"/>
+                    <constraint firstItem="NT3-9o-MS8" firstAttribute="leading" secondItem="XHf-5Z-mjk" secondAttribute="trailing" constant="4" id="KaO-X7-TdM"/>
                     <constraint firstAttribute="bottom" secondItem="NT3-9o-MS8" secondAttribute="bottom" constant="4" id="M1c-z8-Kur"/>
+                    <constraint firstAttribute="trailing" secondItem="NT3-9o-MS8" secondAttribute="trailing" constant="4" id="Uci-bx-OYq"/>
+                    <constraint firstItem="XHf-5Z-mjk" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dZG-Lz-CrW"/>
                     <constraint firstItem="NT3-9o-MS8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="j5W-Zx-xyB"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="checkbox" destination="XHf-5Z-mjk" id="vcY-c3-pKw"/>
                 <outlet property="textView" destination="NT3-9o-MS8" id="5DY-PV-D8n"/>
             </connections>
-            <point key="canvasLocation" x="91" y="186"/>
+            <point key="canvasLocation" x="89.599999999999994" y="185.30734632683661"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="circle" catalog="system" width="128" height="121"/>
+    </resources>
 </document>

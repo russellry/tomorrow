@@ -10,5 +10,5 @@ target 'tomorrow' do
     pod 'FirebaseUI'
     pod 'Firebase'
     pod 'SideMenu'
-
+    pod 'FSCalendar'
 end

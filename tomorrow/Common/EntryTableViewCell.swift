@@ -25,13 +25,19 @@ protocol DeleteEmptyCellDataProtocol: class {
     func deleteEmptyCellData(_ cell: EntryTableViewCell)
 }
 
+protocol TapCheckboxProtocol: class {
+    func selectCheckbox(_ cell: EntryTableViewCell)
+}
+
 class EntryTableViewCell: UITableViewCell {
     
     weak var rowHeightDelegate: CellDynamicHeightProtocol?
     weak var selectedCellDelegate: SaveSelectedCellProtocol?
     weak var selectNextPossibleCellDelegate: SelectNextCellProtocol?
     weak var deleteEmptyCellDataDelegate: DeleteEmptyCellDataProtocol?
+    weak var selectCheckboxDelegate: TapCheckboxProtocol?
     
+    @IBOutlet weak var checkbox: UIButton!
     @IBOutlet weak var textView: UITextView!
     
     override func awakeFromNib() {
@@ -43,6 +49,17 @@ class EntryTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    @IBAction func onTapCheckbox(_ sender: Any) {
+        selectCheckboxDelegate?.selectCheckbox(self)
+    }
+    
+    func setCheckboxImage(entry: Entry) {
+        if entry.done {
+            self.checkbox.setBackgroundImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
+        } else {
+            self.checkbox.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+        }
+    }
 }
 
 extension EntryTableViewCell: UITextViewDelegate {

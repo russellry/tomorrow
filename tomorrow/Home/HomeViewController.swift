@@ -22,8 +22,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     @IBOutlet weak var navbar: UINavigationItem!
     private var sideMenu: SideMenuNavigationController?
-    private let settingsVC = SETTINGSVC
-    private let profileVC = PROFILEVC
+    private let settingsVC = SETTINGSVC as! SettingsViewController
+    private let profileVC = PROFILEVC as! ProfileViewController
     @IBOutlet weak var tableView: UITableView!
     
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -42,12 +42,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
-        tableView.addGestureRecognizer(tap)
-        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
-        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        navbar.rightBarButtonItem = addBtn
-        setupSideMenu()
     }
     
     
@@ -87,14 +81,22 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NSLog("appearing")
         navigationController?.navigationBar.isHidden = false
         refresh()
         setupNib()
         setupNotificationCenter()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
+        tableView.addGestureRecognizer(tap)
+        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
+        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
+        navbar.rightBarButtonItem = addBtn
+        setupSideMenu()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         teardownNotificationCenter()
+        NSLog("DISappearing")
         super.viewWillDisappear(animated)
     }
     
@@ -218,6 +220,7 @@ extension HomeViewController: NSFetchedResultsControllerDelegate {
 extension HomeViewController: UITableViewDelegate {
 }
 
+//MARK: - Tableview Data source
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -239,7 +242,11 @@ extension HomeViewController: UITableViewDataSource {
         cell.selectedCellDelegate = self
         cell.selectNextPossibleCellDelegate = self
         cell.deleteEmptyCellDataDelegate = self
+        cell.selectCheckboxDelegate = self
         cell.selectionStyle = .none
+        
+        cell.setCheckboxImage(entry: entry)
+        
         cell.textView.text = entry.value(forKey: "task") as? String
         return cell
     }
@@ -248,6 +255,22 @@ extension HomeViewController: UITableViewDataSource {
         if editingStyle == .delete {
             let entry = fetchedRC.object(at: indexPath)
             deleteEntry(entry)
+        }
+    }
+}
+
+extension HomeViewController: TapCheckboxProtocol {
+    func selectCheckbox(_ cell: EntryTableViewCell) {
+        if let index = tableView.indexPath(for: cell) {
+            let entry = fetchedRC.object(at: index)
+            entry.done = !entry.done
+            print(entry.done)
+            if entry.done {
+                cell.checkbox.setBackgroundImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
+            } else {
+                cell.checkbox.setBackgroundImage(UIImage(systemName: "circle"), for: .normal)
+            }
+            appDelegate.saveContext()
         }
     }
 }
@@ -269,6 +292,7 @@ extension HomeViewController: SaveSelectedCellProtocol {
             let entry = fetchedRC.object(at: index)
             entry.task = text
             appDelegate.saveContext() //TODO: this is saving every time text changes - might cause performance issues
+            profileVC.updateEntriesDelegate?.updateEntries()
         }
     }
 }
@@ -311,6 +335,7 @@ extension HomeViewController: SelectNextCellProtocol {
     }
 }
 
+//MARK: - Handle Entries
 extension HomeViewController {
     private func refresh() {
         let request = Entry.fetchRequest() as NSFetchRequest<Entry>

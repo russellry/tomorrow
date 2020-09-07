@@ -11,7 +11,6 @@
 		FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2C01D424D560030093D16D /* EntryTableViewCell.swift */; };
 		FB2C01D724D560040093D16D /* EntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2C01D524D560040093D16D /* EntryTableViewCell.xib */; };
 		FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36744D2495313A003D2F1E /* AppDelegate.swift */; };
-		FB3674522495313A003D2F1E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3674512495313A003D2F1E /* ViewController.swift */; };
 		FB3674572495313B003D2F1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB3674562495313B003D2F1E /* Assets.xcassets */; };
 		FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB3674582495313B003D2F1E /* LaunchScreen.storyboard */; };
 		FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36746724961B22003D2F1E /* UIViewController+Background.swift */; };
@@ -28,6 +27,7 @@
 		FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */; };
 		FB5A136B24FE9F2E00F9A3C0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */; };
 		FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */; };
+		FB5A13792503B20D00F9A3C0 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */; };
 		FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB8684B324E0153500C93440 /* EntryModel.xcdatamodeld */; };
 		FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */; };
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
@@ -43,7 +43,6 @@
 		FB2C01D524D560040093D16D /* EntryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTableViewCell.xib; sourceTree = "<group>"; };
 		FB36744A2495313A003D2F1E /* tomorrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomorrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB36744D2495313A003D2F1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FB3674512495313A003D2F1E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FB3674562495313B003D2F1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB3674592495313B003D2F1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB36745B2495313C003D2F1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenuScreen.storyboard; sourceTree = "<group>"; };
+		FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extension.swift"; sourceTree = "<group>"; };
 		FB8684B424E0153500C93440 /* EntryModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntryModel.xcdatamodel; sourceTree = "<group>"; };
 		FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -130,7 +130,6 @@
 				FB36746924979CC0003D2F1E /* Common */,
 				FB36746624961B0B003D2F1E /* Extensions */,
 				FB36744D2495313A003D2F1E /* AppDelegate.swift */,
-				FB3674512495313A003D2F1E /* ViewController.swift */,
 				FB3674562495313B003D2F1E /* Assets.xcassets */,
 				FB3674582495313B003D2F1E /* LaunchScreen.storyboard */,
 				FB36745B2495313C003D2F1E /* Info.plist */,
@@ -157,6 +156,7 @@
 				FB367483249AA245003D2F1E /* PublicVar.swift */,
 				FB2C01D424D560030093D16D /* EntryTableViewCell.swift */,
 				FB2C01D524D560040093D16D /* EntryTableViewCell.xib */,
+				FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -355,7 +355,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
-				FB3674522495313A003D2F1E /* ViewController.swift in Sources */,
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
@@ -364,6 +363,7 @@
 				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,
 				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,
 				FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */,
+				FB5A13792503B20D00F9A3C0 /* AppDelegate+Extension.swift in Sources */,
 				FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */,
 				FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */,
 				FB36747A24992446003D2F1E /* HomeViewController.swift in Sources */,
