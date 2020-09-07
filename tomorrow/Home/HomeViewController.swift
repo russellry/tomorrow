@@ -52,7 +52,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         sideMenu = SideMenuNavigationController(rootViewController: menu)
         sideMenu?.leftSide = true
         SideMenuManager.default.leftMenuNavigationController = sideMenu
-        SideMenuManager.default.addPanGestureToPresent(toView: view)
+        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: view)
         sideMenu?.presentationStyle = .menuSlideIn
         dimmingView.backgroundColor = .black
         dimmingView.alpha = 0
