@@ -15,33 +15,75 @@ protocol EntryChangeDelegate: class {
 }
 
 class ProfileViewController: UIViewController, EntryChangeDelegate {
-    func updateEntries() {
-        refresh()
-        debugPrint(fetchedRC.fetchedObjects)
-    }
-
-    @IBOutlet weak var calendarView: FSCalendar!
+    
+    let productCellId = "ImmutableEntryTableViewCell"
+    
+    @IBOutlet weak var calendar: FSCalendar!
+    @IBOutlet weak var tableView: UITableView!
+    
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
     weak var updateEntriesDelegate: EntryChangeDelegate?
-
+    
+    let format = DateFormatter()
+    var groupedDateStrings: [Entry] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateEntriesDelegate = self
+        setupNib()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupTimezone()
         refresh()
-        debugPrint(fetchedRC.fetchedObjects)
+    }
+    
+    func updateEntries() {
+        refresh()
+    }
+    
+    fileprivate func setupTimezone(){
+        format.timeZone = .current
+        format.dateFormat = "yyyy-MM-dd"
+    }
+    
+    fileprivate func setupNib(){
+        let nib = UINib(nibName: productCellId, bundle: nil)
+        self.tableView.register(nib, forCellReuseIdentifier: productCellId)
+        self.tableView.tableFooterView = UIView()
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
     }
 }
 
 extension ProfileViewController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print("select: ")
-        //TODO: for MM-dd-YYYY -> obtain from core data
+        groupedDateStrings = []
+        for entry in fetchedRC.fetchedObjects! {
+            let str1 = format.string(from: entry.dateCreated)
+            let str2 = format.string(from: date)
+            if str1 == str2 {
+                groupedDateStrings.append(entry)
+            }
+        }
+        tableView.reloadData()
+    }
+}
+
+extension ProfileViewController: CellDynamicHeightProtocol {
+    func updateHeightOfRow(_ cell: EntryTableViewCell, _ textView: UITextView) {
+        let size = textView.bounds.size
+        let newSize = textView.sizeThatFits(CGSize(width: size.width,
+                                                   height: CGFloat.greatestFiniteMagnitude))
+        if size.height.rounded(.down) != newSize.height.rounded(.down) {
+            UIView.setAnimationsEnabled(false)
+            tableView?.beginUpdates()
+            tableView?.endUpdates()
+            UIView.setAnimationsEnabled(true)
+        }
     }
 }
 
@@ -59,4 +101,27 @@ extension ProfileViewController: NSFetchedResultsControllerDelegate {
             NSLog("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+}
+
+extension ProfileViewController: UITableViewDelegate {
+    
+}
+
+extension ProfileViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return groupedDateStrings.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: productCellId, for: indexPath) as! ImmutableEntryTableViewCell
+        cell.selectionStyle = .none
+        cell.labelView.text = groupedDateStrings[indexPath.row].task
+        cell.sizeToFit()
+        print(cell.frame.height)
+        
+        return cell
+    }
+    
+    
 }

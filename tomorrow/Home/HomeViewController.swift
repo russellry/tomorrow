@@ -11,10 +11,14 @@ import CoreData
 import SideMenu
 
 class HomeViewController: UIViewController, MenuControllerDelegate {
+    
+    //TODO: need state management for done with day vs still left with things to do -> Can put into settingsVC to say oh i still got things to do today.
     var isEditingText = false
     
     let productCellId = "EntryTableViewCell"
-    
+    let format = DateFormatter()
+    var dayComponent = DateComponents()
+
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
     
@@ -42,6 +46,13 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTimezone()
+    }
+    
+    fileprivate func setupTimezone(){
+        format.timeZone = .current
+        format.dateFormat = "yyyy-MM-dd"
+        dayComponent.day = 1 // For removing one day (yesterday): -1
     }
     
     
@@ -81,7 +92,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NSLog("appearing")
         navigationController?.navigationBar.isHidden = false
         refresh()
         setupNib()
@@ -96,7 +106,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         teardownNotificationCenter()
-        NSLog("DISappearing")
         super.viewWillDisappear(animated)
     }
     
@@ -191,13 +200,14 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     func toggleBarButton(){
-        //        isEditingText = !isEditingText
-        //
-        //        if isEditingText {
-        //            navItem.rightBarButtonItem = doneBtn
-        //        } else {
-        //            navItem.rightBarButtonItem = addBtn
-        //        }
+        isEditingText = !isEditingText
+        
+        if isEditingText {
+            navbar.rightBarButtonItem = doneBtn
+            //TODO: add entry
+        } else {
+            navbar.rightBarButtonItem = addBtn
+        }
     }
 }
 
@@ -264,7 +274,6 @@ extension HomeViewController: TapCheckboxProtocol {
         if let index = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: index)
             entry.done = !entry.done
-            print(entry.done)
             if entry.done {
                 cell.checkbox.setBackgroundImage(UIImage(systemName: "largecircle.fill.circle"), for: .normal)
             } else {
@@ -352,9 +361,13 @@ extension HomeViewController {
     
     func addEntry(name: String) {
         let entry = Entry(entity: Entry.entity() , insertInto: context)
-        
         entry.task = name
-        entry.dateCreated = NSDate() as Date
+        //TODO: if today is done, set tomorrow as date, if today is still ongoing, still today.
+        
+        let calendar = Calendar.current
+        let nextDate = calendar.date(byAdding: dayComponent, to: Date())!
+        entry.dateCreated = nextDate
+
         entry.done = false
         refresh()
         appDelegate.saveContext()

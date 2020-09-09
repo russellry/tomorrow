@@ -12,12 +12,19 @@ import FBSDKLoginKit
 
 class SettingsViewController: UITableViewController{
 
+    @IBOutlet weak var onTapManageSubscription: UITableViewCell!
+    @IBOutlet weak var onTapAccountInfo: UITableViewCell!
+    @IBOutlet weak var onTapEditToday: UITableViewCell!
     @IBOutlet weak var onTapLogout: UITableViewCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let logoutTapGesture = UITapGestureRecognizer(target: self, action: #selector(logoutTapped))
+        let editTapGesture = UITapGestureRecognizer(target: self, action: #selector(editTapped))
+
         onTapLogout.addGestureRecognizer(logoutTapGesture)
+        onTapEditToday.addGestureRecognizer(editTapGesture)
+
     }
     
     @objc func logoutTapped(){
@@ -30,5 +37,12 @@ class SettingsViewController: UITableViewController{
         AppDelegate.shared.window?.rootViewController = navVC
         AppDelegate.shared.window?.makeKeyAndVisible()
         //delegate call home view controller to hide the other views?
+    }
+    
+    @objc func editTapped(){
+        let isEditToday = UserDefaults.standard.bool(forKey: "editToday")
+        UserDefaults.standard.set(!isEditToday, forKey: "editToday")
+        NSLog("Edit Tapped")
+        
     }
 }

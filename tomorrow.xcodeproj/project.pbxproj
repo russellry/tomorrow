@@ -33,6 +33,8 @@
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
 		FBA5757224A7349000D59A47 /* SettingsScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */; };
 		FBA5757424A7349E00D59A47 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5757324A7349E00D59A47 /* SettingsViewController.swift */; };
+		FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */; };
+		FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,8 @@
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsScreen.storyboard; sourceTree = "<group>"; };
 		FBA5757324A7349E00D59A47 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmutableEntryTableViewCell.swift; sourceTree = "<group>"; };
+		FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImmutableEntryTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +161,8 @@
 				FB2C01D424D560030093D16D /* EntryTableViewCell.swift */,
 				FB2C01D524D560040093D16D /* EntryTableViewCell.xib */,
 				FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */,
+				FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */,
+				FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -285,6 +291,7 @@
 				FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */,
 				FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */,
 				FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */,
+				FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +364,7 @@
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
+				FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */,
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
 				FB5A136124FAB7E500F9A3C0 /* ProfileViewController.swift in Sources */,
