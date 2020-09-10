@@ -333,6 +333,7 @@ PODS:
   - FirebaseUI/Storage (8.4.2):
     - Firebase/Storage (~> 6.0)
     - SDWebImage (~> 5.0)
+  - Floaty (4.2.0)
   - FSCalendar (2.8.1)
   - GoogleAppMeasurement (6.6.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
@@ -415,6 +416,7 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - Firebase
   - FirebaseUI
+  - Floaty (~> 4.2.0)
   - FSCalendar
   - SideMenu
 
@@ -435,6 +437,7 @@ SPEC REPOS:
     - FirebaseInstallations
     - FirebaseStorage
     - FirebaseUI
+    - Floaty
     - FSCalendar
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -467,6 +470,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 293f567159b6d66d1c990f13bb868066096c94ec
   FirebaseStorage: af7bdbd12177cf567df00904e3e3a93704f25b15
   FirebaseUI: e57e9b9c4340631151fbe67a14206d23d0974f37
+  Floaty: e2bd5a0f6f7f70899e26ff2da31081c8bee8d1b0
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   GoogleAppMeasurement: 2fd5c5a56c069db635c8e7b92d4809a9591d0a69
   GoogleDataTransport: 9a8a16f79feffc7f42096743de2a7c4815e84020
@@ -483,6 +487,6 @@ SPEC CHECKSUMS:
   SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
   SideMenu: 8ef57a3cfc024a2d3fc1c036c7fe98537baec9e0
 
-PODFILE CHECKSUM: 5994e3c0d19a57dbc90b7d71eef6f66a55f2b860
+PODFILE CHECKSUM: 940ad0b5d95e87b679016cc3f617f371f9ace536
 
 COCOAPODS: 1.8.4

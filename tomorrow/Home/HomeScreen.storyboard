@@ -23,11 +23,21 @@
                                     <outlet property="delegate" destination="0uD-Oh-cKa" id="82I-4o-2Ig"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QlR-KI-5vl" customClass="Floaty" customModule="Floaty">
+                                <rect key="frame" x="356" y="804" width="50" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="gAd-5o-r8D"/>
+                                    <constraint firstAttribute="height" constant="50" id="yeZ-oj-VWK"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="9MS-qX-Hej" firstAttribute="top" secondItem="gE8-A1-eof" secondAttribute="top" id="7px-mO-dc3"/>
                             <constraint firstItem="gE8-A1-eof" firstAttribute="trailing" secondItem="9MS-qX-Hej" secondAttribute="trailing" id="Nug-Mc-cVv"/>
+                            <constraint firstItem="gE8-A1-eof" firstAttribute="bottom" secondItem="QlR-KI-5vl" secondAttribute="bottom" constant="8" id="YKI-JX-fQf"/>
+                            <constraint firstItem="gE8-A1-eof" firstAttribute="trailing" secondItem="QlR-KI-5vl" secondAttribute="trailing" constant="8" id="jIG-qV-jFI"/>
                             <constraint firstItem="gE8-A1-eof" firstAttribute="bottom" secondItem="9MS-qX-Hej" secondAttribute="bottom" id="oLc-Pr-e1L"/>
                             <constraint firstItem="9MS-qX-Hej" firstAttribute="leading" secondItem="gE8-A1-eof" secondAttribute="leading" id="sNt-eG-lRb"/>
                         </constraints>
@@ -41,6 +51,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="floatyQuad" destination="QlR-KI-5vl" id="cU4-61-Ric"/>
                         <outlet property="navbar" destination="led-D6-bJt" id="98m-ZW-sFY"/>
                         <outlet property="tableView" destination="9MS-qX-Hej" id="xTc-iy-rHM"/>
                     </connections>

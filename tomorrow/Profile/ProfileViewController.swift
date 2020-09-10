@@ -33,12 +33,14 @@ class ProfileViewController: UIViewController, EntryChangeDelegate {
         super.viewDidLoad()
         updateEntriesDelegate = self
         setupNib()
+        setupTimezone()
+        refresh()
+        setupTodayDate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupTimezone()
-        refresh()
+
     }
     
     func updateEntries() {
@@ -56,6 +58,18 @@ class ProfileViewController: UIViewController, EntryChangeDelegate {
         self.tableView.tableFooterView = UIView()
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    fileprivate func setupTodayDate(){
+        for entry in fetchedRC.fetchedObjects! {
+            let str1 = format.string(from: entry.dateCreated)
+            let str2 = format.string(from: Date())
+
+            if str1 == str2 {
+                groupedDateStrings.append(entry)
+            }
+        }
+        tableView.reloadData()
     }
 }
 

@@ -11,4 +11,6 @@ target 'tomorrow' do
     pod 'Firebase'
     pod 'SideMenu'
     pod 'FSCalendar'
+    pod 'Floaty', '~> 4.2.0'
+
 end

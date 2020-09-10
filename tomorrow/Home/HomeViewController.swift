@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import SideMenu
+import Floaty
 
 class HomeViewController: UIViewController, MenuControllerDelegate {
     
@@ -23,6 +24,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     var addBtn = UIBarButtonItem()
     
     let dimmingView = UIView()
+    @IBOutlet weak var floatyQuad: Floaty!
     
     @IBOutlet weak var navbar: UINavigationItem!
     private var sideMenu: SideMenuNavigationController?
@@ -47,6 +49,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTimezone()
+        // For QuadCircularAnimaition
+        layoutFABforQuadAnimation(floaty: floatyQuad)
     }
     
     fileprivate func setupTimezone(){
@@ -110,26 +114,30 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @IBAction func sideMenuTapped(_ sender: Any) {
-        view.endEditing(true)
         present(sideMenu!, animated: true)
     }
     
     func didSelectMenuItem(row: Int) {
         sideMenu?.dismiss(animated: true, completion: nil)
-        
+        view.endEditing(true)
+
         switch row {
-        case 0:
+        case 0: //ProfileVC
             profileVC.view.isHidden = false
             settingsVC.view.isHidden = true
-        case 1:
+            floatyQuad.alpha = 0
+        case 1: //HomeVC
             profileVC.view.isHidden = true
             settingsVC.view.isHidden = true
-        case 2:
+            floatyQuad.alpha = 1
+        case 2: //SettingsVC
             profileVC.view.isHidden = true
             settingsVC.view.isHidden = false
-        default:
+            floatyQuad.alpha = 0
+        default: //HomeVC
             profileVC.view.isHidden = true
             settingsVC.view.isHidden = true
+            floatyQuad.alpha = 0
         }
         
     }
@@ -396,5 +404,41 @@ extension HomeViewController: SideMenuNavigationControllerDelegate {
         UIView.animate(withDuration: 0.2, animations: { [weak self] in
             self?.dimmingView.alpha = 0
         })
+    }
+}
+
+extension HomeViewController: FloatyDelegate {
+    // MARK: - Floaty Delegate Methods
+    func floatyWillOpen(_ floaty: Floaty) {
+      print("Floaty Will Open")
+    }
+    
+    func floatyDidOpen(_ floaty: Floaty) {
+      print("Floaty Did Open")
+    }
+    
+    func floatyWillClose(_ floaty: Floaty) {
+      print("Floaty Will Close")
+    }
+    
+    func floatyDidClose(_ floaty: Floaty) {
+      print("Floaty Did Close")
+    }
+    
+    func layoutFABforQuadAnimation(floaty : Floaty) {
+        floaty.hasShadow = false
+        floaty.fabDelegate = self
+        floaty.respondsToKeyboard = false
+        
+        let item = FloatyItem()
+        item.buttonColor = UIColor.blue
+        
+        floaty.addItem("", icon: UIImage(named: "icShare"))
+        floaty.addItem("", icon: UIImage(named: "icMap")) { item in
+        let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        }
+        floaty.addItem(item: item)
     }
 }
