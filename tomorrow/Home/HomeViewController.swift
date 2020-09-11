@@ -49,7 +49,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTimezone()
-        // For QuadCircularAnimaition
+        tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         layoutFABforQuadAnimation(floaty: floatyQuad)
     }
     
@@ -275,6 +275,18 @@ extension HomeViewController: UITableViewDataSource {
             deleteEntry(entry)
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
+                    "sectionHeader") as! CustomHeader
+        view.title.text = "What would you like to do Tomorrow?"
+
+        return view
+    }
 }
 
 extension HomeViewController: TapCheckboxProtocol {
@@ -430,15 +442,13 @@ extension HomeViewController: FloatyDelegate {
         floaty.fabDelegate = self
         floaty.respondsToKeyboard = false
         
-        let item = FloatyItem()
-        item.buttonColor = UIColor.blue
         
-        floaty.addItem("", icon: UIImage(named: "icShare"))
-        floaty.addItem("", icon: UIImage(named: "icMap")) { item in
-        let alert = UIAlertController(title: "Hey", message: "I'm hungry...", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Me too", style: .default, handler: nil))
+        floaty.addItem("", icon: UIImage(systemName: "square.and.pencil")).title = "Edit"
+        let itemTwo = floaty.addItem("", icon: UIImage(systemName: "plus")){ item in
+        let alert = UIAlertController(title: "Done For Today", message: "Are you finished with your tasks today?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         }
-        floaty.addItem(item: item)
+        itemTwo.title = "Add" 
     }
 }

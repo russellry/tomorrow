@@ -28,6 +28,7 @@
 		FB5A136B24FE9F2E00F9A3C0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */; };
 		FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */; };
 		FB5A13792503B20D00F9A3C0 /* AppDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */; };
+		FB68B990250B95AE00D5C034 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB68B98F250B95AE00D5C034 /* CustomHeader.swift */; };
 		FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB8684B324E0153500C93440 /* EntryModel.xcdatamodeld */; };
 		FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */; };
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
@@ -64,6 +65,7 @@
 		FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		FB5A136C24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SideMenuScreen.storyboard; sourceTree = "<group>"; };
 		FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Extension.swift"; sourceTree = "<group>"; };
+		FB68B98F250B95AE00D5C034 /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		FB8684B424E0153500C93440 /* EntryModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EntryModel.xcdatamodel; sourceTree = "<group>"; };
 		FB8684C324E0479700C93440 /* Entry+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				FB5A13782503B20D00F9A3C0 /* AppDelegate+Extension.swift */,
 				FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */,
 				FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */,
+				FB68B98F250B95AE00D5C034 /* CustomHeader.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
+				FB68B990250B95AE00D5C034 /* CustomHeader.swift in Sources */,
 				FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */,
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
