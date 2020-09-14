@@ -19,7 +19,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     let productCellId = "EntryTableViewCell"
     let format = DateFormatter()
     var dayComponent = DateComponents()
-
+    
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
     
@@ -120,7 +120,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     func didSelectMenuItem(row: Int) {
         sideMenu?.dismiss(animated: true, completion: nil)
         view.endEditing(true)
-
+        
         switch row {
         case 0: //ProfileVC
             profileVC.view.isHidden = false
@@ -143,12 +143,18 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     
-    @objc func tableTapped(tap:UITapGestureRecognizer) {
-        print("table tapped - how many objects: \(fetchedRC.fetchedObjects!.count)")
-        let lastRow = tableView.numberOfRows(inSection: 0) - 1
-        if lastRow >= 0 {
-            let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
-            if !lastCell.textView.text.isEmpty{
+    fileprivate func addNewEntryCell() {
+        let numberOfRows = tableView.numberOfRows(inSection: 0)
+        if numberOfRows == 0 {
+            addEntry(name: "")
+            let index = IndexPath(row: numberOfRows, section: 0)
+            let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
+            selectNextPossibleCellTableTap(cell)
+        } else {
+            let index = IndexPath(row: numberOfRows - 1, section: 0)
+            tableView.scrollToRow(at: index, at: .bottom, animated: false)
+            let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
+            if !cell.textView.text.isEmpty {
                 addEntry(name: "")
                 if let count = fetchedRC.fetchedObjects?.count {
                     let index = IndexPath(row: count - 1, section: 0)
@@ -156,14 +162,11 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
                     selectNextPossibleCellTableTap(cell)
                 }
             }
-        } else {
-            addEntry(name: "")
-            if let count = fetchedRC.fetchedObjects?.count {
-                let index = IndexPath(row: count - 1, section: 0)
-                let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
-                selectNextPossibleCellTableTap(cell)
-            }
         }
+    }
+    
+    @objc func tableTapped(tap:UITapGestureRecognizer) {
+        addNewEntryCell()
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
@@ -278,9 +281,18 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
-                    "sectionHeader") as! CustomHeader
-        view.title.text = "What would you like to do Tomorrow?"
+            "sectionHeader") as! CustomHeader
+        let header = view as UITableViewHeaderFooterView
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
 
+        if isToday {
+            view.title.text = "These are your tasks for today."
+            header.backgroundView = UIImageView(image: UIImage(named: "header-today-bg"))
+        } else {
+            view.title.text = "What are you doing for Tomorrow?"
+            header.backgroundView = UIImageView(image: UIImage(named: "header-tmr-bg"))
+        }
+        
         return view
     }
 }
@@ -337,6 +349,8 @@ extension HomeViewController: CellDynamicHeightProtocol {
     }
 }
 
+
+//MARK: - Select Next Cell
 extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCell(_ cell: EntryTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
@@ -384,7 +398,7 @@ extension HomeViewController {
         let calendar = Calendar.current
         let nextDate = calendar.date(byAdding: dayComponent, to: Date())!
         entry.dateCreated = nextDate
-
+        
         entry.done = false
         refresh()
         appDelegate.saveContext()
@@ -419,19 +433,19 @@ extension HomeViewController: SideMenuNavigationControllerDelegate {
 extension HomeViewController: FloatyDelegate {
     // MARK: - Floaty Delegate Methods
     func floatyWillOpen(_ floaty: Floaty) {
-      print("Floaty Will Open")
+        print("Floaty Will Open")
     }
     
     func floatyDidOpen(_ floaty: Floaty) {
-      print("Floaty Did Open")
+        print("Floaty Did Open")
     }
     
     func floatyWillClose(_ floaty: Floaty) {
-      print("Floaty Will Close")
+        print("Floaty Will Close")
     }
     
     func floatyDidClose(_ floaty: Floaty) {
-      print("Floaty Did Close")
+        print("Floaty Did Close")
     }
     
     func layoutFABforQuadAnimation(floaty : Floaty) {
@@ -439,13 +453,21 @@ extension HomeViewController: FloatyDelegate {
         floaty.fabDelegate = self
         floaty.respondsToKeyboard = false
         
-        
-        floaty.addItem("", icon: UIImage(systemName: "square.and.pencil")).title = "Edit"
-        let itemTwo = floaty.addItem("", icon: UIImage(systemName: "plus")){ item in
-        let alert = UIAlertController(title: "Done For Today", message: "Are you finished with your tasks today?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        let editItem = floaty.addItem("", icon: UIImage(systemName: "square.and.pencil")){ _ in
+            let alert = UIAlertController(title: "Done For Today", message: "Are you finished with your tasks today?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                let isToday = UserDefaults.standard.bool(forKey: "isToday")
+                print(isToday)
+                UserDefaults.standard.set(!isToday, forKey: "isToday")
+                self.tableView.reloadData()
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
-        itemTwo.title = "Add" 
+        editItem.title = "Edit"
+        let addItem = floaty.addItem("", icon: UIImage(systemName: "plus")){ _ in
+            self.addNewEntryCell()
+        }
+        addItem.title = "Add"
     }
 }
