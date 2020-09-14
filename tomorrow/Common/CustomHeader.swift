@@ -10,7 +10,6 @@ import UIKit
 
 class CustomHeader: UITableViewHeaderFooterView {
     let title = UILabel()
-    let image = UIImageView()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -22,28 +21,20 @@ class CustomHeader: UITableViewHeaderFooterView {
     }
     
     func configureContents() {
-        image.translatesAutoresizingMaskIntoConstraints = false
+        self.isUserInteractionEnabled = false
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.font = UIFont.systemFont(ofSize: 40)
+        title.font = UIFont.systemFont(ofSize: 60)
         title.numberOfLines = 0
-        contentView.addSubview(image)
         contentView.addSubview(title)
 
         // Center the image vertically and place it near the leading
         // edge of the view. Constrain its width and height to 50 points.
         NSLayoutConstraint.activate([
-            image.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
-            image.widthAnchor.constraint(equalToConstant: 50),
-            image.heightAnchor.constraint(equalToConstant: 50),
-            image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-        
-            // Center the label vertically, and use it to fill the remaining
-            // space in the header view.
-            title.heightAnchor.constraint(equalToConstant: 300),
-            title.leadingAnchor.constraint(equalTo: image.trailingAnchor,
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                    constant: 8),
             title.trailingAnchor.constraint(equalTo:
                    contentView.layoutMarginsGuide.trailingAnchor),
+            title.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             title.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }

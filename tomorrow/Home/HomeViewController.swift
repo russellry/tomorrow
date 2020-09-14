@@ -144,25 +144,11 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     
     @objc func tableTapped(tap:UITapGestureRecognizer) {
-        let location = tap.location(in: self.tableView)
-        let path = self.tableView.indexPathForRow(at: location)
-        
-        if let indexPathForRow = path {
-            let cell = tableView.cellForRow(at: IndexPath(row: indexPathForRow.row, section: 0)) as! EntryTableViewCell
-            selectNextPossibleCellTableTap(cell)
-        } else {
-            let lastRow = tableView.numberOfRows(inSection: 0) - 1
-            if lastRow >= 0 {
-                let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
-                if !lastCell.textView.text.isEmpty{
-                    addEntry(name: "")
-                    if let count = fetchedRC.fetchedObjects?.count {
-                        let index = IndexPath(row: count - 1, section: 0)
-                        let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
-                        selectNextPossibleCellTableTap(cell)
-                    }
-                }
-            } else {
+        print("table tapped - how many objects: \(fetchedRC.fetchedObjects!.count)")
+        let lastRow = tableView.numberOfRows(inSection: 0) - 1
+        if lastRow >= 0 {
+            let lastCell = tableView.cellForRow(at: IndexPath(row: lastRow, section: 0)) as! EntryTableViewCell
+            if !lastCell.textView.text.isEmpty{
                 addEntry(name: "")
                 if let count = fetchedRC.fetchedObjects?.count {
                     let index = IndexPath(row: count - 1, section: 0)
@@ -170,7 +156,13 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
                     selectNextPossibleCellTableTap(cell)
                 }
             }
-            
+        } else {
+            addEntry(name: "")
+            if let count = fetchedRC.fetchedObjects?.count {
+                let index = IndexPath(row: count - 1, section: 0)
+                let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
+                selectNextPossibleCellTableTap(cell)
+            }
         }
     }
     
@@ -277,7 +269,11 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 25
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -309,6 +305,7 @@ extension HomeViewController: DeleteEmptyCellDataProtocol {
         if let indexPath = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: indexPath)
             if entry.task.isEmpty {
+                print("gonna delete")
                 deleteEntry(entry)
             }
         }

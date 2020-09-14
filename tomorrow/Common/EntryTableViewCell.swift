@@ -43,6 +43,8 @@ class EntryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         textView.delegate = self
+        //Default value: https://developer.apple.com/documentation/uikit/uitextview/1618619-textcontainerinset
+        textView.textContainerInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

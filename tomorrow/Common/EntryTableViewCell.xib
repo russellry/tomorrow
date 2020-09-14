@@ -29,8 +29,7 @@
                         </connections>
                     </button>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Enter text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="NT3-9o-MS8">
-                        <rect key="frame" x="42" y="4" width="274" height="36"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <rect key="frame" x="42" y="0.0" width="274" height="44"/>
                         <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -39,10 +38,10 @@
                 <constraints>
                     <constraint firstItem="XHf-5Z-mjk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="4wM-5e-Xs6"/>
                     <constraint firstItem="NT3-9o-MS8" firstAttribute="leading" secondItem="XHf-5Z-mjk" secondAttribute="trailing" constant="4" id="KaO-X7-TdM"/>
-                    <constraint firstAttribute="bottom" secondItem="NT3-9o-MS8" secondAttribute="bottom" constant="4" id="M1c-z8-Kur"/>
+                    <constraint firstAttribute="bottom" secondItem="NT3-9o-MS8" secondAttribute="bottom" id="M1c-z8-Kur"/>
                     <constraint firstAttribute="trailing" secondItem="NT3-9o-MS8" secondAttribute="trailing" constant="4" id="Uci-bx-OYq"/>
                     <constraint firstItem="XHf-5Z-mjk" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="dZG-Lz-CrW"/>
-                    <constraint firstItem="NT3-9o-MS8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="j5W-Zx-xyB"/>
+                    <constraint firstItem="NT3-9o-MS8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="j5W-Zx-xyB"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
