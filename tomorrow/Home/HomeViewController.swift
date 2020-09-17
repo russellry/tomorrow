@@ -18,10 +18,10 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     let productCellId = "EntryTableViewCell"
     let format = DateFormatter()
-    var dayComponent = DateComponents()
-    
+    var dayComponentAddOne = DateComponents()
+    var dayComponentAddZero = DateComponents()
+
     var doneBtn = UIBarButtonItem()
-    var addBtn = UIBarButtonItem()
     
     let dimmingView = UIView()
     @IBOutlet weak var floatyQuad: Floaty!
@@ -35,6 +35,43 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
+    var groupedDateStrings: [Entry] = []
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        clearEmptyData()
+        setupTimezone()
+        setupTodayDate()
+        tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        layoutFABforQuadAnimation(floaty: floatyQuad)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        refresh()
+        setupNib()
+        setupNotificationCenter()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
+        tableView.addGestureRecognizer(tap)
+        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
+        setupSideMenu()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        teardownNotificationCenter()
+        super.viewWillDisappear(animated)
+    }
+    
+    fileprivate func clearEmptyData(){
+        refresh()
+        for entry in fetchedRC.fetchedObjects! {
+            if entry.task.isEmpty {
+                deleteEntry(entry)
+            }
+        }
+    }
     
     fileprivate func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -45,20 +82,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupTimezone()
-        tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
-        layoutFABforQuadAnimation(floaty: floatyQuad)
-    }
-    
-    fileprivate func setupTimezone(){
-        format.timeZone = .current
-        format.dateFormat = "yyyy-MM-dd"
-        dayComponent.day = 1 // For removing one day (yesterday): -1
-    }
-    
     
     private func setupSideMenu(){
         let menu = UIStoryboard(name: "SideMenuScreen", bundle: nil).instantiateViewController(identifier: "SideMenuViewController") as! SideMenuViewController
@@ -94,24 +117,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         settingsVC.view.isHidden = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-        refresh()
-        setupNib()
-        setupNotificationCenter()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
-        tableView.addGestureRecognizer(tap)
-        doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
-        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        navbar.rightBarButtonItem = addBtn
-        setupSideMenu()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        teardownNotificationCenter()
-        super.viewWillDisappear(animated)
-    }
+
     
     @IBAction func sideMenuTapped(_ sender: Any) {
         present(sideMenu!, animated: true)
@@ -120,7 +126,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     func didSelectMenuItem(row: Int) {
         sideMenu?.dismiss(animated: true, completion: nil)
         view.endEditing(true)
-        
+        //keyboard is presented - table view is done via another way.
         switch row {
         case 0: //ProfileVC
             profileVC.view.isHidden = false
@@ -139,7 +145,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             settingsVC.view.isHidden = true
             floatyQuad.alpha = 0
         }
-        
     }
     
     
@@ -156,11 +161,10 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
             if !cell.textView.text.isEmpty {
                 addEntry(name: "")
-                if let count = fetchedRC.fetchedObjects?.count {
-                    let index = IndexPath(row: count - 1, section: 0)
-                    let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
-                    selectNextPossibleCellTableTap(cell)
-                }
+                let newIndex = IndexPath(row: numberOfRows, section: 0)
+                tableView.scrollToRow(at: newIndex, at: .bottom, animated: false)
+                let cell = tableView.cellForRow(at: newIndex) as! EntryTableViewCell
+                selectNextPossibleCellTableTap(cell)
             }
         }
     }
@@ -170,7 +174,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        clickedAdd()
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - (UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0), right: 0)
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
@@ -194,22 +199,19 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @objc func clickedDone() {
-        toggleBarButton()
+        editingText(false)
     }
     
-    @objc func clickedAdd() {
-        toggleBarButton()
-        
+    func clickedAdd() {
+        editingText(true) //TODO: last row.
     }
     
-    func toggleBarButton(){
-        isEditingText = !isEditingText
-        
-        if isEditingText {
+    func editingText(_ isEditingTextStatus: Bool){
+        if isEditingTextStatus {
             navbar.rightBarButtonItem = doneBtn
-            //TODO: add entry
         } else {
-            navbar.rightBarButtonItem = addBtn
+            navbar.rightBarButtonItem = nil
+            view.endEditing(true)
         }
     }
 }
@@ -250,6 +252,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let entry = fetchedRC.object(at: indexPath)
+//        let entry = groupedDateStrings[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: productCellId, for: indexPath) as! EntryTableViewCell
         cell.rowHeightDelegate = self
         cell.selectedCellDelegate = self
@@ -257,9 +260,7 @@ extension HomeViewController: UITableViewDataSource {
         cell.deleteEmptyCellDataDelegate = self
         cell.selectCheckboxDelegate = self
         cell.selectionStyle = .none
-        
         cell.setCheckboxImage(entry: entry)
-        
         cell.textView.text = entry.value(forKey: "task") as? String
         return cell
     }
@@ -317,7 +318,6 @@ extension HomeViewController: DeleteEmptyCellDataProtocol {
         if let indexPath = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: indexPath)
             if entry.task.isEmpty {
-                print("gonna delete")
                 deleteEntry(entry)
             }
         }
@@ -360,7 +360,7 @@ extension HomeViewController: SelectNextCellProtocol {
             }
             
             let index = IndexPath(row: indexPath.row + 1, section: 0)
-            
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }
@@ -385,6 +385,7 @@ extension HomeViewController {
             fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             fetchedRC.delegate = self
             try fetchedRC.performFetch()
+            setupTodayDate()
         } catch let error as NSError {
             NSLog("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -396,8 +397,14 @@ extension HomeViewController {
         //TODO: if today is done, set tomorrow as date, if today is still ongoing, still today.
         
         let calendar = Calendar.current
-        let nextDate = calendar.date(byAdding: dayComponent, to: Date())!
-        entry.dateCreated = nextDate
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        let date: Date?
+        if isToday {
+            date = calendar.date(byAdding: dayComponentAddZero, to: Date())!
+        } else {
+            date = calendar.date(byAdding: dayComponentAddOne, to: Date())!
+        }
+        entry.dateCreated = date!
         
         entry.done = false
         refresh()
@@ -430,6 +437,7 @@ extension HomeViewController: SideMenuNavigationControllerDelegate {
     }
 }
 
+//MARK:- Floating Button
 extension HomeViewController: FloatyDelegate {
     // MARK: - Floaty Delegate Methods
     func floatyWillOpen(_ floaty: Floaty) {
@@ -469,5 +477,39 @@ extension HomeViewController: FloatyDelegate {
             self.addNewEntryCell()
         }
         addItem.title = "Add"
+    }
+}
+
+//MARK:- Date handler
+extension HomeViewController {
+    fileprivate func setupTimezone(){
+        format.timeZone = .current
+        format.dateFormat = "yyyy-MM-dd"
+        dayComponentAddOne.day = 1 // For removing one day (yesterday): -1
+        dayComponentAddZero.day = 0
+    }
+    
+    fileprivate func setupTodayDate(){
+        for entry in fetchedRC.fetchedObjects! {
+            let str1 = format.string(from: entry.dateCreated)
+            let str2: String?
+            let date: Date?
+
+            let calendar = Calendar.current
+            let isToday = UserDefaults.standard.bool(forKey: "isToday")
+
+            if isToday {
+                date = calendar.date(byAdding: dayComponentAddZero, to: Date())!
+                str2 = format.string(from: date!)
+            } else {
+                date = calendar.date(byAdding: dayComponentAddOne, to: Date())!
+                str2 = format.string(from: date!)
+            }
+
+            if str1 == str2 {
+                groupedDateStrings.append(entry)
+            }
+        }
+        tableView.reloadData()
     }
 }
