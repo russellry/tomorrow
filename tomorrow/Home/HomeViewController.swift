@@ -48,10 +48,20 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        clearEmptyData()
         setupTimezone()
         tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         layoutFABforQuadAnimation(floaty: floatyQuad)
     }
+    
+    fileprivate func clearEmptyData(){
+            refresh()
+            for entry in fetchedRC.fetchedObjects! {
+                if entry.task.isEmpty {
+                    deleteEntry(entry)
+                }
+            }
+        }
     
     fileprivate func setupTimezone(){
         format.timeZone = .current

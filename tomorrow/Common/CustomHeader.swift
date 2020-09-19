@@ -24,6 +24,7 @@ class CustomHeader: UITableViewHeaderFooterView {
         self.isUserInteractionEnabled = false
         title.translatesAutoresizingMaskIntoConstraints = false
         title.font = UIFont(name: "GillSans", size: 60)
+        title.textColor = .white
         title.numberOfLines = 0
         title.layer.shadowColor = UIColor.black.cgColor
         title.layer.shadowRadius = 3.0
