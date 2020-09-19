@@ -156,11 +156,10 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
             if !cell.textView.text.isEmpty {
                 addEntry(name: "")
-                if let count = fetchedRC.fetchedObjects?.count {
-                    let index = IndexPath(row: count - 1, section: 0)
-                    let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
-                    selectNextPossibleCellTableTap(cell)
-                }
+                let newIndex = IndexPath(row: numberOfRows, section: 0)
+                tableView.scrollToRow(at: newIndex, at: .bottom, animated: false)
+                let cell = tableView.cellForRow(at: newIndex) as! EntryTableViewCell
+                selectNextPossibleCellTableTap(cell)
             }
         }
     }
@@ -170,7 +169,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @objc func keyboardWillShow(_ notification:Notification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - (UIApplication.shared.delegate?.window??.safeAreaInsets.bottom ?? 0), right: 0)
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
@@ -194,12 +193,20 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @objc func clickedDone() {
-        toggleBarButton()
+        editingText(false)
     }
     
     @objc func clickedAdd() {
-        toggleBarButton()
-        
+        editingText(true)
+    }
+    
+    func editingText(_ isEditingTextStatus: Bool){
+        if isEditingTextStatus {
+            navbar.rightBarButtonItem = doneBtn
+        } else {
+            navbar.rightBarButtonItem = nil
+            view.endEditing(true)
+        }
     }
     
     func toggleBarButton(){
@@ -360,7 +367,7 @@ extension HomeViewController: SelectNextCellProtocol {
             }
             
             let index = IndexPath(row: indexPath.row + 1, section: 0)
-            
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
             nextCell.textView.becomeFirstResponder()
         }

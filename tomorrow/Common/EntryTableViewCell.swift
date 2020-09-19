@@ -75,20 +75,13 @@ extension EntryTableViewCell: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        if let delegate = selectedCellDelegate {
-            delegate.saveSelectedCell(self, text: textView.text)
-        }
-        
-        if let delegate = rowHeightDelegate {
-            delegate.updateHeightOfRow(self, textView)
-        }
+        selectedCellDelegate?.saveSelectedCell(self, text: textView.text)
+        rowHeightDelegate?.updateHeightOfRow(self, textView)
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
-            if let delegate = selectNextPossibleCellDelegate {
-                delegate.selectNextPossibleCell(self)
-            }
+            selectNextPossibleCellDelegate?.selectNextPossibleCell(self)
             return false
         }
         return true
