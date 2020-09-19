@@ -411,10 +411,11 @@ extension HomeViewController {
         let entry = Entry(entity: Entry.entity() , insertInto: context)
         entry.task = name
         //TODO: if today is done, set tomorrow as date, if today is still ongoing, still today.
-        
+        //TODO: set as today's date first.
         let calendar = Calendar.current
         let nextDate = calendar.date(byAdding: dayComponent, to: Date())!
-        entry.dateCreated = nextDate
+        entry.dateCreated = nextDate //TODO: smth is wrong with nextDate
+        print(entry.dateCreated)
         
         entry.done = false
         refresh()
