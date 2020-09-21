@@ -35,7 +35,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     private var appDelegate = UIApplication.shared.delegate as! AppDelegate
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
-    
+    let calendar = Calendar.current
+
     fileprivate func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -396,10 +397,21 @@ extension HomeViewController {
         let request = Entry.fetchRequest() as NSFetchRequest<Entry>
         let sort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
         request.sortDescriptors = [sort]
+        //TODO: if today or
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        
+        if isToday {
+            dayComponent.day = 0
+        } else {
+            dayComponent.day = 1
+        }
+        let date = calendar.date(byAdding: dayComponent, to: Date())!
+        
+        request.predicate = NSPredicate(format: "dateCreated < %@", date as NSDate)
         do {
             fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             fetchedRC.delegate = self
-            try fetchedRC.performFetch()
+            try fetchedRC.performFetch() //TODO: fetchedRC -> filter by date...?
         } catch let error as NSError {
             NSLog("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -409,7 +421,6 @@ extension HomeViewController {
         let entry = Entry(entity: Entry.entity() , insertInto: context)
         entry.task = name
 
-        let calendar = Calendar.current
         let isToday = UserDefaults.standard.bool(forKey: "isToday")
         
         if isToday {
@@ -417,12 +428,9 @@ extension HomeViewController {
         } else {
             dayComponent.day = 1
         }
-        //TODO: this messes up the entire view because its not supposed to be like this (try on profile vc)
         
         let date = calendar.date(byAdding: dayComponent, to: Date())!
-        entry.dateCreated = date
-        print(entry.dateCreated) // this will be passed to profile view controller -> handled here.
-        
+        entry.dateCreated = date        
         entry.done = false
         refresh()
         appDelegate.saveContext()
@@ -483,6 +491,7 @@ extension HomeViewController: FloatyDelegate {
                 let isToday = UserDefaults.standard.bool(forKey: "isToday")
                 UserDefaults.standard.set(!isToday, forKey: "isToday")
                 print("is it today: \(UserDefaults.standard.bool(forKey: "isToday"))")
+                self.refresh()
                 self.tableView.reloadData()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
