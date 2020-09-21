@@ -13,13 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// - Tag: did_finish_launching
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        setupUserDefaults()
         FirebaseApp.configure()
         
         //TODO: have a login state management: eg: with userdefaults for loginState, at first always false, after login true -> go to home screen, if false set by logout or first time entry -> go to welcome screen
         
         let isLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         isLoggedIn ? setupHomeScreen() : setupWelcomeScreen()
-        print(isLoggedIn)
         
         if let user = Auth.auth().currentUser {
             USERNAME = user.displayName
@@ -61,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
 //        }
         return true
+    }
+    
+    fileprivate func setupUserDefaults(){
+        UserDefaults.standard.register(defaults: ["isUserLoggedIn": false, "isToday": true])
     }
     
     fileprivate func setupHomeScreen(){

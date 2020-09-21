@@ -66,7 +66,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     fileprivate func setupTimezone(){
         format.timeZone = .current
         format.dateFormat = "yyyy-MM-dd"
-        dayComponent.day = 1 // For removing one day (yesterday): -1
     }
     
     
@@ -334,7 +333,6 @@ extension HomeViewController: DeleteEmptyCellDataProtocol {
         if let indexPath = tableView.indexPath(for: cell) {
             let entry = fetchedRC.object(at: indexPath)
             if entry.task.isEmpty {
-                print("gonna delete")
                 deleteEntry(entry)
             }
         }
@@ -410,12 +408,20 @@ extension HomeViewController {
     func addEntry(name: String) {
         let entry = Entry(entity: Entry.entity() , insertInto: context)
         entry.task = name
-        //TODO: if today is done, set tomorrow as date, if today is still ongoing, still today.
-        //TODO: set as today's date first.
+
         let calendar = Calendar.current
-        let nextDate = calendar.date(byAdding: dayComponent, to: Date())!
-        entry.dateCreated = nextDate //TODO: smth is wrong with nextDate
-        print(entry.dateCreated)
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        
+        if isToday {
+            dayComponent.day = 0
+        } else {
+            dayComponent.day = 1
+        }
+        //TODO: this messes up the entire view because its not supposed to be like this (try on profile vc)
+        
+        let date = calendar.date(byAdding: dayComponent, to: Date())!
+        entry.dateCreated = date
+        print(entry.dateCreated) // this will be passed to profile view controller -> handled here.
         
         entry.done = false
         refresh()
@@ -475,8 +481,8 @@ extension HomeViewController: FloatyDelegate {
             let alert = UIAlertController(title: "Done For Today", message: "Are you finished with your tasks today?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 let isToday = UserDefaults.standard.bool(forKey: "isToday")
-                print(isToday)
                 UserDefaults.standard.set(!isToday, forKey: "isToday")
+                print("is it today: \(UserDefaults.standard.bool(forKey: "isToday"))")
                 self.tableView.reloadData()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))

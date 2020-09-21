@@ -132,7 +132,6 @@ extension ProfileViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.labelView.text = groupedDateStrings[indexPath.row].task
         cell.sizeToFit()
-        print(cell.frame.height)
         
         return cell
     }

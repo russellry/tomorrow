@@ -40,9 +40,6 @@ class SettingsViewController: UITableViewController{
     }
     
     @objc func editTapped(){
-        let isEditToday = UserDefaults.standard.bool(forKey: "editToday")
-        UserDefaults.standard.set(!isEditToday, forKey: "editToday")
-        NSLog("Edit Tapped")
-        
+//Consider removing
     }
 }
