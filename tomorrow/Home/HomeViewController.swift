@@ -156,6 +156,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         switch row {
         case 0: //ProfileVC
             profileVC.view.isHidden = false
+            profileVC.updateEntriesDelegate?.updateEntries()
+            profileVC.reloadProfileTableDelegate?.setupTodayDate()
             settingsVC.view.isHidden = true
             floatyQuad.alpha = 0
         case 1: //HomeVC
@@ -419,7 +421,7 @@ extension HomeViewController {
         let request = Entry.fetchRequest() as NSFetchRequest<Entry>
         let dateSort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
         let idSort = NSSortDescriptor(key: #keyPath(Entry.id), ascending: true)
-//        let doneSort = NSSortDescriptor(key: #keyPath(Entry.done), ascending: true)
+
         request.sortDescriptors = [dateSort, idSort]
         setupTimezone()
         

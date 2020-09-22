@@ -14,7 +14,11 @@ protocol EntryChangeDelegate: class {
     func updateEntries()
 }
 
-class ProfileViewController: UIViewController, EntryChangeDelegate {
+protocol ReloadProfileTableDelegate: class {
+    func setupTodayDate()
+}
+
+class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfileTableDelegate {
     
     let productCellId = "ImmutableEntryTableViewCell"
     
@@ -25,6 +29,7 @@ class ProfileViewController: UIViewController, EntryChangeDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
     weak var updateEntriesDelegate: EntryChangeDelegate?
+    weak var reloadProfileTableDelegate: ReloadProfileTableDelegate?
     
     let format = DateFormatter()
     var groupedDateStrings: [Entry] = []
@@ -32,19 +37,16 @@ class ProfileViewController: UIViewController, EntryChangeDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateEntriesDelegate = self
+        reloadProfileTableDelegate = self
         setupNib()
         setupTimezone()
         refresh()
         setupTodayDate()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-    }
-    
     func updateEntries() {
         refresh()
+        print("update entries")
     }
     
     fileprivate func setupTimezone(){
@@ -60,7 +62,8 @@ class ProfileViewController: UIViewController, EntryChangeDelegate {
         self.tableView.delegate = self
     }
     
-    fileprivate func setupTodayDate(){
+    func setupTodayDate(){
+        print("setupTodayDate")
         for entry in fetchedRC.fetchedObjects! {
             let str1 = format.string(from: entry.dateCreated)
             let str2 = format.string(from: Date())
