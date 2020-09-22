@@ -19,5 +19,6 @@ extension Entry {
     @NSManaged public var task: String
     @NSManaged public var dateCreated: Date
     @NSManaged public var done: Bool
+    @NSManaged public var id: Int64
 
 }

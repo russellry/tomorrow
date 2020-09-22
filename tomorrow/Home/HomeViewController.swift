@@ -18,7 +18,9 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     let productCellId = "EntryTableViewCell"
     let format = DateFormatter()
-    var dayComponent = DateComponents()
+    var dayComponentFrom = DateComponents()
+    var dayComponentTo = DateComponents()
+    var startOfDayComponent = DateComponents()
     
     var doneBtn = UIBarButtonItem()
     var addBtn = UIBarButtonItem()
@@ -66,7 +68,27 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     fileprivate func setupTimezone(){
         format.timeZone = .current
+        let date = Date()
         format.dateFormat = "yyyy-MM-dd"
+        
+        let dateString = format.string(from: date).split(separator: "-")
+        startOfDayComponent.year = Int(dateString[0])
+        startOfDayComponent.month = Int(dateString[1])
+        
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        startOfDayComponent.day = Int(dateString[2])
+
+        if isToday {
+            dayComponentFrom.day = 0
+            dayComponentTo.day = 1
+        } else {
+            dayComponentFrom.day = 1
+            dayComponentTo.day = 2
+        }
+        
+        startOfDayComponent.hour = 0
+        startOfDayComponent.minute = 0
+        startOfDayComponent.second = 0
     }
     
     
@@ -395,19 +417,20 @@ extension HomeViewController: SelectNextCellProtocol {
 extension HomeViewController {
     private func refresh() {
         let request = Entry.fetchRequest() as NSFetchRequest<Entry>
-        let sort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
-        request.sortDescriptors = [sort]
-        //TODO: if today or
-        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        let dateSort = NSSortDescriptor(key: #keyPath(Entry.dateCreated), ascending: true)
+        let idSort = NSSortDescriptor(key: #keyPath(Entry.id), ascending: true)
+//        let doneSort = NSSortDescriptor(key: #keyPath(Entry.done), ascending: true)
+        request.sortDescriptors = [dateSort, idSort]
+        setupTimezone()
         
-        if isToday {
-            dayComponent.day = 0
-        } else {
-            dayComponent.day = 1
-        }
-        let date = calendar.date(byAdding: dayComponent, to: Date())!
-        
-        request.predicate = NSPredicate(format: "dateCreated < %@", date as NSDate)
+        let dateFrom = calendar.date(byAdding: dayComponentFrom, to: calendar.date(from: startOfDayComponent)!)!
+        let dateTo = calendar.date(byAdding: dayComponentTo, to: calendar.date(from: startOfDayComponent)!)!
+        print("dateFrom \(dateFrom)")
+        print("dateTo \(dateTo)")
+        let datePredicateFrom = NSPredicate(format: "dateCreated >= %@", dateFrom as NSDate)
+        let datePredicateTo = NSPredicate(format: "dateCreated < %@", dateTo as NSDate)
+        request.predicate = datePredicateTo
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicateFrom, datePredicateTo])
         do {
             fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             fetchedRC.delegate = self
@@ -420,18 +443,18 @@ extension HomeViewController {
     func addEntry(name: String) {
         let entry = Entry(entity: Entry.entity() , insertInto: context)
         entry.task = name
-
-        let isToday = UserDefaults.standard.bool(forKey: "isToday")
         
-        if isToday {
-            dayComponent.day = 0
-        } else {
-            dayComponent.day = 1
-        }
+        setupTimezone()
         
-        let date = calendar.date(byAdding: dayComponent, to: Date())!
-        entry.dateCreated = date        
+        let date = calendar.date(byAdding: dayComponentFrom, to: Date())!
+        entry.dateCreated = date
         entry.done = false
+        
+        let id = UserDefaults.standard.integer(forKey: "globalId")
+        entry.id = Int64(id)
+        
+        UserDefaults.standard.set(id + 1, forKey: "globalId")
+
         refresh()
         appDelegate.saveContext()
         tableView.beginUpdates()

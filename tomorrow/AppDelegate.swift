@@ -64,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     fileprivate func setupUserDefaults(){
-        UserDefaults.standard.register(defaults: ["isUserLoggedIn": false, "isToday": true])
+        UserDefaults.standard.register(defaults: ["isUserLoggedIn": false, "isToday": true, "globalId:": 0])
     }
     
     fileprivate func setupHomeScreen(){
