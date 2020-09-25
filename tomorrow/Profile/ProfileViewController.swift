@@ -46,7 +46,6 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
     
     func updateEntries() {
         refresh()
-        print("update entries")
     }
     
     fileprivate func setupTimezone(){
@@ -63,10 +62,12 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
     }
     
     func setupTodayDate(){
-        print("setupTodayDate")
+        groupedDateStrings = []
         for entry in fetchedRC.fetchedObjects! {
             let str1 = format.string(from: entry.dateCreated)
-            let str2 = format.string(from: Date())
+            let dateSelected = UserDefaults.standard.object(forKey: "dateSelected") as! Date
+
+            let str2 = format.string(from: dateSelected)
 
             if str1 == str2 {
                 groupedDateStrings.append(entry)
@@ -79,6 +80,7 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
 extension ProfileViewController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         groupedDateStrings = []
+        UserDefaults.standard.set(date, forKey: "dateSelected")
         for entry in fetchedRC.fetchedObjects! {
             let str1 = format.string(from: entry.dateCreated)
             let str2 = format.string(from: date)
@@ -133,7 +135,13 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: productCellId, for: indexPath) as! ImmutableEntryTableViewCell
         cell.selectionStyle = .none
-        cell.labelView.text = groupedDateStrings[indexPath.row].task
+        
+        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: groupedDateStrings[indexPath.row].task)
+
+        if groupedDateStrings[indexPath.row].done {
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+        }
+        cell.labelView.attributedText = attributeString
         cell.sizeToFit()
         
         return cell

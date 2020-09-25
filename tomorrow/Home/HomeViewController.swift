@@ -158,6 +158,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             profileVC.view.isHidden = false
             profileVC.updateEntriesDelegate?.updateEntries()
             profileVC.reloadProfileTableDelegate?.setupTodayDate()
+            //TODO: click on today's date manually.
             settingsVC.view.isHidden = true
             floatyQuad.alpha = 0
         case 1: //HomeVC
