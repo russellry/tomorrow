@@ -34,6 +34,7 @@
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
 		FBA5757224A7349000D59A47 /* SettingsScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */; };
 		FBA5757424A7349E00D59A47 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5757324A7349E00D59A47 /* SettingsViewController.swift */; };
+		FBC9D6D7251E142B009C8A7C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9D6D6251E142B009C8A7C /* CloudKit.framework */; };
 		FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */; };
 		FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -71,6 +72,7 @@
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsScreen.storyboard; sourceTree = "<group>"; };
 		FBA5757324A7349E00D59A47 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FBC9D6D6251E142B009C8A7C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmutableEntryTableViewCell.swift; sourceTree = "<group>"; };
 		FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImmutableEntryTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC9D6D7251E142B009C8A7C /* CloudKit.framework in Frameworks */,
 				7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */,
 				FB5A136B24FE9F2E00F9A3C0 /* StoreKit.framework in Frameworks */,
 			);
@@ -91,6 +94,7 @@
 		4F43A9A99535D1702FD148DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBC9D6D6251E142B009C8A7C /* CloudKit.framework */,
 				FB5A136A24FE9F2E00F9A3C0 /* StoreKit.framework */,
 				270426510742B9BF4E230206 /* Pods_tomorrow.framework */,
 			);

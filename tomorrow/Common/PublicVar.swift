@@ -14,3 +14,5 @@ public let HOMEVC = UIStoryboard(name: "HomeScreen", bundle: nil).instantiateVie
 public let MENUVC = UIStoryboard(name: "MenuScreen", bundle: nil).instantiateViewController(withIdentifier: "MenuViewController")
 public let WELCOMEVC = UIStoryboard(name: "WelcomeScreen", bundle: nil).instantiateViewController(withIdentifier: "WelcomeViewController")
 public let PROFILEVC = UIStoryboard(name: "ProfileScreen", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController")
+public var keyStore = NSUbiquitousKeyValueStore()
+//TODO: https://medium.com/@janakmshah/quickly-sync-user-data-and-preferences-over-icloud-with-swift-4757a3904f1a
