@@ -34,6 +34,10 @@
 		FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */; };
 		FBA5757224A7349000D59A47 /* SettingsScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */; };
 		FBA5757424A7349E00D59A47 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA5757324A7349E00D59A47 /* SettingsViewController.swift */; };
+		FBB12A34251F26DF001CD137 /* PremiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB12A33251F26DF001CD137 /* PremiumViewController.swift */; };
+		FBB12A37251F26EE001CD137 /* PremiumScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB12A36251F26EE001CD137 /* PremiumScreen.storyboard */; };
+		FBB12A3A251F278A001CD137 /* PremiumPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB12A39251F278A001CD137 /* PremiumPageViewController.swift */; };
+		FBB12A3D251F28A0001CD137 /* PremiumPagesScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB12A3C251F28A0001CD137 /* PremiumPagesScreen.storyboard */; };
 		FBC9D6D7251E142B009C8A7C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9D6D6251E142B009C8A7C /* CloudKit.framework */; };
 		FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */; };
 		FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */; };
@@ -72,6 +76,10 @@
 		FB8684C424E0479800C93440 /* Entry+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Entry+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FBA5757124A7349000D59A47 /* SettingsScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsScreen.storyboard; sourceTree = "<group>"; };
 		FBA5757324A7349E00D59A47 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		FBB12A33251F26DF001CD137 /* PremiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumViewController.swift; sourceTree = "<group>"; };
+		FBB12A36251F26EE001CD137 /* PremiumScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PremiumScreen.storyboard; sourceTree = "<group>"; };
+		FBB12A39251F278A001CD137 /* PremiumPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPageViewController.swift; sourceTree = "<group>"; };
+		FBB12A3C251F28A0001CD137 /* PremiumPagesScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PremiumPagesScreen.storyboard; sourceTree = "<group>"; };
 		FBC9D6D6251E142B009C8A7C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmutableEntryTableViewCell.swift; sourceTree = "<group>"; };
 		FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImmutableEntryTableViewCell.xib; sourceTree = "<group>"; };
@@ -131,6 +139,7 @@
 		FB36744C2495313A003D2F1E /* tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				FBC9D6D9251F267B009C8A7C /* Premium */,
 				FB5A136524FD54CF00F9A3C0 /* SideMenu */,
 				FB5A135D24FAB79C00F9A3C0 /* Profile */,
 				FB8684B624E036B000C93440 /* Data */,
@@ -228,6 +237,17 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FBC9D6D9251F267B009C8A7C /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				FBB12A33251F26DF001CD137 /* PremiumViewController.swift */,
+				FBB12A36251F26EE001CD137 /* PremiumScreen.storyboard */,
+				FBB12A39251F278A001CD137 /* PremiumPageViewController.swift */,
+				FBB12A3C251F28A0001CD137 /* PremiumPagesScreen.storyboard */,
+			);
+			path = Premium;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -299,6 +319,8 @@
 				FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */,
 				FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */,
 				FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */,
+				FBB12A37251F26EE001CD137 /* PremiumScreen.storyboard in Resources */,
+				FBB12A3D251F28A0001CD137 /* PremiumPagesScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,8 +394,10 @@
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
 				FB68B990250B95AE00D5C034 /* CustomHeader.swift in Sources */,
+				FBB12A3A251F278A001CD137 /* PremiumPageViewController.swift in Sources */,
 				FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */,
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
+				FBB12A34251F26DF001CD137 /* PremiumViewController.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
 				FB5A136124FAB7E500F9A3C0 /* ProfileViewController.swift in Sources */,
 				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,

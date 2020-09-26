@@ -232,7 +232,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     }
     
     @objc func clickedAdd() {
-        editingText(true)
+//        editingText(true)
+        performSegue(withIdentifier: "toPremium", sender: nil)
     }
     
     func editingText(_ isEditingTextStatus: Bool){
