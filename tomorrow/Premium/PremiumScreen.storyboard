@@ -47,22 +47,22 @@ Save 25%</string>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yBM-Lb-1lr">
                                                                 <rect key="frame" x="38.5" y="44" width="126" height="61.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obq-4e-Xwq">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="obq-4e-Xwq">
                                                                         <rect key="frame" x="0.0" y="0.0" width="126" height="41"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay Yearly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERH-eO-CiM">
                                                                         <rect key="frame" x="0.0" y="41" width="126" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="yBM-Lb-1lr" firstAttribute="centerX" secondItem="aDu-J2-MYh" secondAttribute="centerX" id="jFs-kx-tOv"/>
                                                             <constraint firstItem="yBM-Lb-1lr" firstAttribute="centerY" secondItem="aDu-J2-MYh" secondAttribute="centerY" id="mpI-m0-dS2"/>
@@ -97,22 +97,22 @@ Save 25%</string>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="raB-rp-0Uf">
                                                                 <rect key="frame" x="38.5" y="44" width="126" height="61.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OY0-Oi-ufQ">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$00.00*" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="OY0-Oi-ufQ">
                                                                         <rect key="frame" x="0.0" y="0.0" width="126" height="41"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                                                        <nil key="textColor"/>
+                                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pay Monthly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-gT-9Qj">
                                                                         <rect key="frame" x="0.0" y="41" width="126" height="20.5"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
                                                             <constraint firstItem="raB-rp-0Uf" firstAttribute="centerX" secondItem="s0a-yd-mGf" secondAttribute="centerX" id="3HD-ep-yfx"/>
                                                             <constraint firstItem="raB-rp-0Uf" firstAttribute="centerY" secondItem="s0a-yd-mGf" secondAttribute="centerY" id="FgP-Eg-a20"/>
@@ -141,7 +141,7 @@ Save 25%</string>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tz3-wH-9Zi">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="128"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* That's $0.00 per month." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIL-xh-dzv">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* That's $0.00 per month." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xIL-xh-dzv">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="84"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
@@ -164,6 +164,9 @@ Save 25%</string>
                                                                 <state key="normal" title="Continue">
                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
+                                                                <connections>
+                                                                    <action selector="didTapPurchase:" destination="fHO-g9-cHS" eventType="touchUpInside" id="qwi-Hm-sIB"/>
+                                                                </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yHV-el-FzZ">
                                                                 <rect key="frame" x="381" y="0.0" width="33" height="44"/>
@@ -219,6 +222,8 @@ Save 25%</string>
                     </navigationItem>
                     <connections>
                         <outlet property="continueBtn" destination="Wzl-iX-XLS" id="F4C-ff-rqz"/>
+                        <outlet property="monthlyDiscountLabel" destination="xIL-xh-dzv" id="v2X-LE-rsG"/>
+                        <outlet property="monthlyLabel" destination="OY0-Oi-ufQ" id="1C0-Ui-sf5"/>
                         <outlet property="mostFlexibleLabel" destination="GGX-o7-DRI" id="5xU-p8-T7m"/>
                         <outlet property="mostFlexibleView" destination="CjY-JY-guE" id="PHt-CY-97p"/>
                         <outlet property="mostPopularLabel" destination="XYP-wG-CPb" id="08a-7n-h3W"/>
@@ -226,6 +231,7 @@ Save 25%</string>
                         <outlet property="navCloseBtn" destination="59Y-zd-US0" id="PPg-8U-kuc"/>
                         <outlet property="pricingStackView" destination="25R-8e-Bm8" id="lIB-dS-nbG"/>
                         <outlet property="restoreBtn" destination="hTH-Yt-yl0" id="eYz-OI-ktS"/>
+                        <outlet property="yearlyLabel" destination="obq-4e-Xwq" id="MR8-X2-oex"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tWd-x8-snz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -239,6 +245,7 @@ Save 25%</string>
                     <view key="view" contentMode="scaleToFill" id="4RS-OX-ecq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="348.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="r0E-7u-hb0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
@@ -266,9 +273,6 @@ Save 25%</string>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

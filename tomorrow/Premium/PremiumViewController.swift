@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 class PremiumViewController: UIViewController {
 
@@ -17,6 +18,10 @@ class PremiumViewController: UIViewController {
     
     @IBOutlet weak var mostPopularLabel: UILabel!
     @IBOutlet weak var mostFlexibleLabel: UILabel!
+    
+    @IBOutlet weak var yearlyLabel: UILabel!
+    @IBOutlet weak var monthlyLabel: UILabel!
+    @IBOutlet weak var monthlyDiscountLabel: UILabel!
     
     var feedbackGenerator : UISelectionFeedbackGenerator? = nil
     var isYearly: Bool = true
@@ -31,13 +36,28 @@ class PremiumViewController: UIViewController {
     
     var tap = UITapGestureRecognizer()
     
+    var product: SKProduct?
+    var yearlyProduct: SKProduct?
+    var monthlyProduct: SKProduct?
+
+    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var restoreBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchProducts()
         setupUI()
         setupGestures()
+    }
+    
+    @IBAction func didTapPurchase(_ sender: Any) {
+        guard let product = product else {return}
+        if SKPaymentQueue.canMakePayments() {
+            let payment = SKPayment(product: product)
+            SKPaymentQueue.default().add(self)
+            SKPaymentQueue.default().add(payment)
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -58,7 +78,7 @@ class PremiumViewController: UIViewController {
             labelBeingUnselected = mostPopularLabel
         }
         
-        labelBeingUnselected.textColor = .white
+        labelBeingSelected.textColor = .white
         labelBeingUnselected.textColor = .black
         
         viewBeingUnselected.addGestureRecognizer(tap)
@@ -91,6 +111,8 @@ class PremiumViewController: UIViewController {
         continueBtn.layer.cornerRadius = 8
         
         restoreBtn.setTitleColor(selectedBgColor, for: .normal)
+        labelBeingSelected.textColor = .white
+        labelBeingUnselected.textColor = .black
     }
     
     fileprivate func setupGestures() {
@@ -104,4 +126,56 @@ class PremiumViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension PremiumViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        
+        yearlyProduct = response.products.last
+        monthlyProduct = response.products.first
+        if isYearly {
+            product = yearlyProduct
+        } else {
+            product = monthlyProduct
+        }
+
+        DispatchQueue.main.async {
+            guard let yearlyProduct = self.yearlyProduct else {return}
+            guard let monthlyProduct = self.monthlyProduct else {return}
+            self.yearlyLabel.text = yearlyProduct.localizedPrice + "*"
+            self.monthlyLabel.text = monthlyProduct.localizedPrice
+            self.monthlyDiscountLabel.text = "*Save 25% When You Subcribe Annually"
+        }
+
+
+    }
+    
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchasing:
+                //no op
+                break
+            case .purchased, .restored:
+                UserDefaults.standard.setValue(true, forKey: "premium_account")
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            case . failed, .deferred:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            default:
+                SKPaymentQueue.default().finishTransaction(transaction)
+                SKPaymentQueue.default().remove(self)
+                break
+            }
+        }
+    }
+    
+    fileprivate func fetchProducts(){
+        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
+        request.delegate = self
+        request.start()
+    }
 }

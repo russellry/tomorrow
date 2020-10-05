@@ -22,6 +22,7 @@
 		FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB36747F249A5537003D2F1E /* GoogleService-Info.plist */; };
 		FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB367481249A666A003D2F1E /* KeychainItem.swift */; };
 		FB367484249AA245003D2F1E /* PublicVar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB367483249AA245003D2F1E /* PublicVar.swift */; };
+		FB58B553252618830043EB35 /* SKProduct+Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB58B552252618830043EB35 /* SKProduct+Localized.swift */; };
 		FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB5A135E24FAB7A900F9A3C0 /* ProfileScreen.storyboard */; };
 		FB5A136124FAB7E500F9A3C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A136024FAB7E500F9A3C0 /* ProfileViewController.swift */; };
 		FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */; };
@@ -64,6 +65,7 @@
 		FB36747F249A5537003D2F1E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FB367481249A666A003D2F1E /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		FB367483249AA245003D2F1E /* PublicVar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVar.swift; sourceTree = "<group>"; };
+		FB58B552252618830043EB35 /* SKProduct+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKProduct+Localized.swift"; sourceTree = "<group>"; };
 		FB5A135E24FAB7A900F9A3C0 /* ProfileScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileScreen.storyboard; sourceTree = "<group>"; };
 		FB5A136024FAB7E500F9A3C0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		FB5A136824FD5DDF00F9A3C0 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				FB36746724961B22003D2F1E /* UIViewController+Background.swift */,
 				FB3674762497BE70003D2F1E /* UITextField.swift */,
+				FB58B552252618830043EB35 /* SKProduct+Localized.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,
 				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,
 				FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */,
+				FB58B553252618830043EB35 /* SKProduct+Localized.swift in Sources */,
 				FB5A13792503B20D00F9A3C0 /* AppDelegate+Extension.swift in Sources */,
 				FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */,
 				FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */,
