@@ -42,11 +42,25 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     fileprivate func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showDayPassed), name: .NSCalendarDayChanged, object: nil)
+    }
+    
+    @objc func showDayPassed() {
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        if !isToday {
+            UserDefaults.standard.set(!isToday, forKey: "isToday")
+        }
+        refresh()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     fileprivate func teardownNotificationCenter(){
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+        NotificationCenter.default.removeObserver(self, name: .NSCalendarDayChanged, object: nil)
+
     }
     
     override func viewDidLoad() {
@@ -438,7 +452,7 @@ extension HomeViewController {
         do {
             fetchedRC = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
             fetchedRC.delegate = self
-            try fetchedRC.performFetch() //TODO: fetchedRC -> filter by date...?
+            try fetchedRC.performFetch()
         } catch let error as NSError {
             NSLog("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -490,23 +504,6 @@ extension HomeViewController: SideMenuNavigationControllerDelegate {
 }
 
 extension HomeViewController: FloatyDelegate {
-    // MARK: - Floaty Delegate Methods
-    func floatyWillOpen(_ floaty: Floaty) {
-        print("Floaty Will Open")
-    }
-    
-    func floatyDidOpen(_ floaty: Floaty) {
-        print("Floaty Did Open")
-    }
-    
-    func floatyWillClose(_ floaty: Floaty) {
-        print("Floaty Will Close")
-    }
-    
-    func floatyDidClose(_ floaty: Floaty) {
-        print("Floaty Did Close")
-    }
-    
     func layoutFABforQuadAnimation(floaty : Floaty) {
         floaty.hasShadow = false
         floaty.fabDelegate = self

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270426510742B9BF4E230206 /* Pods_tomorrow.framework */; };
+		FB13D46A252B6EB900E8D7DF /* NSNotification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB13D469252B6EB900E8D7DF /* NSNotification+Name.swift */; };
 		FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2C01D424D560030093D16D /* EntryTableViewCell.swift */; };
 		FB2C01D724D560040093D16D /* EntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2C01D524D560040093D16D /* EntryTableViewCell.xib */; };
 		FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36744D2495313A003D2F1E /* AppDelegate.swift */; };
@@ -48,6 +49,7 @@
 		035E02E42098671B790B6929 /* Pods-tomorrow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tomorrow.debug.xcconfig"; path = "Target Support Files/Pods-tomorrow/Pods-tomorrow.debug.xcconfig"; sourceTree = "<group>"; };
 		270426510742B9BF4E230206 /* Pods_tomorrow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tomorrow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B50E03F8DCD23BB3830237 /* Pods-tomorrow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tomorrow.release.xcconfig"; path = "Target Support Files/Pods-tomorrow/Pods-tomorrow.release.xcconfig"; sourceTree = "<group>"; };
+		FB13D469252B6EB900E8D7DF /* NSNotification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Name.swift"; sourceTree = "<group>"; };
 		FB2C01D424D560030093D16D /* EntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryTableViewCell.swift; sourceTree = "<group>"; };
 		FB2C01D524D560040093D16D /* EntryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTableViewCell.xib; sourceTree = "<group>"; };
 		FB36744A2495313A003D2F1E /* tomorrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomorrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +169,7 @@
 				FB36746724961B22003D2F1E /* UIViewController+Background.swift */,
 				FB3674762497BE70003D2F1E /* UITextField.swift */,
 				FB58B552252618830043EB35 /* SKProduct+Localized.swift */,
+				FB13D469252B6EB900E8D7DF /* NSNotification+Name.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
+				FB13D46A252B6EB900E8D7DF /* NSNotification+Name.swift in Sources */,
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
 				FB68B990250B95AE00D5C034 /* CustomHeader.swift in Sources */,
