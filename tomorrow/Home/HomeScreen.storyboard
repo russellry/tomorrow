@@ -56,20 +56,11 @@
                         <outlet property="floatyQuad" destination="QlR-KI-5vl" id="cU4-61-Ric"/>
                         <outlet property="navbar" destination="led-D6-bJt" id="98m-ZW-sFY"/>
                         <outlet property="tableView" destination="9MS-qX-Hej" id="xTc-iy-rHM"/>
-                        <segue destination="5BI-Uc-DUW" kind="presentation" identifier="toPremium" id="qWm-4i-6jg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x66-ev-PmV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1020" y="59"/>
-        </scene>
-        <!--PremiumScreen-->
-        <scene sceneID="ejJ-13-wAi">
-            <objects>
-                <viewControllerPlaceholder storyboardName="PremiumScreen" id="5BI-Uc-DUW" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="D9S-Tq-aGe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1742" y="200"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3iU-jj-n2J">

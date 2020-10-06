@@ -23,6 +23,10 @@ class PremiumViewController: UIViewController {
     @IBOutlet weak var monthlyLabel: UILabel!
     @IBOutlet weak var monthlyDiscountLabel: UILabel!
     
+    var yearlyLabelText = ""
+    var monthlyLabelText = ""
+    var monthlyDiscountLabelText = ""
+    
     var feedbackGenerator : UISelectionFeedbackGenerator? = nil
     var isYearly: Bool = true
     var viewBeingSelected = UIView()
@@ -46,7 +50,6 @@ class PremiumViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchProducts()
         setupUI()
         setupGestures()
     }
@@ -113,6 +116,10 @@ class PremiumViewController: UIViewController {
         restoreBtn.setTitleColor(selectedBgColor, for: .normal)
         labelBeingSelected.textColor = .white
         labelBeingUnselected.textColor = .black
+        
+        yearlyLabel.text = yearlyLabelText
+        monthlyLabel.text = monthlyLabelText
+        monthlyDiscountLabel.text = monthlyDiscountLabelText
     }
     
     fileprivate func setupGestures() {
@@ -128,27 +135,7 @@ class PremiumViewController: UIViewController {
 
 }
 
-extension PremiumViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        
-        yearlyProduct = response.products.last
-        monthlyProduct = response.products.first
-        if isYearly {
-            product = yearlyProduct
-        } else {
-            product = monthlyProduct
-        }
-
-        DispatchQueue.main.async {
-            guard let yearlyProduct = self.yearlyProduct else {return}
-            guard let monthlyProduct = self.monthlyProduct else {return}
-            self.yearlyLabel.text = yearlyProduct.localizedPrice + "*"
-            self.monthlyLabel.text = monthlyProduct.localizedPrice
-            self.monthlyDiscountLabel.text = "*Save 25% When You Subcribe Annually"
-        }
-
-
-    }
+extension PremiumViewController: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
@@ -157,7 +144,7 @@ extension PremiumViewController: SKProductsRequestDelegate, SKPaymentTransaction
                 //no op
                 break
             case .purchased, .restored:
-                UserDefaults.standard.setValue(true, forKey: "premium_account")
+                UserDefaults.standard.setValue(true, forKey: "is_premium")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 SKPaymentQueue.default().remove(self)
                 break
@@ -171,11 +158,5 @@ extension PremiumViewController: SKProductsRequestDelegate, SKPaymentTransaction
                 break
             }
         }
-    }
-    
-    fileprivate func fetchProducts(){
-        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
-        request.delegate = self
-        request.start()
     }
 }
