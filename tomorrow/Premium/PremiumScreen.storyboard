@@ -189,6 +189,9 @@ Save 25%</string>
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                         <state key="normal" title="Restore Subscription"/>
+                                                        <connections>
+                                                            <action selector="didTapRestore:" destination="fHO-g9-cHS" eventType="touchUpInside" id="oSX-Dj-6Ep"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>

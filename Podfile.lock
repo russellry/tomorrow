@@ -411,6 +411,7 @@ PODS:
     - SDWebImage/Core (= 5.8.1)
   - SDWebImage/Core (5.8.1)
   - SideMenu (6.4.9)
+  - SKActivityIndicatorView (1.0.0)
 
 DEPENDENCIES:
   - FBSDKLoginKit
@@ -419,6 +420,7 @@ DEPENDENCIES:
   - Floaty (~> 4.2.0)
   - FSCalendar
   - SideMenu
+  - SKActivityIndicatorView (~> 1.0.0)
 
 SPEC REPOS:
   trunk:
@@ -453,6 +455,7 @@ SPEC REPOS:
     - PromisesObjC
     - SDWebImage
     - SideMenu
+    - SKActivityIndicatorView
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -486,7 +489,8 @@ SPEC CHECKSUMS:
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
   SideMenu: 8ef57a3cfc024a2d3fc1c036c7fe98537baec9e0
+  SKActivityIndicatorView: 81c123380127ad497f9b57cd4d11347e40ab3427
 
-PODFILE CHECKSUM: 940ad0b5d95e87b679016cc3f617f371f9ace536
+PODFILE CHECKSUM: b637f56bc220fcce927073bbd2d084fb840b5d38
 
 COCOAPODS: 1.8.4

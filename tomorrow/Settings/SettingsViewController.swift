@@ -20,11 +20,13 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
     var product: SKProduct?
     var yearlyProduct: SKProduct?
     var monthlyProduct: SKProduct?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserDefaults.standard.setValue(false, forKey: "is_premium")
+
         let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
-        
+
         if !isPremium {
             fetchProducts()
         }
@@ -32,6 +34,13 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         let manageSubscriptionTapGesture = UITapGestureRecognizer(target: self, action: #selector(manageSubscriptionTapped))
         onTapLogout.addGestureRecognizer(logoutTapGesture)
         onTapManageSubscription.addGestureRecognizer(manageSubscriptionTapGesture)
+    }
+    
+    fileprivate func showProductAlert(){
+        let alert = UIAlertController(title: "Purchase Details", message: "Until 20/10/2020", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cool!", style: .default, handler: nil))
+        self.present(alert, animated: true)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,6 +53,8 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
                 presentVC.monthlyLabelText = monthlyProduct.localizedPrice
                 presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
                 presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
+                presentVC.yearlyProduct = yearlyProduct
+                presentVC.monthlyProduct = monthlyProduct
             }
 
         }
@@ -65,7 +76,7 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
 
         if isPremium {
-            //TODO: set it as "looking at your subscriptions" - what are you subscribed to.
+            showProductAlert()
         } else {
             performSegue(withIdentifier: "toPremium", sender: nil)
         }

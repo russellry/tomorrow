@@ -8,6 +8,7 @@
 
 import UIKit
 import StoreKit
+import SKActivityIndicatorView
 
 class PremiumViewController: UIViewController {
 
@@ -28,6 +29,7 @@ class PremiumViewController: UIViewController {
     var monthlyDiscountLabelText = ""
     
     var feedbackGenerator : UISelectionFeedbackGenerator? = nil
+    var overlayView = UIView()
     var isYearly: Bool = true
     var viewBeingSelected = UIView()
     var viewBeingUnselected = UIView()
@@ -41,10 +43,9 @@ class PremiumViewController: UIViewController {
     var tap = UITapGestureRecognizer()
     
     var product: SKProduct?
-    var yearlyProduct: SKProduct?
     var monthlyProduct: SKProduct?
+    var yearlyProduct: SKProduct?
 
-    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var restoreBtn: UIButton!
     
@@ -52,15 +53,32 @@ class PremiumViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupGestures()
-    }
+     }
     
     @IBAction func didTapPurchase(_ sender: Any) {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
+        SKActivityIndicator.show()
+
+        if isYearly {
+            product = yearlyProduct
+        } else {
+            product = monthlyProduct
+        }
+        
         guard let product = product else {return}
         if SKPaymentQueue.canMakePayments() {
             let payment = SKPayment(product: product)
             SKPaymentQueue.default().add(self)
             SKPaymentQueue.default().add(payment)
         }
+    }
+    
+    @IBAction func didTapRestore(_ sender: Any) {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
+        SKActivityIndicator.show()
+        
+        SKPaymentQueue.default().add(self)
+        SKPaymentQueue.default().restoreCompletedTransactions()
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -120,6 +138,10 @@ class PremiumViewController: UIViewController {
         yearlyLabel.text = yearlyLabelText
         monthlyLabel.text = monthlyLabelText
         monthlyDiscountLabel.text = monthlyDiscountLabelText
+
+        overlayView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+        overlayView.backgroundColor = .black
+        overlayView.alpha = 0.7
     }
     
     fileprivate func setupGestures() {
@@ -130,7 +152,15 @@ class PremiumViewController: UIViewController {
     }
     
     @IBAction func onTapClose(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss()
+    }
+    
+    fileprivate func dismiss(){
+        let alert = UIAlertController(title: "Purchase Restored", message: "You have already purchased this item.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
     }
 
 }
@@ -147,16 +177,25 @@ extension PremiumViewController: SKPaymentTransactionObserver {
                 UserDefaults.standard.setValue(true, forKey: "is_premium")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 SKPaymentQueue.default().remove(self)
+                SKActivityIndicator.dismiss()
+                overlayView.removeFromSuperview()
+                
+                dismiss()
                 break
             case . failed, .deferred:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 SKPaymentQueue.default().remove(self)
+                SKActivityIndicator.dismiss()
+                overlayView.removeFromSuperview()
                 break
             default:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 SKPaymentQueue.default().remove(self)
+                SKActivityIndicator.dismiss()
+                overlayView.removeFromSuperview()
                 break
             }
         }
+
     }
 }

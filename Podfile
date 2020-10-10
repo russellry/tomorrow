@@ -12,5 +12,6 @@ target 'tomorrow' do
     pod 'SideMenu'
     pod 'FSCalendar'
     pod 'Floaty', '~> 4.2.0'
+pod 'SKActivityIndicatorView', '~> 1.0.0'
 
 end
