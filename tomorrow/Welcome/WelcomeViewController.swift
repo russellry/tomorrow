@@ -11,12 +11,14 @@ import AuthenticationServices
 import CryptoKit
 import Firebase
 import FBSDKLoginKit
+import SKActivityIndicatorView
 
 class WelcomeViewController: UIViewController {
     
     // Unhashed nonce.
     fileprivate var currentNonce: String?
-    
+    var overlayView = UIView()
+
     @IBOutlet weak var loginStackView: UIStackView!
     let defaults = UserDefaults.standard
     
@@ -25,6 +27,13 @@ class WelcomeViewController: UIViewController {
         setBackground(name: "welcome-bg")
         setupAppleLoginView()
         setupFBLoginView()
+        setupUI()
+    }
+    
+    fileprivate func setupUI(){
+        overlayView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+        overlayView.backgroundColor = .black
+        overlayView.alpha = 0.7
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,6 +45,8 @@ class WelcomeViewController: UIViewController {
 extension WelcomeViewController: LoginButtonDelegate {
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
+        SKActivityIndicator.show()
         
         if let error = error {
             print(error.localizedDescription)
@@ -73,6 +84,8 @@ extension WelcomeViewController: LoginButtonDelegate {
             
             guard let self = self else {return}
             self.defaults.set(true, forKey: "isUserLoggedIn")
+            SKActivityIndicator.dismiss()
+            self.overlayView.removeFromSuperview()
             self.navigationController?.pushViewController(HOMEVC, animated: true)
         })
         
@@ -112,6 +125,7 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
     }
     
     @objc func handleAuthorizationAppleIDButtonPress() {
+
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()
