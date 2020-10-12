@@ -42,7 +42,6 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         let alert = UIAlertController(title: "Purchase Details", message: "Your subscription ends on" + "\n" + format.string(from: isPremiumUntil), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cool!", style: .default, handler: nil))
         self.present(alert, animated: true)
-
     }
     
     fileprivate func setupGestures() {
@@ -65,7 +64,6 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
                 presentVC.yearlyProduct = yearlyProduct
                 presentVC.monthlyProduct = monthlyProduct
             }
-
         }
     }
     

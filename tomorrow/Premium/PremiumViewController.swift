@@ -152,7 +152,7 @@ class PremiumViewController: UIViewController {
     }
     
     @IBAction func onTapClose(_ sender: Any) {
-        dismiss()
+        dismiss(animated: true, completion: nil)
     }
     
     fileprivate func dismiss(){
@@ -177,10 +177,8 @@ extension PremiumViewController: SKPaymentTransactionObserver {
                 UserDefaults.standard.setValue(true, forKey: "is_premium")
                 var expiryDate: Date?
                 if transaction.payment.productIdentifier == "tomorrow.monthly.subscription" {
-                    //TODO: compare transactionDate + 1 month, if < current date -> ignore
                     expiryDate = Calendar.current.date(byAdding: .month, value: 1, to: transaction.transactionDate!)
                 } else if transaction.payment.productIdentifier == "tomorrow.yearly.subscription" {
-                    //TODO: if td + 1 year > current date -> set is_premium_until as td + 1 year.
                     expiryDate = Calendar.current.date(byAdding: .year, value: 1, to: transaction.transactionDate!)
                 }
                 

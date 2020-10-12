@@ -9,6 +9,7 @@
 import UIKit
 import FSCalendar
 import CoreData
+import StoreKit
 
 protocol EntryChangeDelegate: class {
     func updateEntries()
@@ -30,7 +31,8 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
     private var fetchedRC: NSFetchedResultsController<Entry>!
     weak var updateEntriesDelegate: EntryChangeDelegate?
     weak var reloadProfileTableDelegate: ReloadProfileTableDelegate?
-    
+    var yearlyProduct: SKProduct?
+    var monthlyProduct: SKProduct?
     let format = DateFormatter()
     var groupedDateStrings: [Entry] = []
     
@@ -42,6 +44,14 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
         setupTimezone()
         refresh()
         setupTodayDate()
+        setupPremium()
+    }
+    
+    fileprivate func setupPremium(){
+        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
+        if !isPremium {
+            fetchProducts()
+        }
     }
     
     func updateEntries() {
@@ -75,20 +85,55 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
         }
         tableView.reloadData()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toPremium" {
+            if let navigationController = segue.destination as? UINavigationController,
+               let presentVC = navigationController.viewControllers.first as? PremiumViewController {
+                guard let yearlyProduct = self.yearlyProduct else {return}
+                guard let monthlyProduct = self.monthlyProduct else {return}
+                
+                presentVC.monthlyLabelText = monthlyProduct.localizedPrice
+                presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
+                presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
+                presentVC.yearlyProduct = yearlyProduct
+                presentVC.monthlyProduct = monthlyProduct
+            }
+        }
+    }
 }
 
 extension ProfileViewController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        groupedDateStrings = []
-        UserDefaults.standard.set(date, forKey: "dateSelected")
-        for entry in fetchedRC.fetchedObjects! {
-            let str1 = format.string(from: entry.dateCreated)
-            let str2 = format.string(from: date)
-            if str1 == str2 {
-                groupedDateStrings.append(entry)
+        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
+        
+        if isPremium {
+            groupedDateStrings = []
+            UserDefaults.standard.set(date, forKey: "dateSelected")
+            for entry in fetchedRC.fetchedObjects! {
+                let str1 = format.string(from: entry.dateCreated)
+                let str2 = format.string(from: date)
+                if str1 == str2 {
+                    groupedDateStrings.append(entry)
+                }
             }
+            tableView.reloadData()
+        } else {
+            performSegue(withIdentifier: "toPremium", sender: nil)
         }
-        tableView.reloadData()
+    }
+}
+
+extension ProfileViewController: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        yearlyProduct = response.products.last
+        monthlyProduct = response.products.first
+    }
+    
+    fileprivate func fetchProducts(){
+        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
+        request.delegate = self
+        request.start()
     }
 }
 

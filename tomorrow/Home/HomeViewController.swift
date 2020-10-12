@@ -10,10 +10,10 @@ import UIKit
 import CoreData
 import SideMenu
 import Floaty
+import StoreKit
 
 class HomeViewController: UIViewController, MenuControllerDelegate {
     
-    //TODO: need state management for done with day vs still left with things to do -> Can put into settingsVC to say oh i still got things to do today.
     var isEditingText = false
     
     let productCellId = "EntryTableViewCell"
@@ -38,11 +38,46 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
     let calendar = Calendar.current
+    
+    var yearlyProduct: SKProduct?
+    var monthlyProduct: SKProduct?
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        clearEmptyData()
+        setupTimezone()
+        tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
+        layoutFABforQuadAnimation(floaty: floatyQuad)
+        setupPremium()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toPremium" {
+            if let navigationController = segue.destination as? UINavigationController,
+               let presentVC = navigationController.viewControllers.first as? PremiumViewController {
+                guard let yearlyProduct = self.yearlyProduct else {return}
+                guard let monthlyProduct = self.monthlyProduct else {return}
+                
+                presentVC.monthlyLabelText = monthlyProduct.localizedPrice
+                presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
+                presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
+                presentVC.yearlyProduct = yearlyProduct
+                presentVC.monthlyProduct = monthlyProduct
+            }
+        }
+    }
+    
     fileprivate func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showDayPassed), name: .NSCalendarDayChanged, object: nil)
+    }
+    
+    fileprivate func setupPremium(){
+        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
+        if !isPremium {
+            fetchProducts()
+        }
     }
     
     @objc func showDayPassed() {
@@ -61,14 +96,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
         NotificationCenter.default.removeObserver(self, name: .NSCalendarDayChanged, object: nil)
 
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        clearEmptyData()
-        setupTimezone()
-        tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
-        layoutFABforQuadAnimation(floaty: floatyQuad)
     }
     
     fileprivate func clearEmptyData(){
@@ -193,13 +220,15 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     
     
     fileprivate func addNewEntryCell() {
+        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
+
         let numberOfRows = tableView.numberOfRows(inSection: 0)
         if numberOfRows == 0 {
             addEntry(name: "")
             let index = IndexPath(row: numberOfRows, section: 0)
             let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
             selectNextPossibleCellTableTap(cell)
-        } else {
+        } else if isPremium || (!isPremium && numberOfRows < 5) {
             let index = IndexPath(row: numberOfRows - 1, section: 0)
             tableView.scrollToRow(at: index, at: .bottom, animated: false)
             let cell = tableView.cellForRow(at: index) as! EntryTableViewCell
@@ -210,6 +239,8 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
                 let cell = tableView.cellForRow(at: newIndex) as! EntryTableViewCell
                 selectNextPossibleCellTableTap(cell)
             }
+        } else {
+            performSegue(withIdentifier: "toPremium", sender: nil)
         }
     }
     
@@ -408,8 +439,16 @@ extension HomeViewController: CellDynamicHeightProtocol {
 //MARK: - Select Next Cell
 extension HomeViewController: SelectNextCellProtocol {
     func selectNextPossibleCell(_ cell: EntryTableViewCell) {
+        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
+
         if let indexPath = tableView.indexPath(for: cell) {
             guard let entriesCount = fetchedRC.fetchedObjects?.count else {return}
+            
+            if !isPremium && entriesCount >= 5 {
+                performSegue(withIdentifier: "toPremium", sender: nil)
+                return
+            }
+            
             if entriesCount - 1 < indexPath.row + 1 {
                 addEntry(name: "")
             }
@@ -421,7 +460,8 @@ extension HomeViewController: SelectNextCellProtocol {
         }
     }
     
-    func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {
+    func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {        
+        
         if let indexPath = tableView.indexPath(for: cell) {
             let index = IndexPath(row: indexPath.row, section: 0)
             let nextCell = tableView.cellForRow(at: index) as! EntryTableViewCell
@@ -525,5 +565,18 @@ extension HomeViewController: FloatyDelegate {
             self.addNewEntryCell()
         }
         addItem.title = "Add"
+    }
+}
+
+extension HomeViewController: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        yearlyProduct = response.products.last
+        monthlyProduct = response.products.first
+    }
+    
+    fileprivate func fetchProducts(){
+        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
+        request.delegate = self
+        request.start()
     }
 }

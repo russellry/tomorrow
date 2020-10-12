@@ -56,11 +56,30 @@
                         <outlet property="floatyQuad" destination="QlR-KI-5vl" id="cU4-61-Ric"/>
                         <outlet property="navbar" destination="led-D6-bJt" id="98m-ZW-sFY"/>
                         <outlet property="tableView" destination="9MS-qX-Hej" id="xTc-iy-rHM"/>
+                        <segue destination="f6z-Ox-zuT" kind="show" identifier="toPremium" id="yc6-Wa-pzc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x66-ev-PmV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1020" y="59"/>
+        </scene>
+        <!--Storyboard Reference-->
+        <scene sceneID="Rrw-hh-dWw">
+            <objects>
+                <viewControllerPlaceholder id="IYE-AU-AUO" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zpU-om-WM7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1867" y="-272"/>
+        </scene>
+        <!--PremiumScreen-->
+        <scene sceneID="Yfa-9G-ZCw">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PremiumScreen" id="f6z-Ox-zuT" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="k8w-YF-vF3"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ene-Ot-eah" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1600" y="53"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3iU-jj-n2J">
