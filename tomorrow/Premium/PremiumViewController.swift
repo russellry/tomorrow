@@ -186,13 +186,9 @@ extension PremiumViewController: SKPaymentTransactionObserver {
                 
                 switch expDate.compare(Date()) {
                 
-                case .orderedAscending:
-                    print("Exp date is earlier than current")
-                    //no op
-                case .orderedSame:
-                    print("Exp date same as current")
+                case .orderedAscending, .orderedSame:
+                    NSLog("exp date same/less")
                 case .orderedDescending:
-                    print("Exp date is later than current")
                     UserDefaults.standard.setValue(expiryDate, forKey: "is_premium_until")
                 }
                 

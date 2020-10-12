@@ -15,6 +15,9 @@ import StoreKit
 class HomeViewController: UIViewController, MenuControllerDelegate {
     
     var isEditingText = false
+    var titleText = ""
+    var messageText = ""
+    var editItemTitleText = ""
     
     let productCellId = "EntryTableViewCell"
     let format = DateFormatter()
@@ -23,7 +26,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     var startOfDayComponent = DateComponents()
     
     var doneBtn = UIBarButtonItem()
-    var addBtn = UIBarButtonItem()
     
     let dimmingView = UIView()
     @IBOutlet weak var floatyQuad: Floaty!
@@ -176,8 +178,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tableTapped))
         tableView.addGestureRecognizer(tap)
         doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(clickedDone))
-        addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(clickedAdd))
-        navbar.rightBarButtonItem = addBtn
+        navbar.rightBarButtonItem = nil
         setupSideMenu()
     }
     
@@ -254,6 +255,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
         }
+        editingText(true)
     }
     
     @objc func keyboardWillHide(_ notification:Notification) {
@@ -262,6 +264,7 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
             self.tableView.contentInset = contentInset
             self.tableView.scrollIndicatorInsets = contentInset
         }
+        editingText(false)
     }
     
     fileprivate func setupNib(){
@@ -276,27 +279,12 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         editingText(false)
     }
     
-    @objc func clickedAdd() {
-//        editingText(true)
-    }
-    
     func editingText(_ isEditingTextStatus: Bool){
         if isEditingTextStatus {
             navbar.rightBarButtonItem = doneBtn
         } else {
             navbar.rightBarButtonItem = nil
             view.endEditing(true)
-        }
-    }
-    
-    func toggleBarButton(){
-        isEditingText = !isEditingText
-        
-        if isEditingText {
-            navbar.rightBarButtonItem = doneBtn
-            //TODO: add entry
-        } else {
-            navbar.rightBarButtonItem = addBtn
         }
     }
 }
@@ -373,10 +361,10 @@ extension HomeViewController: UITableViewDataSource {
         let isToday = UserDefaults.standard.bool(forKey: "isToday")
 
         if isToday {
-            view.title.text = "These are your tasks for today."
+            view.title.text = "These are your tasks for Today."
             header.backgroundView = UIImageView(image: UIImage(named: "header-today-bg"))
         } else {
-            view.title.text = "What are you doing for Tomorrow?"
+            view.title.text = "What are your tasks Tomorrow?"
             header.backgroundView = UIImageView(image: UIImage(named: "header-tmr-bg"))
         }
         
@@ -460,7 +448,7 @@ extension HomeViewController: SelectNextCellProtocol {
         }
     }
     
-    func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {        
+    func selectNextPossibleCellTableTap(_ cell: EntryTableViewCell) {
         
         if let indexPath = tableView.indexPath(for: cell) {
             let index = IndexPath(row: indexPath.row, section: 0)
@@ -482,10 +470,11 @@ extension HomeViewController {
         
         let dateFrom = calendar.date(byAdding: dayComponentFrom, to: calendar.date(from: startOfDayComponent)!)!
         let dateTo = calendar.date(byAdding: dayComponentTo, to: calendar.date(from: startOfDayComponent)!)!
-        print("dateFrom \(dateFrom)")
-        print("dateTo \(dateTo)")
+
+        
         let datePredicateFrom = NSPredicate(format: "dateCreated >= %@", dateFrom as NSDate)
         let datePredicateTo = NSPredicate(format: "dateCreated < %@", dateTo as NSDate)
+        
         request.predicate = datePredicateTo
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicateFrom, datePredicateTo])
         do {
@@ -543,28 +532,57 @@ extension HomeViewController: SideMenuNavigationControllerDelegate {
 }
 
 extension HomeViewController: FloatyDelegate {
+    fileprivate func setupFloaty() {
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+
+        if isToday {
+            editItemTitleText = "Tomorrow"
+            titleText = "Hey Congrats!"
+            messageText = "Are you finished with your tasks today?"
+        } else {
+            editItemTitleText = "Go Back"
+            titleText = "Looking Back"
+            messageText = "Not quite done with today's tasks?"
+        }
+    }
+    
+    func floatyWillOpen(_ floaty: Floaty) {
+        setupFloaty()
+    }
+    
     func layoutFABforQuadAnimation(floaty : Floaty) {
         floaty.hasShadow = false
         floaty.fabDelegate = self
         floaty.respondsToKeyboard = false
         
-        let editItem = floaty.addItem("", icon: UIImage(systemName: "square.and.pencil")){ _ in
-            let alert = UIAlertController(title: "Done For Today", message: "Are you finished with your tasks today?", preferredStyle: .alert)
+        let isToday = UserDefaults.standard.bool(forKey: "isToday")
+        
+        if isToday {
+            editItemTitleText = "Tomorrow"
+        } else {
+            editItemTitleText = "Go Back"
+        }
+        
+        floaty.addItem(editItemTitleText, icon: UIImage(systemName: "square.and.pencil")){ item in
+            
+            let alert = UIAlertController(title: self.titleText, message: self.messageText, preferredStyle: .alert)
+            
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
                 let isToday = UserDefaults.standard.bool(forKey: "isToday")
                 UserDefaults.standard.set(!isToday, forKey: "isToday")
-                print("is it today: \(UserDefaults.standard.bool(forKey: "isToday"))")
+                self.setupFloaty()
+                item.title = self.editItemTitleText
+
                 self.refresh()
                 self.tableView.reloadData()
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
-        editItem.title = "Edit"
-        let addItem = floaty.addItem("", icon: UIImage(systemName: "plus")){ _ in
+                
+        floaty.addItem("Add", icon: UIImage(systemName: "plus")){ _ in
             self.addNewEntryCell()
         }
-        addItem.title = "Add"
     }
 }
 

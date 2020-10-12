@@ -66,7 +66,7 @@ class EntryTableViewCell: UITableViewCell {
 
 extension EntryTableViewCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        //TODO: when it begins, whole cell should be visible. TODO: leave it for now
+        
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
