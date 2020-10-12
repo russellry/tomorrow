@@ -11,7 +11,7 @@ import StoreKit
 import SKActivityIndicatorView
 
 class PremiumViewController: UIViewController {
-
+    
     @IBOutlet weak var navCloseBtn: UIBarButtonItem!
     @IBOutlet weak var mostPopularView: UIView!
     @IBOutlet weak var mostFlexibleView: UIView!
@@ -45,7 +45,7 @@ class PremiumViewController: UIViewController {
     var product: SKProduct?
     var monthlyProduct: SKProduct?
     var yearlyProduct: SKProduct?
-
+    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var restoreBtn: UIButton!
     
@@ -53,12 +53,12 @@ class PremiumViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupGestures()
-     }
+    }
     
     @IBAction func didTapPurchase(_ sender: Any) {
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
         SKActivityIndicator.show()
-
+        
         if isYearly {
             product = yearlyProduct
         } else {
@@ -86,7 +86,7 @@ class PremiumViewController: UIViewController {
         
         feedbackGenerator?.selectionChanged()
         feedbackGenerator?.prepare()
-
+        
         if isYearly {
             viewBeingSelected = mostPopularView
             viewBeingUnselected = mostFlexibleView
@@ -138,7 +138,7 @@ class PremiumViewController: UIViewController {
         yearlyLabel.text = yearlyLabelText
         monthlyLabel.text = monthlyLabelText
         monthlyDiscountLabel.text = monthlyDiscountLabelText
-
+        
         overlayView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
         overlayView.backgroundColor = .black
         overlayView.alpha = 0.7
@@ -162,7 +162,7 @@ class PremiumViewController: UIViewController {
         }))
         self.present(alert, animated: true)
     }
-
+    
 }
 
 extension PremiumViewController: SKPaymentTransactionObserver {
@@ -175,6 +175,29 @@ extension PremiumViewController: SKPaymentTransactionObserver {
                 break
             case .purchased, .restored:
                 UserDefaults.standard.setValue(true, forKey: "is_premium")
+                var expiryDate: Date?
+                if transaction.payment.productIdentifier == "tomorrow.monthly.subscription" {
+                    //TODO: compare transactionDate + 1 month, if < current date -> ignore
+                    expiryDate = Calendar.current.date(byAdding: .month, value: 1, to: transaction.transactionDate!)
+                } else if transaction.payment.productIdentifier == "tomorrow.yearly.subscription" {
+                    //TODO: if td + 1 year > current date -> set is_premium_until as td + 1 year.
+                    expiryDate = Calendar.current.date(byAdding: .year, value: 1, to: transaction.transactionDate!)
+                }
+                
+                guard let expDate = expiryDate else {return}
+                
+                switch expDate.compare(Date()) {
+                
+                case .orderedAscending:
+                    print("Exp date is earlier than current")
+                    //no op
+                case .orderedSame:
+                    print("Exp date same as current")
+                case .orderedDescending:
+                    print("Exp date is later than current")
+                    UserDefaults.standard.setValue(expiryDate, forKey: "is_premium_until")
+                }
+                
                 SKPaymentQueue.default().finishTransaction(transaction)
                 SKPaymentQueue.default().remove(self)
                 SKActivityIndicator.dismiss()
@@ -196,6 +219,6 @@ extension PremiumViewController: SKPaymentTransactionObserver {
                 break
             }
         }
-
+        
     }
 }

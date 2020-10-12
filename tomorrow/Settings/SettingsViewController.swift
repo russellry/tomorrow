@@ -20,7 +20,8 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
     var product: SKProduct?
     var yearlyProduct: SKProduct?
     var monthlyProduct: SKProduct?
-
+    let format = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaults.standard.setValue(false, forKey: "is_premium")
@@ -30,17 +31,25 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         if !isPremium {
             fetchProducts()
         }
+        setupGestures()
+    }
+    
+    fileprivate func showProductAlert(){
+        let isPremiumUntil = UserDefaults.standard.object(forKey: "is_premium_until") as! Date
+        format.timeZone = .current
+        format.dateFormat = "MMM d, yyyy"
+        
+        let alert = UIAlertController(title: "Purchase Details", message: "Your subscription ends on" + "\n" + format.string(from: isPremiumUntil), preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cool!", style: .default, handler: nil))
+        self.present(alert, animated: true)
+
+    }
+    
+    fileprivate func setupGestures() {
         let logoutTapGesture = UITapGestureRecognizer(target: self, action: #selector(logoutTapped))
         let manageSubscriptionTapGesture = UITapGestureRecognizer(target: self, action: #selector(manageSubscriptionTapped))
         onTapLogout.addGestureRecognizer(logoutTapGesture)
         onTapManageSubscription.addGestureRecognizer(manageSubscriptionTapGesture)
-    }
-    
-    fileprivate func showProductAlert(){
-        let alert = UIAlertController(title: "Purchase Details", message: "Until 20/10/2020", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cool!", style: .default, handler: nil))
-        self.present(alert, animated: true)
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
