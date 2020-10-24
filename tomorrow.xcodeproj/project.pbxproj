@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7198C4FDB702EBFF76368306 /* Pods_tomorrow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 270426510742B9BF4E230206 /* Pods_tomorrow.framework */; };
 		FB13D46A252B6EB900E8D7DF /* NSNotification+Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB13D469252B6EB900E8D7DF /* NSNotification+Name.swift */; };
+		FB13D4EF2534A98800E8D7DF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB13D4EE2534A98800E8D7DF /* AccountViewController.swift */; };
+		FB13D4F32534A99200E8D7DF /* AccountScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB13D4F22534A99200E8D7DF /* AccountScreen.storyboard */; };
 		FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2C01D424D560030093D16D /* EntryTableViewCell.swift */; };
 		FB2C01D724D560040093D16D /* EntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB2C01D524D560040093D16D /* EntryTableViewCell.xib */; };
 		FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB36744D2495313A003D2F1E /* AppDelegate.swift */; };
@@ -50,6 +52,8 @@
 		270426510742B9BF4E230206 /* Pods_tomorrow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tomorrow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6B50E03F8DCD23BB3830237 /* Pods-tomorrow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tomorrow.release.xcconfig"; path = "Target Support Files/Pods-tomorrow/Pods-tomorrow.release.xcconfig"; sourceTree = "<group>"; };
 		FB13D469252B6EB900E8D7DF /* NSNotification+Name.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSNotification+Name.swift"; sourceTree = "<group>"; };
+		FB13D4EE2534A98800E8D7DF /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		FB13D4F22534A99200E8D7DF /* AccountScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AccountScreen.storyboard; sourceTree = "<group>"; };
 		FB2C01D424D560030093D16D /* EntryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryTableViewCell.swift; sourceTree = "<group>"; };
 		FB2C01D524D560040093D16D /* EntryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EntryTableViewCell.xib; sourceTree = "<group>"; };
 		FB36744A2495313A003D2F1E /* tomorrow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tomorrow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +126,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FB13D4ED2534A96C00E8D7DF /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				FB13D4EE2534A98800E8D7DF /* AccountViewController.swift */,
+				FB13D4F22534A99200E8D7DF /* AccountScreen.storyboard */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		FB3674412495313A003D2F1E = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +156,7 @@
 		FB36744C2495313A003D2F1E /* tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				FB13D4ED2534A96C00E8D7DF /* Account */,
 				FBC9D6D9251F267B009C8A7C /* Premium */,
 				FB5A136524FD54CF00F9A3C0 /* SideMenu */,
 				FB5A135D24FAB79C00F9A3C0 /* Profile */,
@@ -316,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB36745A2495313B003D2F1E /* LaunchScreen.storyboard in Resources */,
+				FB13D4F32534A99200E8D7DF /* AccountScreen.storyboard in Resources */,
 				FB2C01D724D560040093D16D /* EntryTableViewCell.xib in Resources */,
 				FBA5757224A7349000D59A47 /* SettingsScreen.storyboard in Resources */,
 				FB3674752497AFFF003D2F1E /* WelcomeScreen.storyboard in Resources */,
@@ -406,6 +421,7 @@
 				FB367482249A66B2003D2F1E /* KeychainItem.swift in Sources */,
 				FBB12A34251F26DF001CD137 /* PremiumViewController.swift in Sources */,
 				FB36744E2495313A003D2F1E /* AppDelegate.swift in Sources */,
+				FB13D4EF2534A98800E8D7DF /* AccountViewController.swift in Sources */,
 				FB5A136124FAB7E500F9A3C0 /* ProfileViewController.swift in Sources */,
 				FB3674772497BE70003D2F1E /* UITextField.swift in Sources */,
 				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,

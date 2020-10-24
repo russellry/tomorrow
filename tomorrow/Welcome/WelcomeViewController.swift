@@ -76,8 +76,9 @@ extension WelcomeViewController: LoginButtonDelegate {
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
-                    let profileName = Auth.auth().currentUser?.displayName ?? ""
-                    self?.defaults.set(profileName, forKey: "fbName")
+                    let profileName = Auth.auth().currentUser?.displayName ?? "New Apple User"
+                    self?.defaults.set(profileName, forKey: "name")
+                    USERNAME = profileName
                     print("Updated display name: \(profileName)")
                 }
             })
@@ -88,9 +89,6 @@ extension WelcomeViewController: LoginButtonDelegate {
             self.overlayView.removeFromSuperview()
             self.navigationController?.pushViewController(HOMEVC, animated: true)
         })
-        
-        
-        
     }
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
@@ -175,7 +173,8 @@ extension WelcomeViewController: ASAuthorizationControllerDelegate {
                         print(error.localizedDescription)
                     } else {
                         let profileName = Auth.auth().currentUser?.displayName ?? ""
-                        self?.defaults.set(profileName, forKey: "appleName")
+                        self?.defaults.set(profileName, forKey: "name")
+                        USERNAME = profileName
                         print("Updated display name: \(profileName)")
                     }
                 })

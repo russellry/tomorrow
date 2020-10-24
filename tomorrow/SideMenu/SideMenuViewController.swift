@@ -24,7 +24,7 @@ class SideMenuViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-        profileName.text = (USERNAME as? String) ?? "Name"
+        profileName.text = USERNAME
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

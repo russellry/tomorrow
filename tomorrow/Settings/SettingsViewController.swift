@@ -15,8 +15,8 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
 
     @IBOutlet weak var onTapManageSubscription: UITableViewCell!
     @IBOutlet weak var onTapAccountInfo: UITableViewCell!
-    @IBOutlet weak var onTapEditToday: UITableViewCell!
     @IBOutlet weak var onTapLogout: UITableViewCell!
+    
     var product: SKProduct?
     var yearlyProduct: SKProduct?
     var monthlyProduct: SKProduct?
@@ -46,11 +46,13 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
     
     fileprivate func setupGestures() {
         let logoutTapGesture = UITapGestureRecognizer(target: self, action: #selector(logoutTapped))
+        let accountTapGesture = UITapGestureRecognizer(target: self, action: #selector(accountTapped))
         let manageSubscriptionTapGesture = UITapGestureRecognizer(target: self, action: #selector(manageSubscriptionTapped))
         onTapLogout.addGestureRecognizer(logoutTapGesture)
         onTapManageSubscription.addGestureRecognizer(manageSubscriptionTapGesture)
+        onTapAccountInfo.addGestureRecognizer(accountTapGesture)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toPremium" {
             if let navigationController = segue.destination as? UINavigationController,
@@ -65,6 +67,10 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
                 presentVC.monthlyProduct = monthlyProduct
             }
         }
+    }
+    
+    @objc func accountTapped(){
+        performSegue(withIdentifier: "toAccount", sender: nil)
     }
     
     @objc func logoutTapped(){

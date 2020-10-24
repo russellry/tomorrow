@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dq8-xr-dQw">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Account View Controller-->
+        <scene sceneID="Wwd-NX-seW">
+            <objects>
+                <viewController id="dq8-xr-dQw" customClass="AccountViewController" customModule="tomorrow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TGW-nR-iR1">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NpA-nj-iLB">
+                                <rect key="frame" x="41.5" y="88.5" width="331" height="36"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="vXX-lA-pwG">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="35"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CeM-Yj-9tz">
+                                        <rect key="frame" x="0.0" y="35" width="331" height="1"/>
+                                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="OB8-kq-E28"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NnM-Hf-rAe">
+                                <rect key="frame" x="41.5" y="140.5" width="331" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="kE8-nN-7w7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="SAVE">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapSave:" destination="dq8-xr-dQw" eventType="touchUpInside" id="Xg2-2j-3hA"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EW8-fD-DZo">
+                                <rect key="frame" x="153" y="52" width="108.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dWM-hs-sYL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NpA-nj-iLB" firstAttribute="centerX" secondItem="dWM-hs-sYL" secondAttribute="centerX" id="9rd-QE-Z73"/>
+                            <constraint firstItem="NpA-nj-iLB" firstAttribute="top" secondItem="EW8-fD-DZo" secondAttribute="bottom" constant="16" id="ASq-yb-kjc"/>
+                            <constraint firstItem="NnM-Hf-rAe" firstAttribute="width" secondItem="dWM-hs-sYL" secondAttribute="width" multiplier="0.8" id="E0g-kL-k1Y"/>
+                            <constraint firstItem="NnM-Hf-rAe" firstAttribute="top" secondItem="NpA-nj-iLB" secondAttribute="bottom" constant="16" id="E38-TR-l37"/>
+                            <constraint firstItem="NpA-nj-iLB" firstAttribute="width" secondItem="dWM-hs-sYL" secondAttribute="width" multiplier="0.8" id="Y7z-Jx-VKJ"/>
+                            <constraint firstItem="EW8-fD-DZo" firstAttribute="centerX" secondItem="TGW-nR-iR1" secondAttribute="centerX" id="a8G-N1-x1F"/>
+                            <constraint firstItem="NnM-Hf-rAe" firstAttribute="centerX" secondItem="TGW-nR-iR1" secondAttribute="centerX" id="kyq-ql-gX4"/>
+                            <constraint firstItem="EW8-fD-DZo" firstAttribute="top" secondItem="dWM-hs-sYL" secondAttribute="top" constant="8" id="syc-0a-RoI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="saveBtn" destination="NnM-Hf-rAe" id="chQ-EX-7mo"/>
+                        <outlet property="usernameLabel" destination="vXX-lA-pwG" id="j3K-me-iEh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JTU-K9-3Ra" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-439" y="-48"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -20,13 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let isLoggedIn = UserDefaults.standard.bool(forKey: "isUserLoggedIn")
         isLoggedIn ? setupHomeScreen() : setupWelcomeScreen()
-        
-        if let user = Auth.auth().currentUser {
-            USERNAME = user.displayName
+
+        if let name = UserDefaults.standard.string(forKey: "name") {
+            USERNAME = name
+        } else {
+            if let user = Auth.auth().currentUser {
+                UserDefaults.standard.setValue(user.displayName, forKey: "name")
+                USERNAME = user.displayName ?? "New User"
+            }
         }
         
-        NSLog("*****Username is ... \(USERNAME)")
         
+
+                
 //        if let appleID = UserDefaults.standard.string(forKey: "appleAuthorizedID") {
 //            //TODO: avoid using main thread.
 //            ASAuthorizationAppleIDProvider().getCredentialState(forUserID: appleID, completion: {

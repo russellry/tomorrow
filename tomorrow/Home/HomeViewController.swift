@@ -361,10 +361,10 @@ extension HomeViewController: UITableViewDataSource {
         let isToday = UserDefaults.standard.bool(forKey: "isToday")
 
         if isToday {
-            view.title.text = "These are your tasks for Today."
+            view.title.text = "Wow, these are your tasks for Today."
             header.backgroundView = UIImageView(image: UIImage(named: "header-today-bg"))
         } else {
-            view.title.text = "What are your tasks Tomorrow?"
+            view.title.text = "Let's fill in your tasks for Tomorrow!"
             header.backgroundView = UIImageView(image: UIImage(named: "header-tmr-bg"))
         }
         
