@@ -26,7 +26,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tmrlogopdf" translatesAutoresizingMaskIntoConstraints="NO" id="T7h-uM-j9a">
-                                                    <rect key="frame" x="167" y="8" width="80" height="80"/>
+                                                    <rect key="frame" x="167" y="0.0" width="80" height="80"/>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="80" id="MUe-rs-yH1"/>
@@ -34,17 +34,25 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xe3-eS-8id">
-                                                    <rect key="frame" x="184.5" y="96" width="45" height="21"/>
+                                                    <rect key="frame" x="184.5" y="101" width="45" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="History" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3T-kX-DTQ">
+                                                    <rect key="frame" x="180" y="80" width="54.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Xe3-eS-8id" firstAttribute="top" secondItem="x3T-kX-DTQ" secondAttribute="bottom" id="14v-X4-1LW"/>
+                                                <constraint firstItem="x3T-kX-DTQ" firstAttribute="top" secondItem="T7h-uM-j9a" secondAttribute="bottom" id="2sK-Zd-YNa"/>
                                                 <constraint firstItem="T7h-uM-j9a" firstAttribute="centerX" secondItem="8j9-ZA-ANS" secondAttribute="centerX" id="Bdg-ow-DlS"/>
-                                                <constraint firstItem="T7h-uM-j9a" firstAttribute="top" secondItem="8j9-ZA-ANS" secondAttribute="top" constant="8" id="MTh-ie-zPd"/>
+                                                <constraint firstItem="x3T-kX-DTQ" firstAttribute="centerX" secondItem="8j9-ZA-ANS" secondAttribute="centerX" id="DjA-EH-len"/>
+                                                <constraint firstItem="T7h-uM-j9a" firstAttribute="top" secondItem="8j9-ZA-ANS" secondAttribute="top" id="MTh-ie-zPd"/>
                                                 <constraint firstItem="Xe3-eS-8id" firstAttribute="centerX" secondItem="T7h-uM-j9a" secondAttribute="centerX" id="dlr-rl-Lk4"/>
-                                                <constraint firstItem="Xe3-eS-8id" firstAttribute="top" secondItem="T7h-uM-j9a" secondAttribute="bottom" constant="8" id="jo7-j1-p1G"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
