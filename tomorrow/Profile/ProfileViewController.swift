@@ -85,22 +85,6 @@ class ProfileViewController: UIViewController, EntryChangeDelegate, ReloadProfil
         }
         tableView.reloadData()
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toPremium" {
-            if let navigationController = segue.destination as? UINavigationController,
-               let presentVC = navigationController.viewControllers.first as? PremiumViewController {
-                guard let yearlyProduct = self.yearlyProduct else {return}
-                guard let monthlyProduct = self.monthlyProduct else {return}
-                
-                presentVC.monthlyLabelText = monthlyProduct.localizedPrice
-                presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
-                presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
-                presentVC.yearlyProduct = yearlyProduct
-                presentVC.monthlyProduct = monthlyProduct
-            }
-        }
-    }
 }
 
 extension ProfileViewController: FSCalendarDelegate {

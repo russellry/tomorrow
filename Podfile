@@ -13,5 +13,7 @@ target 'tomorrow' do
     pod 'FSCalendar'
     pod 'Floaty', '~> 4.2.0'
 pod 'SKActivityIndicatorView', '~> 1.0.0'
+pod 'Purchases', '3.7.3'
+
 
 end

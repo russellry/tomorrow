@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import SideMenu
 import Floaty
-import StoreKit
 
 class HomeViewController: UIViewController, MenuControllerDelegate {
     
@@ -40,9 +39,6 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     private var fetchedRC: NSFetchedResultsController<Entry>!
     let calendar = Calendar.current
-    
-    var yearlyProduct: SKProduct?
-    var monthlyProduct: SKProduct?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,36 +46,12 @@ class HomeViewController: UIViewController, MenuControllerDelegate {
         setupTimezone()
         tableView.register(CustomHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         layoutFABforQuadAnimation(floaty: floatyQuad)
-        setupPremium()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toPremium" {
-            if let navigationController = segue.destination as? UINavigationController,
-               let presentVC = navigationController.viewControllers.first as? PremiumViewController {
-                guard let yearlyProduct = self.yearlyProduct else {return}
-                guard let monthlyProduct = self.monthlyProduct else {return}
-                
-                presentVC.monthlyLabelText = monthlyProduct.localizedPrice
-                presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
-                presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
-                presentVC.yearlyProduct = yearlyProduct
-                presentVC.monthlyProduct = monthlyProduct
-            }
-        }
     }
     
     fileprivate func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showDayPassed), name: .NSCalendarDayChanged, object: nil)
-    }
-    
-    fileprivate func setupPremium(){
-        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
-        if !isPremium {
-            fetchProducts()
-        }
     }
     
     @objc func showDayPassed() {
@@ -583,18 +555,5 @@ extension HomeViewController: FloatyDelegate {
         floaty.addItem("Add", icon: UIImage(systemName: "plus")){ _ in
             self.addNewEntryCell()
         }
-    }
-}
-
-extension HomeViewController: SKProductsRequestDelegate {
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        yearlyProduct = response.products.last
-        monthlyProduct = response.products.first
-    }
-    
-    fileprivate func fetchProducts(){
-        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
-        request.delegate = self
-        request.start()
     }
 }

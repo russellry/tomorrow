@@ -407,6 +407,9 @@ PODS:
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
   - PromisesObjC (1.2.9)
+  - Purchases (3.7.3):
+    - PurchasesCoreSwift (= 3.7.3)
+  - PurchasesCoreSwift (3.7.3)
   - SDWebImage (5.8.1):
     - SDWebImage/Core (= 5.8.1)
   - SDWebImage/Core (5.8.1)
@@ -419,6 +422,7 @@ DEPENDENCIES:
   - FirebaseUI
   - Floaty (~> 4.2.0)
   - FSCalendar
+  - Purchases (= 3.7.3)
   - SideMenu
   - SKActivityIndicatorView (~> 1.0.0)
 
@@ -453,6 +457,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Purchases
+    - PurchasesCoreSwift
     - SDWebImage
     - SideMenu
     - SKActivityIndicatorView
@@ -487,10 +493,12 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
+  Purchases: ae790bb695c4d4f1c13f952067d2d2c3f0d0ca5e
+  PurchasesCoreSwift: 53956256a1ff84de8f0f212ea4b9b46a53a212dc
   SDWebImage: e3eae2eda88578db0685a0c88597fdadd9433f05
   SideMenu: 8ef57a3cfc024a2d3fc1c036c7fe98537baec9e0
   SKActivityIndicatorView: 81c123380127ad497f9b57cd4d11347e40ab3427
 
-PODFILE CHECKSUM: b637f56bc220fcce927073bbd2d084fb840b5d38
+PODFILE CHECKSUM: 717a0d86561cddb910f8999005337d8d7403d41d
 
 COCOAPODS: 1.8.4

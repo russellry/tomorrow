@@ -6,6 +6,7 @@ import FBSDKCoreKit
 import Firebase
 import AuthenticationServices
 import CoreData
+import Purchases
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,8 +14,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// - Tag: did_finish_launching
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        Purchases.debugLogsEnabled = true
+        Purchases.configure(withAPIKey: "fILSzIKPiwcMuiIGJJFRhEOghbHeMeYD")
+        
         setupUserDefaults()
         FirebaseApp.configure()
+        
+        // Get the latest purchaserInfo to see if we have a pro cat user or not
+        Purchases.shared.purchaserInfo { (purchaserInfo, error) in
+            if let e = error {
+                print(e.localizedDescription)
+            }
+            // Route the view depending if we have a premium cat user or not
+            if purchaserInfo?.entitlements["premium"]?.isActive == true {
+                UserDefaults.standard.setValue(true, forKey: "is_premium")
+            } else {
+                UserDefaults.standard.setValue(false, forKey: "is_premium")
+            }
+        }
         
         //TODO: have a login state management: eg: with userdefaults for loginState, at first always false, after login true -> go to home screen, if false set by logout or first time entry -> go to welcome screen
         
@@ -30,8 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        
-
+        // we're requesting push notifications on app start only to showcase how to set the push token in RevenueCat
+        requestPushNotificationsPermissions()
                 
 //        if let appleID = UserDefaults.standard.string(forKey: "appleAuthorizedID") {
 //            //TODO: avoid using main thread.
@@ -67,6 +84,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
 //        }
         return true
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Purchases.shared.setPushToken(deviceToken)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register: \(error)")
+    }
+    
+    private func requestPushNotificationsPermissions() {
+        let userNotificationCenter = UNUserNotificationCenter.current()
+        userNotificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
+            print("Permission granted: \(granted)")
+            if granted {
+                self?.getNotificationSettings()
+            }
+        }
+    }
+    
+    private func getNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            print("Notification settings: \(settings)")
+            guard settings.authorizationStatus == .authorized else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
     }
     
     fileprivate func setupUserDefaults(){

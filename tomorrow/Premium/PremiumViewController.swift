@@ -7,11 +7,18 @@
 //
 
 import UIKit
-import StoreKit
 import SKActivityIndicatorView
+import Purchases
+
+@objc protocol SwiftPaywallDelegate {
+    func purchaseCompleted(paywall: PremiumViewController, transaction: SKPaymentTransaction, purchaserInfo: Purchases.PurchaserInfo)
+    @objc optional func purchaseFailed(paywall: PremiumViewController, purchaserInfo: Purchases.PurchaserInfo?, error: Error, userCancelled: Bool)
+    @objc optional func purchaseRestored(paywall: PremiumViewController, purchaserInfo: Purchases.PurchaserInfo?, error: Error?)
+}
 
 class PremiumViewController: UIViewController {
-    
+    var paywallDelegate : SwiftPaywallDelegate?
+
     @IBOutlet weak var navCloseBtn: UIBarButtonItem!
     @IBOutlet weak var mostPopularView: UIView!
     @IBOutlet weak var mostFlexibleView: UIView!
@@ -23,10 +30,6 @@ class PremiumViewController: UIViewController {
     @IBOutlet weak var yearlyLabel: UILabel!
     @IBOutlet weak var monthlyLabel: UILabel!
     @IBOutlet weak var monthlyDiscountLabel: UILabel!
-    
-    var yearlyLabelText = ""
-    var monthlyLabelText = ""
-    var monthlyDiscountLabelText = ""
     
     var feedbackGenerator : UISelectionFeedbackGenerator? = nil
     var overlayView = UIView()
@@ -46,11 +49,16 @@ class PremiumViewController: UIViewController {
     var monthlyProduct: SKProduct?
     var yearlyProduct: SKProduct?
     
+    private var offeringId : String?
+    
+    private var offering : Purchases.Offering?
+    
     @IBOutlet weak var continueBtn: UIButton!
     @IBOutlet weak var restoreBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        paywallDelegate = self
         setupUI()
         setupGestures()
     }
@@ -58,27 +66,67 @@ class PremiumViewController: UIViewController {
     @IBAction func didTapPurchase(_ sender: Any) {
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
         SKActivityIndicator.show()
-        
-        if isYearly {
-            product = yearlyProduct
+
+        let yearlyPackage: Purchases.Package?
+        let monthlyPackage: Purchases.Package?
+        let package: Purchases.Package?
+        if offering?.availablePackages[0].product.productIdentifier == "tomorrow.monthly.subscription" {
+            monthlyPackage = offering?.availablePackages[0]
+            yearlyPackage = offering?.availablePackages[1]
         } else {
-            product = monthlyProduct
+            monthlyPackage = offering?.availablePackages[1]
+            yearlyPackage = offering?.availablePackages[0]
+        }
+
+        if isYearly {
+            package = yearlyPackage
+        } else {
+            package = monthlyPackage
         }
         
-        guard let product = product else {return}
-        if SKPaymentQueue.canMakePayments() {
-            let payment = SKPayment(product: product)
-            SKPaymentQueue.default().add(self)
-            SKPaymentQueue.default().add(payment)
+        
+        Purchases.shared.purchasePackage(package!) { (trans, info, error, cancelled) in
+            if let error = error {
+                if let purchaseFailedHandler = self.paywallDelegate?.purchaseFailed {
+                    purchaseFailedHandler(self, info, error, cancelled)
+                } else {
+                    self.showAlert(title: "Purchase Failed", message: error.localizedDescription, actionTitle: "OK")
+                }
+            } else  {
+                if let purchaseCompletedHandler = self.paywallDelegate?.purchaseCompleted {
+                    purchaseCompletedHandler(self, trans!, info!)
+                } else {
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+            SKActivityIndicator.dismiss()
+            self.overlayView.removeFromSuperview()
         }
     }
     
     @IBAction func didTapRestore(_ sender: Any) {
         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(overlayView)
         SKActivityIndicator.show()
-        
-        SKPaymentQueue.default().add(self)
-        SKPaymentQueue.default().restoreCompletedTransactions()
+
+        Purchases.shared.restoreTransactions { (info, error) in
+            if let purchaseRestoredHandler = self.paywallDelegate?.purchaseRestored {
+                purchaseRestoredHandler(self, info, error)
+            } else {
+                if let error = error {
+                    self.showAlert(title: "Restore Failed", message: error.localizedDescription, actionTitle: "OK")
+                } else {
+                    if let purchaserInfo = info {
+                        if purchaserInfo.entitlements.active.isEmpty {
+                            self.showAlert(title: "Restore Failed", message: "Restore Unsuccessful", actionTitle: "OK")
+                        } else {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    }
+                }
+            }
+            SKActivityIndicator.dismiss()
+            self.overlayView.removeFromSuperview()
+        }
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -135,9 +183,30 @@ class PremiumViewController: UIViewController {
         labelBeingSelected.textColor = .white
         labelBeingUnselected.textColor = .black
         
-        yearlyLabel.text = yearlyLabelText
-        monthlyLabel.text = monthlyLabelText
-        monthlyDiscountLabel.text = monthlyDiscountLabelText
+        Purchases.shared.offerings { (offerings, error) in
+            
+            if error != nil {
+                NSLog(error.debugDescription)
+            }
+            
+            if let monthlyPrice = offerings?.current?.monthly?.product {
+                self.monthlyLabel.text = monthlyPrice.localizedPrice
+            }
+            if let yearlyPrice = offerings?.current?.annual?.product {
+                self.yearlyLabel.text = yearlyPrice.localizedPrice + "*"
+            }
+            self.monthlyDiscountLabel.text = "*Save 25% when you Subscribe Annually"
+            
+            if let offeringId = self.offeringId {
+                self.offering = offerings?.offering(identifier: offeringId)
+            } else {
+                self.offering = offerings?.current
+            }
+            
+            if self.offering == nil {
+                NSLog("no offerings found")
+            }
+        }
         
         overlayView = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
         overlayView.backgroundColor = .black
@@ -155,9 +224,9 @@ class PremiumViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    fileprivate func dismiss(){
-        let alert = UIAlertController(title: "Purchase Restored", message: "You have already purchased this item.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+    fileprivate func showAlert(title: String, message: String, actionTitle: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .default, handler: { _ in
             self.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true)
@@ -165,54 +234,26 @@ class PremiumViewController: UIViewController {
     
 }
 
-extension PremiumViewController: SKPaymentTransactionObserver {
+extension PremiumViewController: SwiftPaywallDelegate {
+    func purchaseCompleted(paywall: PremiumViewController, transaction: SKPaymentTransaction, purchaserInfo: Purchases.PurchaserInfo) {
+        UserDefaults.standard.setValue(true, forKey: "is_premium")
+        let expiryDate = purchaserInfo.expirationDate(forEntitlement: "premium")
+        UserDefaults.standard.setValue(expiryDate, forKey: "is_premium_until")
+        print("purchase completed")
+        dismiss(animated: true, completion: nil)
+    }
     
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchasing:
-                //no op
-                break
-            case .purchased, .restored:
-                UserDefaults.standard.setValue(true, forKey: "is_premium")
-                var expiryDate: Date?
-                if transaction.payment.productIdentifier == "tomorrow.monthly.subscription" {
-                    expiryDate = Calendar.current.date(byAdding: .month, value: 1, to: transaction.transactionDate!)
-                } else if transaction.payment.productIdentifier == "tomorrow.yearly.subscription" {
-                    expiryDate = Calendar.current.date(byAdding: .year, value: 1, to: transaction.transactionDate!)
-                }
-                
-                guard let expDate = expiryDate else {return}
-                
-                switch expDate.compare(Date()) {
-                
-                case .orderedAscending, .orderedSame:
-                    NSLog("exp date same/less")
-                case .orderedDescending:
-                    UserDefaults.standard.setValue(expiryDate, forKey: "is_premium_until")
-                }
-                
-                SKPaymentQueue.default().finishTransaction(transaction)
-                SKPaymentQueue.default().remove(self)
-                SKActivityIndicator.dismiss()
-                overlayView.removeFromSuperview()
-                
-                dismiss()
-                break
-            case . failed, .deferred:
-                SKPaymentQueue.default().finishTransaction(transaction)
-                SKPaymentQueue.default().remove(self)
-                SKActivityIndicator.dismiss()
-                overlayView.removeFromSuperview()
-                break
-            default:
-                SKPaymentQueue.default().finishTransaction(transaction)
-                SKPaymentQueue.default().remove(self)
-                SKActivityIndicator.dismiss()
-                overlayView.removeFromSuperview()
-                break
-            }
+    func purchaseRestored(paywall: PremiumViewController, purchaserInfo: Purchases.PurchaserInfo?, error: Error?) {
+        UserDefaults.standard.setValue(true, forKey: "is_premium")
+        guard let expiryDate = purchaserInfo?.expirationDate(forEntitlement: "premium") else {
+            return
         }
-        
+        UserDefaults.standard.setValue(expiryDate, forKey: "is_premium_until")
+        print("purchase restored")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func purchaseFailed(paywall: PremiumViewController, purchaserInfo: Purchases.PurchaserInfo?, error: Error, userCancelled: Bool) {
+        print("purchase failed")
     }
 }

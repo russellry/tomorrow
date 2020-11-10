@@ -9,28 +9,17 @@
 import UIKit
 import Firebase
 import FBSDKLoginKit
-import StoreKit
 
-class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
+class SettingsViewController: UITableViewController{
 
     @IBOutlet weak var onTapManageSubscription: UITableViewCell!
     @IBOutlet weak var onTapAccountInfo: UITableViewCell!
     @IBOutlet weak var onTapLogout: UITableViewCell!
-    
-    var product: SKProduct?
-    var yearlyProduct: SKProduct?
-    var monthlyProduct: SKProduct?
+
     let format = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserDefaults.standard.setValue(false, forKey: "is_premium")
-
-        let isPremium = UserDefaults.standard.bool(forKey: "is_premium")
-
-        if !isPremium {
-            fetchProducts()
-        }
         setupGestures()
     }
     
@@ -51,22 +40,6 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         onTapLogout.addGestureRecognizer(logoutTapGesture)
         onTapManageSubscription.addGestureRecognizer(manageSubscriptionTapGesture)
         onTapAccountInfo.addGestureRecognizer(accountTapGesture)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toPremium" {
-            if let navigationController = segue.destination as? UINavigationController,
-               let presentVC = navigationController.viewControllers.first as? PremiumViewController {
-                guard let yearlyProduct = self.yearlyProduct else {return}
-                guard let monthlyProduct = self.monthlyProduct else {return}
-                
-                presentVC.monthlyLabelText = monthlyProduct.localizedPrice
-                presentVC.yearlyLabelText = yearlyProduct.localizedPrice + "*"
-                presentVC.monthlyDiscountLabelText = "*Save 25% When You Subcribe Annually"
-                presentVC.yearlyProduct = yearlyProduct
-                presentVC.monthlyProduct = monthlyProduct
-            }
-        }
     }
     
     @objc func accountTapped(){
@@ -93,16 +66,5 @@ class SettingsViewController: UITableViewController, SKProductsRequestDelegate{
         } else {
             performSegue(withIdentifier: "toPremium", sender: nil)
         }
-    }
-    
-    fileprivate func fetchProducts(){
-        let request = SKProductsRequest(productIdentifiers: ["tomorrow.monthly.subscription", "tomorrow.yearly.subscription.discount"])
-        request.delegate = self
-        request.start()
-    }
-    
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        yearlyProduct = response.products.last
-        monthlyProduct = response.products.first
     }
 }
