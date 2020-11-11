@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -186,13 +186,32 @@ Save 25%</string>
                                                 <rect key="frame" x="0.0" y="128" width="414" height="85"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTH-Yt-yl0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="42.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                         <state key="normal" title="Restore Subscription"/>
                                                         <connections>
                                                             <action selector="didTapRestore:" destination="fHO-g9-cHS" eventType="touchUpInside" id="oSX-Dj-6Ep"/>
                                                         </connections>
                                                     </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ojw-An-vmI">
+                                                        <rect key="frame" x="0.0" y="42.5" width="414" height="42.5"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Luo-T9-FeX">
+                                                                <rect key="frame" x="0.0" y="0.0" width="207" height="42.5"/>
+                                                                <state key="normal" title="Terms Of Use"/>
+                                                                <connections>
+                                                                    <segue destination="cvQ-Ny-iiD" kind="presentation" id="4q3-bN-ozQ"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f8l-P1-eZX">
+                                                                <rect key="frame" x="207" y="0.0" width="207" height="42.5"/>
+                                                                <state key="normal" title="Privacy Policy"/>
+                                                                <connections>
+                                                                    <segue destination="c22-6A-lSH" kind="presentation" id="qzy-Ov-2fu"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
@@ -240,6 +259,22 @@ Save 25%</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tWd-x8-snz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1134.7826086956522" y="-15.401785714285714"/>
+        </scene>
+        <!--PrivacyPolicyScreen-->
+        <scene sceneID="aLE-ZE-tHq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PrivacyPolicyScreen" id="c22-6A-lSH" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6yw-kY-s9W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1336" y="402"/>
+        </scene>
+        <!--TermsOfUseScreen-->
+        <scene sceneID="QEJ-aI-v39">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TermsOfUseScreen" id="cvQ-Ny-iiD" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0K0-QU-gdo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="402"/>
         </scene>
         <!--Premium Page View Controller-->
         <scene sceneID="hpJ-zw-NuU">

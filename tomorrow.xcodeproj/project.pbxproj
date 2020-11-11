@@ -42,6 +42,10 @@
 		FBB12A37251F26EE001CD137 /* PremiumScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB12A36251F26EE001CD137 /* PremiumScreen.storyboard */; };
 		FBB12A3A251F278A001CD137 /* PremiumPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB12A39251F278A001CD137 /* PremiumPageViewController.swift */; };
 		FBB12A3D251F28A0001CD137 /* PremiumPagesScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB12A3C251F28A0001CD137 /* PremiumPagesScreen.storyboard */; };
+		FBB843E4255C3EB000C8BABB /* TermsOfUseScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB843E3255C3EB000C8BABB /* TermsOfUseScreen.storyboard */; };
+		FBB843E7255C3EC500C8BABB /* TermsOfUseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB843E6255C3EC500C8BABB /* TermsOfUseViewController.swift */; };
+		FBB843EB255C41BE00C8BABB /* PrivacyPolicyScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FBB843EA255C41BE00C8BABB /* PrivacyPolicyScreen.storyboard */; };
+		FBB843EE255C41DE00C8BABB /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB843ED255C41DE00C8BABB /* PrivacyPolicyViewController.swift */; };
 		FBC9D6D7251E142B009C8A7C /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC9D6D6251E142B009C8A7C /* CloudKit.framework */; };
 		FBD9B24625093A7B004DF87C /* ImmutableEntryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */; };
 		FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */; };
@@ -88,6 +92,10 @@
 		FBB12A36251F26EE001CD137 /* PremiumScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PremiumScreen.storyboard; sourceTree = "<group>"; };
 		FBB12A39251F278A001CD137 /* PremiumPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPageViewController.swift; sourceTree = "<group>"; };
 		FBB12A3C251F28A0001CD137 /* PremiumPagesScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PremiumPagesScreen.storyboard; sourceTree = "<group>"; };
+		FBB843E3255C3EB000C8BABB /* TermsOfUseScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TermsOfUseScreen.storyboard; sourceTree = "<group>"; };
+		FBB843E6255C3EC500C8BABB /* TermsOfUseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseViewController.swift; sourceTree = "<group>"; };
+		FBB843EA255C41BE00C8BABB /* PrivacyPolicyScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyPolicyScreen.storyboard; sourceTree = "<group>"; };
+		FBB843ED255C41DE00C8BABB /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		FBC9D6D6251E142B009C8A7C /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		FBD9B24425093A7B004DF87C /* ImmutableEntryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmutableEntryTableViewCell.swift; sourceTree = "<group>"; };
 		FBD9B24525093A7B004DF87C /* ImmutableEntryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImmutableEntryTableViewCell.xib; sourceTree = "<group>"; };
@@ -156,6 +164,8 @@
 		FB36744C2495313A003D2F1E /* tomorrow */ = {
 			isa = PBXGroup;
 			children = (
+				FBB843E9255C41AE00C8BABB /* PrivacyPolicy */,
+				FBB843E2255C3E9E00C8BABB /* TermsOfUse */,
 				FB13D4ED2534A96C00E8D7DF /* Account */,
 				FBC9D6D9251F267B009C8A7C /* Premium */,
 				FB5A136524FD54CF00F9A3C0 /* SideMenu */,
@@ -257,6 +267,24 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		FBB843E2255C3E9E00C8BABB /* TermsOfUse */ = {
+			isa = PBXGroup;
+			children = (
+				FBB843E3255C3EB000C8BABB /* TermsOfUseScreen.storyboard */,
+				FBB843E6255C3EC500C8BABB /* TermsOfUseViewController.swift */,
+			);
+			path = TermsOfUse;
+			sourceTree = "<group>";
+		};
+		FBB843E9255C41AE00C8BABB /* PrivacyPolicy */ = {
+			isa = PBXGroup;
+			children = (
+				FBB843EA255C41BE00C8BABB /* PrivacyPolicyScreen.storyboard */,
+				FBB843ED255C41DE00C8BABB /* PrivacyPolicyViewController.swift */,
+			);
+			path = PrivacyPolicy;
+			sourceTree = "<group>";
+		};
 		FBC9D6D9251F267B009C8A7C /* Premium */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,8 +366,10 @@
 				FB3674572495313B003D2F1E /* Assets.xcassets in Resources */,
 				FB5A136D24FEAD8A00F9A3C0 /* SideMenuScreen.storyboard in Resources */,
 				FB367480249A5537003D2F1E /* GoogleService-Info.plist in Resources */,
+				FBB843EB255C41BE00C8BABB /* PrivacyPolicyScreen.storyboard in Resources */,
 				FB5A135F24FAB7A900F9A3C0 /* ProfileScreen.storyboard in Resources */,
 				FBD9B24725093A7B004DF87C /* ImmutableEntryTableViewCell.xib in Resources */,
+				FBB843E4255C3EB000C8BABB /* TermsOfUseScreen.storyboard in Resources */,
 				FBB12A37251F26EE001CD137 /* PremiumScreen.storyboard in Resources */,
 				FBB12A3D251F28A0001CD137 /* PremiumPagesScreen.storyboard in Resources */,
 			);
@@ -414,6 +444,7 @@
 				FB8684B524E0153500C93440 /* EntryModel.xcdatamodeld in Sources */,
 				FB13D46A252B6EB900E8D7DF /* NSNotification+Name.swift in Sources */,
 				FB3674732497AFF7003D2F1E /* WelcomeViewController.swift in Sources */,
+				FBB843EE255C41DE00C8BABB /* PrivacyPolicyViewController.swift in Sources */,
 				FB2C01D624D560040093D16D /* EntryTableViewCell.swift in Sources */,
 				FB68B990250B95AE00D5C034 /* CustomHeader.swift in Sources */,
 				FBB12A3A251F278A001CD137 /* PremiumPageViewController.swift in Sources */,
@@ -427,6 +458,7 @@
 				FB36746824961B22003D2F1E /* UIViewController+Background.swift in Sources */,
 				FB8684C524E0479800C93440 /* Entry+CoreDataProperties.swift in Sources */,
 				FB58B553252618830043EB35 /* SKProduct+Localized.swift in Sources */,
+				FBB843E7255C3EC500C8BABB /* TermsOfUseViewController.swift in Sources */,
 				FB5A13792503B20D00F9A3C0 /* AppDelegate+Extension.swift in Sources */,
 				FB5A136924FD5DDF00F9A3C0 /* SideMenuViewController.swift in Sources */,
 				FB8684C624E0479800C93440 /* Entry+CoreDataClass.swift in Sources */,
@@ -571,7 +603,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = tomorrow/tomorrow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -579,7 +611,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.03;
 				PRODUCT_BUNDLE_IDENTIFIER = trillion.unicorn.tomorrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -594,7 +626,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = tomorrow/tomorrow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = M6373TXG4B;
 				INFOPLIST_FILE = tomorrow/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -602,7 +634,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.03;
 				PRODUCT_BUNDLE_IDENTIFIER = trillion.unicorn.tomorrow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

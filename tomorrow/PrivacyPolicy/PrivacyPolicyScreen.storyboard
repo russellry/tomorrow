@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ouc-II-PK3">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Privacy Policy-->
+        <scene sceneID="njX-x9-U0O">
+            <objects>
+                <viewController id="d9r-LJ-UYq" customClass="PrivacyPolicyViewController" customModule="tomorrow" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lMR-bg-NiA">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MqP-sL-m8X">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <mutableString key="text">This policy applies to all information collected or submitted on Tomorrow’s website and our apps for iPhone and any other devices and platforms.
+
+Information we collect
+New Tomorrow accounts are created anonymously, without email addresses or passwords.
+
+You may optionally add an email address and a password to your account, or remove the email address and password from your account, at any time in Tomorrow’s app. Email addresses are only used for logging in, password resets, responding to emails that you initiate, and sending notifications that you request. We don’t send promotional emails.
+
+We store information about your podcasts, episodes, and listening progress to sync this information between the website and your devices. We also collect anonymous statistics about which podcasts are most popular to help inform our recommendation engine.
+
+Technical basics
+If you enable notifications, we must store a token to send them. We never use notifications for marketing.
+
+If you upload files to Tomorrow, we need to store them until you delete them.
+
+If you subscribe to a password-protected podcast, we need to store the credentials you provide in order to keep it updated.
+
+We use cookies on the site and similar tokens in the app to keep you logged in.
+
+Our server software may also store basic technical information, such as your IP address, in temporary memory or logs.
+
+iCloud
+Tomorrow stores some of your data in Apple’s iCloud service, such as login tokens for your account(s), to enable some sync features between all devices signed into your Apple ID.
+
+Ads and analytics
+Tomorrow’s app collects aggregate, anonymous statistics, such as the percentage of users who use particular features, to improve the app.
+
+No personal data is used to target Tomorrow’s ads except the categories of podcasts that you’re subscribed to, such as “Technology” or “Business”. Each ad collects, and shares with its advertiser, only three numbers: total views, total taps, and total subscriptions from the ad.
+
+Information usage
+We use the information we collect to operate and improve our website, apps, and customer support.
+
+We do not share personal information with outside parties except to the extent necessary to accomplish Tomorrow’s functionality. We may share anonymous, aggregate statistics with outside parties, such as how many people listen to a particular podcast with Tomorrow.
+
+We may disclose your information in response to subpoenas, court orders, or other legal requirements; to exercise our legal rights or defend against legal claims; to investigate, prevent, or take action regarding illegal activities, suspected fraud or abuse, violations of our policies; or to protect our rights and property.
+
+In the future, we may sell to, buy, merge with, or partner with other businesses. In such transactions, user information may be among the transferred assets.
+
+Security
+We implement a variety of security measures to help keep your information secure. For instance, all communication with the app and website requires HTTPS with certificate pinning. Passwords are hashed, not stored, using industry-standard methods (currently bcrypt).
+
+Accessing, changing, or deleting information
+You may access or change your information or delete your account from the Tomorrow iOS app.
+
+Deleted information may be kept in backups for up to 90 days. Backups are encrypted and are only accessed if needed for disaster recovery.
+
+Tomorrow may delete your information at any time and for any reason, such as technical needs, legal concerns, abuse prevention, removal of idle accounts, data loss, or any other reason.
+
+Third-party links and content
+Tomorrow displays links and content from third-party podcast feeds and sites, and downloads podcast files directly from each podcast’s third-party servers. These have their own independent privacy policies, and we have no responsibility or liability for their content or activities.
+
+California Online Privacy Protection Act Compliance
+We comply with the California Online Privacy Protection Act. We therefore will not distribute your personal information to outside parties without your consent.
+
+Children’s Online Privacy Protection Act Compliance
+We never collect or maintain information at our website from those we actually know are under 13, and no part of our website is structured to attract anyone under 13.
+
+Information for European Union Customers
+By using Tomorrow and providing your information, you authorize us to collect, use, and store your information outside of the European Union.
+
+International Transfers of Information
+Information may be processed, stored, and used outside of the country in which you are located. Data privacy laws vary across jurisdictions, and different laws may be applicable to your data depending on where it is processed, stored, or used.
+
+Your Consent
+By using our site or apps, you consent to our privacy policy.
+
+Contacting Us
+If you have questions regarding this privacy policy, you may email admin@tomorrowapp.today. Please note that account deletion should be done within the Tomorrow app, not via email requests, for security reasons</mutableString>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="s4r-YZ-76F"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="s4r-YZ-76F" firstAttribute="trailing" secondItem="MqP-sL-m8X" secondAttribute="trailing" id="85Y-nm-Uva"/>
+                            <constraint firstItem="s4r-YZ-76F" firstAttribute="bottom" secondItem="MqP-sL-m8X" secondAttribute="bottom" id="Jic-qa-Vu2"/>
+                            <constraint firstItem="MqP-sL-m8X" firstAttribute="top" secondItem="s4r-YZ-76F" secondAttribute="top" id="RUs-cP-LHg"/>
+                            <constraint firstItem="MqP-sL-m8X" firstAttribute="leading" secondItem="s4r-YZ-76F" secondAttribute="leading" id="gXE-gx-dt1"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Privacy Policy" id="fLY-Rw-GTr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Qs5-XU-7ng">
+                            <connections>
+                                <action selector="didTapPrivacyPolicyBtn:" destination="d9r-LJ-UYq" id="Gox-So-e3m"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Rz-Yv-JtW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1105.7971014492755" y="154.6875"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ldv-bR-QeP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ouc-II-PK3" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="gWn-G1-RD4">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="d9r-LJ-UYq" kind="relationship" relationship="rootViewController" id="Yac-FU-xs2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WfZ-Y7-uML" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="195.6521739130435" y="154.6875"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
